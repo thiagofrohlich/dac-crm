@@ -1,0 +1,67 @@
+package org.ufpr.dac.domain;
+
+import java.io.Serializable;
+import javax.persistence.*;
+
+
+/**
+ * The persistent class for the produto_nf database table.
+ * 
+ */
+@Entity
+@Table(name="produto_nf")
+@NamedQuery(name="ProdutoNf.findAll", query="SELECT p FROM ProdutoNf p")
+public class ProdutoNf implements Serializable {
+	private static final long serialVersionUID = 1L;
+
+	@EmbeddedId
+	private ProdutoNfPK id;
+
+	private Long quantidade;
+
+	//bi-directional many-to-one association to NotaFiscal
+	@ManyToOne
+	@JoinColumn(name="nf_id", insertable=false, updatable=false)
+	private NotaFiscal notaFiscal;
+
+	//bi-directional many-to-one association to Produto
+	@ManyToOne
+	@JoinColumn(insertable=false, updatable=false)
+	private Produto produto;
+
+	public ProdutoNf() {
+	}
+
+	public ProdutoNfPK getId() {
+		return this.id;
+	}
+
+	public void setId(ProdutoNfPK id) {
+		this.id = id;
+	}
+
+	public Long getQuantidade() {
+		return this.quantidade;
+	}
+
+	public void setQuantidade(Long quantidade) {
+		this.quantidade = quantidade;
+	}
+
+	public NotaFiscal getNotaFiscal() {
+		return this.notaFiscal;
+	}
+
+	public void setNotaFiscal(NotaFiscal notaFiscal) {
+		this.notaFiscal = notaFiscal;
+	}
+
+	public Produto getProduto() {
+		return this.produto;
+	}
+
+	public void setProduto(Produto produto) {
+		this.produto = produto;
+	}
+
+}
