@@ -1,6 +1,7 @@
 package org.ufpr.dac.domain;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
 
 
@@ -10,7 +11,7 @@ import javax.persistence.*;
  */
 @Entity
 @NamedQuery(name="Usuario.findAll", query="SELECT u FROM Usuario u")
-public class Usuario implements Serializable {
+public class Usuario implements Domain, Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id

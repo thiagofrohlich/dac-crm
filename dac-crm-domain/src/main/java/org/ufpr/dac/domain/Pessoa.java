@@ -3,8 +3,10 @@ package org.ufpr.dac.domain;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -20,7 +22,7 @@ import javax.persistence.SequenceGenerator;
  */
 @Entity
 @NamedQuery(name="Pessoa.findAll", query="SELECT p FROM Pessoa p")
-public class Pessoa implements Serializable {
+public class Pessoa implements Domain, Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -31,16 +33,16 @@ public class Pessoa implements Serializable {
 
 	private String nome;
 
-	@OneToOne(mappedBy="pessoa")
+	@OneToOne(mappedBy="pessoa", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 	private Endereco endereco;
 
 	@OneToMany(mappedBy="pessoa")
 	private List<NotaFiscal> notaFiscals;
 
-	@OneToOne(mappedBy="pessoa")
+	@OneToOne(mappedBy="pessoa", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 	private PessoaFisica pessoaFisica;
 
-	@OneToOne(mappedBy="pessoa")
+	@OneToOne(mappedBy="pessoa", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 	private PessoaJuridica pessoaJuridica;
 
 	@OneToOne(mappedBy="pessoa")

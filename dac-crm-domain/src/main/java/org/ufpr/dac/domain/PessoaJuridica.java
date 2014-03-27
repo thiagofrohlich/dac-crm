@@ -1,7 +1,9 @@
 package org.ufpr.dac.domain;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
 import java.util.List;
 
 
@@ -12,7 +14,7 @@ import java.util.List;
 @Entity
 @Table(name="pessoa_juridica")
 @NamedQuery(name="PessoaJuridica.findAll", query="SELECT p FROM PessoaJuridica p")
-public class PessoaJuridica implements Serializable {
+public class PessoaJuridica implements Domain, Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -26,7 +28,7 @@ public class PessoaJuridica implements Serializable {
 	@OneToOne
 	private Pessoa pessoa;
 
-	@OneToMany(mappedBy="pessoaJuridica")
+	@OneToMany(mappedBy="fornecedor")
 	private List<Produto> produtos;
 
 	public PessoaJuridica() {
@@ -74,14 +76,14 @@ public class PessoaJuridica implements Serializable {
 
 	public Produto addProduto(Produto produto) {
 		getProdutos().add(produto);
-		produto.setPessoaJuridica(this);
+		produto.setFornecedor(this);
 
 		return produto;
 	}
 
 	public Produto removeProduto(Produto produto) {
 		getProdutos().remove(produto);
-		produto.setPessoaJuridica(null);
+		produto.setFornecedor(null);
 
 		return produto;
 	}

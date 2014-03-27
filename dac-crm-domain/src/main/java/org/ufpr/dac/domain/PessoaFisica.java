@@ -1,7 +1,9 @@
 package org.ufpr.dac.domain;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
 import java.util.Date;
 
 
@@ -12,7 +14,7 @@ import java.util.Date;
 @Entity
 @Table(name="pessoa_fisica")
 @NamedQuery(name="PessoaFisica.findAll", query="SELECT p FROM PessoaFisica p")
-public class PessoaFisica implements Serializable {
+public class PessoaFisica implements Domain, Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id

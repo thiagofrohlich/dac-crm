@@ -1,6 +1,6 @@
 package org.ufpr.dac.model;
 
-public class ProdutoNfSummary extends AbstractSummary {
+public class ProdutoNfSummary implements Summary {
 
 	private static final long serialVersionUID = 1L;
 	

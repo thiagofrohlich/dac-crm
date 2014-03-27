@@ -1,6 +1,7 @@
 package org.ufpr.dac.domain;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
 
 /**
@@ -8,7 +9,7 @@ import javax.persistence.*;
  * 
  */
 @Embeddable
-public class ProdutoNfPK implements Serializable {
+public class ProdutoNfPK implements Domain, Serializable {
 	//default serial version id, required for serializable classes.
 	private static final long serialVersionUID = 1L;
 

@@ -2,7 +2,7 @@ package org.ufpr.dac.model;
 
 import java.util.List;
 
-public abstract class PessoaSummary extends AbstractSummary {
+public abstract class PessoaSummary implements Summary {
 
 	private static final long serialVersionUID = 1L;
 	

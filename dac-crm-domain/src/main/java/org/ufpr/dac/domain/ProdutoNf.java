@@ -1,6 +1,7 @@
 package org.ufpr.dac.domain;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
 
 
@@ -11,7 +12,7 @@ import javax.persistence.*;
 @Entity
 @Table(name="produto_nf")
 @NamedQuery(name="ProdutoNf.findAll", query="SELECT p FROM ProdutoNf p")
-public class ProdutoNf implements Serializable {
+public class ProdutoNf implements Domain, Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@EmbeddedId

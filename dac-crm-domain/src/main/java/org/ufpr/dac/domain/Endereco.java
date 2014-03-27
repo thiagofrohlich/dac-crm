@@ -10,7 +10,7 @@ import javax.persistence.*;
  */
 @Entity
 @NamedQuery(name="Endereco.findAll", query="SELECT e FROM Endereco e")
-public class Endereco implements Serializable {
+public class Endereco implements Domain, Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id

@@ -1,7 +1,7 @@
 package org.ufpr.dac.model;
 
 // FIXME Add operation and product complex type
-public class NotaFiscalSummary extends AbstractSummary {
+public class NotaFiscalSummary implements Summary {
 
 	private static final long serialVersionUID = 1L;
 	

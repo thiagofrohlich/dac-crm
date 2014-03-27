@@ -1,6 +1,6 @@
 package org.ufpr.dac.model;
 
-public class OperacaoSummary extends AbstractSummary {
+public class OperacaoSummary implements Summary {
 
 	private static final long serialVersionUID = 1L;
 	

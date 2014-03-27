@@ -1,6 +1,7 @@
 package org.ufpr.dac.domain;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
 
 
@@ -10,7 +11,7 @@ import javax.persistence.*;
  */
 @Entity
 @NamedQuery(name="Operacao.findAll", query="SELECT o FROM Operacao o")
-public class Operacao implements Serializable {
+public class Operacao implements Domain, Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -23,8 +24,7 @@ public class Operacao implements Serializable {
 	@Column(name="valor_total")
 	private double valorTotal;
 
-	//bi-directional many-to-one association to NotaFiscal
-	@ManyToOne
+	@OneToOne(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 	@JoinColumn(name="nf_id")
 	private NotaFiscal notaFiscal;
 

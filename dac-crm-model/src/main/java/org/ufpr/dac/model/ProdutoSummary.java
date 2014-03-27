@@ -1,7 +1,7 @@
 package org.ufpr.dac.model;
 
 //FIXME Add produtonf
-public class ProdutoSummary extends AbstractSummary {
+public class ProdutoSummary implements Summary {
 
 	private static final long serialVersionUID = 1L;
 	

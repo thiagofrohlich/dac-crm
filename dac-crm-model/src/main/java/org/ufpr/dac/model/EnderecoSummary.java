@@ -1,6 +1,6 @@
 package org.ufpr.dac.model;
 
-public class EnderecoSummary extends AbstractSummary {
+public class EnderecoSummary implements Summary {
 
 	private static final long serialVersionUID = 1L;
 	

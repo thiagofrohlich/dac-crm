@@ -18,7 +18,7 @@ import javax.persistence.NamedQuery;
  */
 @Entity
 @NamedQuery(name="Produto.findAll", query="SELECT p FROM Produto p")
-public class Produto implements Serializable {
+public class Produto implements Domain, Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -36,7 +36,7 @@ public class Produto implements Serializable {
 	//bi-directional many-to-one association to PessoaJuridica
 	@ManyToOne
 	@JoinColumn(name="pessoa_juridica_id")
-	private PessoaJuridica pessoaJuridica;
+	private PessoaJuridica fornecedor;
 
 	public Produto() {
 	}
@@ -73,12 +73,12 @@ public class Produto implements Serializable {
 		this.valorVenda = valorVenda;
 	}
 
-	public PessoaJuridica getPessoaJuridica() {
-		return this.pessoaJuridica;
+	public PessoaJuridica getFornecedor() {
+		return this.fornecedor;
 	}
 
-	public void setPessoaJuridica(PessoaJuridica pessoaJuridica) {
-		this.pessoaJuridica = pessoaJuridica;
+	public void setFornecedor(PessoaJuridica pessoaJuridica) {
+		this.fornecedor = pessoaJuridica;
 	}
 
 }

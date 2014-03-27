@@ -1,7 +1,9 @@
 package org.ufpr.dac.domain;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
 import java.util.List;
 
 
@@ -12,7 +14,7 @@ import java.util.List;
 @Entity
 @Table(name="nota_fiscal")
 @NamedQuery(name="NotaFiscal.findAll", query="SELECT n FROM NotaFiscal n")
-public class NotaFiscal implements Serializable {
+public class NotaFiscal implements Domain, Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -27,7 +29,7 @@ public class NotaFiscal implements Serializable {
 	@OneToOne(mappedBy="notaFiscal")
 	private Operacao operacao;
 
-	@OneToMany(mappedBy="notaFiscal")
+	@OneToMany(mappedBy="notaFiscal", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 	private List<ProdutoNf> produtosNf;
 
 	public NotaFiscal() {
