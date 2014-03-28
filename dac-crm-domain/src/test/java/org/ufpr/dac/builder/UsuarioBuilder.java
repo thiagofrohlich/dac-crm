@@ -27,7 +27,7 @@ public class UsuarioBuilder {
 		usuario.setId(id);
 		usuario.setLogin(login);
 		usuario.setSenha(senha);
-		usuario.setPessoa(pessoa != null ? pessoa : makeDefaultPessoa());
+		usuario.setPessoaUsuario(pessoa != null ? pessoa : makeDefaultPessoa());
 		return persist(usuario);
 	}
 

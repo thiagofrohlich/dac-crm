@@ -10,7 +10,6 @@ import orc.ufpr.dac.transformer.impl.PessoaTransformer;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.ufpr.dac.builder.PessoaDomainBuilder;
 import org.ufpr.dac.builder.PessoaSummaryBuilder;
 import org.ufpr.dac.domain.Pessoa;
@@ -18,13 +17,10 @@ import org.ufpr.dac.domain.PessoaFisica;
 import org.ufpr.dac.domain.PessoaJuridica;
 import org.ufpr.dac.model.PessoaFisicaSummary;
 import org.ufpr.dac.model.PessoaJuridicaSummary;
-import org.ufpr.dac.repository.PessoaRepository;
 
 public class PessoaTransformerTest {
 
 	private PessoaTransformer pessoaTransformer;
-	@Autowired
-	private PessoaRepository pessoaRepository;
 	
 	@Before
 	public void setUp() {
@@ -102,7 +98,7 @@ public class PessoaTransformerTest {
 	}
 	
 	public PessoaDomainBuilder newBuilder() {
-		return new PessoaDomainBuilder(pessoaRepository);
+		return new PessoaDomainBuilder(null);
 	}
 	
 }

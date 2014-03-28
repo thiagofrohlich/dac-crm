@@ -7,6 +7,7 @@ public class OperacaoSummary implements Summary {
 	private Long id;
 	private double valorTotal;
 	private TipoOperacao tipoOperacao;
+	private NotaFiscalSummary notaFiscal;
 	
 	public Long getId() {
 		return id;
@@ -25,6 +26,12 @@ public class OperacaoSummary implements Summary {
 	}
 	public void setTipoOperacao(TipoOperacao tipoOperacao) {
 		this.tipoOperacao = tipoOperacao;
+	}
+	public NotaFiscalSummary getNotaFiscal() {
+		return notaFiscal;
+	}
+	public void setNotaFiscal(NotaFiscalSummary notaFiscal) {
+		this.notaFiscal = notaFiscal;
 	}
 
 }

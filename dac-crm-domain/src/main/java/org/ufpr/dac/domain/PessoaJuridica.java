@@ -2,9 +2,13 @@ package org.ufpr.dac.domain;
 
 import java.io.Serializable;
 
-import javax.persistence.*;
-
-import java.util.List;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 
 /**
@@ -27,9 +31,6 @@ public class PessoaJuridica implements Domain, Serializable {
 
 	@OneToOne
 	private Pessoa pessoa;
-
-	@OneToMany(mappedBy="fornecedor")
-	private List<Produto> produtos;
 
 	public PessoaJuridica() {
 	}
@@ -64,28 +65,6 @@ public class PessoaJuridica implements Domain, Serializable {
 
 	public void setPessoa(Pessoa pessoa) {
 		this.pessoa = pessoa;
-	}
-
-	public List<Produto> getProdutos() {
-		return this.produtos;
-	}
-
-	public void setProdutos(List<Produto> produtos) {
-		this.produtos = produtos;
-	}
-
-	public Produto addProduto(Produto produto) {
-		getProdutos().add(produto);
-		produto.setFornecedor(this);
-
-		return produto;
-	}
-
-	public Produto removeProduto(Produto produto) {
-		getProdutos().remove(produto);
-		produto.setFornecedor(null);
-
-		return produto;
 	}
 
 }

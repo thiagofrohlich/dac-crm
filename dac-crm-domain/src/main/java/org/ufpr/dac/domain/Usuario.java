@@ -23,7 +23,8 @@ public class Usuario implements Domain, Serializable {
 	private String senha;
 
 	@OneToOne
-	private Pessoa pessoa;
+	@JoinColumn(name="pessoa_id")
+	private Pessoa pessoaUsuario;
 
 	public Usuario() {
 	}
@@ -52,12 +53,12 @@ public class Usuario implements Domain, Serializable {
 		this.senha = senha;
 	}
 
-	public Pessoa getPessoa() {
-		return this.pessoa;
+	public Pessoa getPessoaUsuario() {
+		return this.pessoaUsuario;
 	}
 
-	public void setPessoa(Pessoa pessoa) {
-		this.pessoa = pessoa;
+	public void setPessoaUsuario(Pessoa pessoa) {
+		this.pessoaUsuario = pessoa;
 	}
 
 }

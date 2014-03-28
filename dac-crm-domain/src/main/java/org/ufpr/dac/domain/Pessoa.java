@@ -45,7 +45,7 @@ public class Pessoa implements Domain, Serializable {
 	@OneToOne(mappedBy="pessoa", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 	private PessoaJuridica pessoaJuridica;
 
-	@OneToOne(mappedBy="pessoa")
+	@OneToOne(mappedBy="pessoaUsuario")
 	private Usuario usuario;
 
 	public Pessoa() {

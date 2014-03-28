@@ -94,7 +94,7 @@ public class UsuarioRepositoryComponentTest extends AbstractTransactionalJUnit4S
 		assertNotNull(actual);
 		assertEquals(expected.getLogin(), actual.getLogin());
 		assertEquals(expected.getSenha(), actual.getSenha());
-		assertPessoa(expected.getPessoa(), actual.getPessoa());
+		assertPessoa(expected.getPessoaUsuario(), actual.getPessoaUsuario());
 	}
 	
 	private void assertPessoa(Pessoa expected, Pessoa actual) {

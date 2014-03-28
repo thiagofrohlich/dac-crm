@@ -25,7 +25,7 @@ public abstract class AbstractTransformer implements Transformer {
             if(!Modifier.isStatic(fieldFrom.getModifiers())) {
 	            for (Field fieldTo : getAllFields(clazzTo)) {
 	                fieldTo.setAccessible(true);
-	                if(!Modifier.isStatic(fieldFrom.getModifiers())) {
+	                if(isSettable(fieldFrom, fieldTo)) {
 		                if (fieldTo.getName().equals(fieldFrom.getName())) {
 		                    Object fieldFromObject = convertObjectToSameTypeIfNecessary(fieldTo, fieldFrom,
 		                            objectFrom);
@@ -137,6 +137,24 @@ public abstract class AbstractTransformer implements Transformer {
 
     private boolean isSameType(Field fieldTo, Field fieldFrom) {
 		return fieldTo.getType().equals(fieldFrom.getType());
+	}
+
+	private boolean isSettable(Field fieldFrom, Field fieldTo) {
+		return !Modifier.isStatic(fieldFrom.getModifiers()) && !isEnums(fieldFrom, fieldTo);
+	}
+	
+	private boolean isEnums(Field... fields) {
+		boolean isEnum = false;
+		for(Field f : fields) {
+			if(isEnum(f)) {
+				isEnum = true;
+			}
+		}
+		return isEnum;
+	}
+	
+	private boolean isEnum(Field f) {
+		return f.getType().isEnum();
 	}
 
 }

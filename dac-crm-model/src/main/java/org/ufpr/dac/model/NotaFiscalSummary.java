@@ -1,5 +1,7 @@
 package org.ufpr.dac.model;
 
+import java.util.List;
+
 // FIXME Add operation and product complex type
 public class NotaFiscalSummary implements Summary {
 
@@ -7,8 +9,7 @@ public class NotaFiscalSummary implements Summary {
 	
 	private Long id;
 	private String observacao;
-	private OperacaoSummary operacao;
-	private ProdutoNfSummary produtosNf;
+	private List<ProdutoNfSummary> produtosNf;
 	
 	public Long getId() {
 		return id;
@@ -22,16 +23,10 @@ public class NotaFiscalSummary implements Summary {
 	public void setObservacao(String observacao) {
 		this.observacao = observacao;
 	}
-	public OperacaoSummary getOperacao() {
-		return operacao;
-	}
-	public void setOperacao(OperacaoSummary operacao) {
-		this.operacao = operacao;
-	}
-	public ProdutoNfSummary getProdutosNf() {
+	public List<ProdutoNfSummary> getProdutosNf() {
 		return produtosNf;
 	}
-	public void setProdutosNf(ProdutoNfSummary produtosNf) {
+	public void setProdutosNf(List<ProdutoNfSummary> produtosNf) {
 		this.produtosNf = produtosNf;
 	}
 

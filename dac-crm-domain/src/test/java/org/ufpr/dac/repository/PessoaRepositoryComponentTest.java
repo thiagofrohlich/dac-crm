@@ -126,8 +126,8 @@ public class PessoaRepositoryComponentTest extends AbstractTransactionalJUnit4Sp
 	@Test
 	public void shouldRetrieveAllPessoas() {
 //		Given
-		newPessoaBuilder().withRootId(new Date().getTime()).persisted();
-		newPessoaBuilder().withRootId(new Date().getTime()).persisted();
+		newPessoaBuilder().withRootId(new Date().getTime()).persisted().asPessoa();
+		newPessoaBuilder().withRootId(new Date().getTime()).persisted().asPessoa();
 		
 //		When
 		List<Pessoa> result = pessoaRepository.findAll();

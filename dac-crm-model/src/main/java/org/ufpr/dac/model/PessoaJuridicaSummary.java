@@ -1,6 +1,5 @@
 package org.ufpr.dac.model;
 
-// FIXME add product list
 public class PessoaJuridicaSummary extends PessoaSummary {
 
 	private static final long serialVersionUID = 1L;
