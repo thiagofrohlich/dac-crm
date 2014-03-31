@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	
+	<ui:composition template="/template.xhtml">
+		<ui:define name="centro">
+			<h:form id="cadastroProduto">
+				<div style="clear:both;" class="center">
+					<h:outputText value="#{msg.cadastro} #{msg.de} #{msg.produtos}" style="font-size:13px; "/>
+					<p:commandButton icon="ui-icon-search" style="margin-left: 10px;"/>
+				</div>
+				<div class="center" style="padding-top: 15px;">
+					<table border="0">
+						<tr>
+							<td class="label">
+								<h:outputText value="#{msg.nome}: " />
+							</td>
+							<td>
+								<h:inputText value="" />
+							</td>
+						</tr>
+						<tr>
+							<td class="label">
+								<h:outputText value="#{msg.descricao}: " />
+							</td>
+							<td>
+								<h:inputText value="" />
+							</td>
+						</tr>
+						<tr>
+							<td class="label">
+								<h:outputText value="#{msg.categoria}: " />
+							</td>
+							<td>
+								<h:inputText value="" />
+							</td>
+						</tr>
+						<tr>
+							<td class="label">
+								<h:outputText value="#{msg.quantidade}: " />
+							</td>
+							<td>
+								<h:inputText value="" />
+							</td>
+						</tr>
+						<tr>
+							<td class="label">
+								<h:outputText value="#{msg.fornecedor}: " />
+							</td>
+							<td>
+								<h:inputText value="" />	
+							</td>
+						</tr>
+						<tr>
+							<td class="label">
+								<h:outputText value="#{msg.valor}: " />
+							</td>
+							<td>
+								<h:inputText value="" />	
+							</td>
+						</tr>
+						<tr>
+							<td class="label">
+								<p:commandButton value="#{msg.cancelar}" />
+							</td>
+							<td>
+								<p:commandButton value="#{msg.salvar}" />	
+							</td>
+						</tr>
+					</table>
+				</div>
+			</h:form>		
+		</ui:define>
+	</ui:composition>
+	
+	
+</html>

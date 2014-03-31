@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	
+	<ui:composition template="/template.xhtml">
+		<ui:define name="centro">
+			<h:form id="cadastroPessoas">
+				<div style="clear:both;" class="center">
+					<h:outputText value="#{msg.cadastro} #{msg.de} #{msg.clientes}" style="font-size:13px; "/>
+					<p:commandButton icon="ui-icon-search" style="margin-left: 10px;"/>
+				</div>
+				<div class="center" style="padding-top: 15px;">
+					<table border="0">
+						<tr>
+							<td class="label">
+								<h:outputText value="#{msg.pessoa}: " />
+							</td>
+							<td>
+								<h:selectOneRadio value="1" layout="lineDirection">
+									<f:selectItem itemLabel="#{msg.fisica}" itemValue="1"  />
+									<f:selectItem itemLabel="#{msg.juridica}" itemValue="2"/>
+								</h:selectOneRadio>
+							</td>
+						</tr>
+						<tr>
+							<td class="label">
+								<h:outputText value="#{msg.nome}: " />
+							</td>
+							<td>
+								<h:inputText value="" />
+							</td>
+						</tr>
+						<tr>
+							<td class="label">
+								<h:outputText value="#{msg.cpf}: " rendered="true" />
+								<h:outputText value="#{msg.cnpj}: " rendered="false" />
+							</td>
+							<td>
+								<h:inputText value="" />
+							</td>
+						</tr>
+						<tr>
+							<td class="label">
+								<h:outputText value="#{msg.datanasc}: " />
+							</td>
+							<td>
+								<h:inputText value="" />
+							</td>
+						</tr>
+						<tr>
+							<td class="label">
+								<h:outputText value="#{msg.endereco}: " />
+							</td>
+							<td>
+								<h:inputText value="" />
+							</td>
+						</tr>
+						<tr>
+							<td class="label">
+								<h:outputText value="#{msg.numero}: " />
+							</td>
+							<td>
+								<h:inputText value="" />	
+							</td>
+						</tr>
+						<tr>
+							<td class="label">
+								<h:outputText value="#{msg.complemento}: " />
+							</td>
+							<td>
+								<h:inputText value="" />	
+							</td>
+						</tr>
+						<tr>
+							<td class="label">
+								<h:outputText value="#{msg.cidade}: " />
+							</td>
+							<td>
+								<h:inputText value="" />	
+							</td>
+						</tr>
+						<tr>
+							<td class="label">
+								<h:outputText value="#{msg.estado}: " />
+							</td>
+							<td>
+								<h:inputText value="" />	
+							</td>
+						</tr>
+						<tr>
+							<td class="label">
+								<h:outputText value="#{msg.pais}: " />
+							</td>
+							<td>
+								<h:inputText value="" />	
+							</td>
+						</tr>
+						<tr>
+							<td class="label">
+								<h:outputText value="#{msg.email}: " />
+							</td>
+							<td>
+								<h:inputText value="" />	
+							</td>
+						</tr>
+						<tr>
+							<td class="label">
+								<h:outputText value="#{msg.telPrincipal}: " />
+							</td>
+							<td>
+								<h:inputText value="" />	
+							</td>
+						</tr>
+						<tr>
+							<td class="label">
+								<h:outputText value="#{msg.telAlternativo}: " />
+							</td>
+							<td>
+								<h:inputText value="" />	
+							</td>
+						</tr>
+						<tr>
+							<td class="label">
+								<h:outputText value="#{msg.senha}: " />
+							</td>
+							<td>
+								<h:inputText value="" />	
+							</td>
+						</tr>
+						<tr>
+							<td class="label">
+								<h:outputText value="#{msg.confirmar} #{msg.senha}: " />
+							</td>
+							<td>
+								<h:inputText value="" />	
+							</td>
+						</tr>
+						<tr>
+							<td class="label">
+								<p:commandButton value="#{msg.cancelar}" />
+							</td>
+							<td>
+								<p:commandButton value="#{msg.salvar}" />	
+							</td>
+						</tr>
+					</table>
+				</div>
+			</h:form>		
+		</ui:define>
+	</ui:composition>
+	
+	
+</html>
