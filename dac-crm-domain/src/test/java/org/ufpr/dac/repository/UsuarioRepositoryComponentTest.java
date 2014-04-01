@@ -13,7 +13,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.ufpr.dac.builder.PessoaDomainBuilder;
-import org.ufpr.dac.builder.UsuarioBuilder;
+import org.ufpr.dac.builder.UsuarioDomainBuilder;
 import org.ufpr.dac.domain.Pessoa;
 import org.ufpr.dac.domain.Usuario;
 
@@ -103,8 +103,8 @@ public class UsuarioRepositoryComponentTest extends AbstractTransactionalJUnit4S
 		assertEquals(expected.getNome(), actual.getNome());
 	}
 	
-	private UsuarioBuilder newBuilder() {
-		return new UsuarioBuilder(usuarioRepository);
+	private UsuarioDomainBuilder newBuilder() {
+		return new UsuarioDomainBuilder(usuarioRepository);
 	}
 
 }

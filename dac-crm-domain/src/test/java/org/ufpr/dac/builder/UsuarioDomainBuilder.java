@@ -7,12 +7,12 @@ import org.ufpr.dac.domain.Usuario;
 import org.ufpr.dac.repository.UsuarioRepository;
 
 @Component
-public class UsuarioBuilder {
+public class UsuarioDomainBuilder {
 
 	private final UsuarioRepository usuarioRepository;
 
 	@Autowired
-	public UsuarioBuilder(UsuarioRepository usuarioRepository) {
+	public UsuarioDomainBuilder(UsuarioRepository usuarioRepository) {
 		this.usuarioRepository = usuarioRepository;
 	}
 	
@@ -45,23 +45,23 @@ public class UsuarioBuilder {
 		return p;
 	}
 
-	public UsuarioBuilder withId(Long id) {
+	public UsuarioDomainBuilder withId(Long id) {
 		this.id = id;
 		return this;
 	}
-	public UsuarioBuilder withLogin(String login) {
+	public UsuarioDomainBuilder withLogin(String login) {
 		this.login = login;
 		return this;
 	}
-	public UsuarioBuilder withSenha(String senha) {
+	public UsuarioDomainBuilder withSenha(String senha) {
 		this.senha = senha;
 		return this;
 	}
-	public UsuarioBuilder withPessoa(Pessoa pessoa) {
+	public UsuarioDomainBuilder withPessoa(Pessoa pessoa) {
 		this.pessoa = pessoa;
 		return this;
 	}
-	public UsuarioBuilder persisted() {
+	public UsuarioDomainBuilder persisted() {
 		this.persisted = true;
 		return this;
 	}

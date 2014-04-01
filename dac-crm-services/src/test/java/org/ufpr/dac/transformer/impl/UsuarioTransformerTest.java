@@ -5,7 +5,7 @@ import java.lang.reflect.InvocationTargetException;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.ufpr.dac.builder.UsuarioBuilder;
+import org.ufpr.dac.builder.UsuarioDomainBuilder;
 import org.ufpr.dac.builder.UsuarioSummaryBuilder;
 import org.ufpr.dac.domain.Usuario;
 import org.ufpr.dac.model.UsuarioSummary;
@@ -53,8 +53,8 @@ public class UsuarioTransformerTest {
 		return new UsuarioSummaryBuilder();
 	}
 	
-	private UsuarioBuilder newDomainBuilder() {
-		return new UsuarioBuilder(null);
+	private UsuarioDomainBuilder newDomainBuilder() {
+		return new UsuarioDomainBuilder(null);
 	}
 
 }
