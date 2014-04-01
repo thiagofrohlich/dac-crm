@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	
+	<ui:composition template="/template.xhtml">
+		<ui:define name="centro">
+			<h:form id="vendas">
+				<div style="margin:auto; width: 900px;">
+					<div style="clear:both;" class="center">
+						<h:outputText value="#{msg.vendas}" 
+										style="font-size:13px; "/>
+						
+					</div>
+					<p:panel style="float:left; min-width:755px;" styleClass="center noborder">
+						<div class="center" style="padding-top: 15px;">
+							<div style="float:left">
+								<table class="noborder">
+									<tr>
+										<td class="label">
+											<h:outputText value="#{msg.pedVendaNum}: " />
+										</td>
+										<td>
+											<h:inputText value="00001" disabled="true"/>
+										</td>
+									</tr>
+									<tr>
+										<td class="label">
+											<h:outputText value="#{msg.cliente}: " />
+										</td>
+										<td>
+											<h:inputText value="" />
+											<p:commandButton icon="ui-icon-search"/>
+										</td>
+									</tr>
+								</table>
+							</div>
+							<div style="float:left; margin-left: 15px;">
+								<p:panel style="width:300px" styleClass="noborder">					
+									<table style="margin-right: auto;">
+										<tr>
+											<td>
+												<h:outputText value="#{msg.cliente}: " />
+											</td>
+											<td>
+												<h:outputText value="" />
+											</td>
+										</tr>
+										<tr>
+											<td>
+												<h:outputText value="#{msg.codigo}: " />
+											</td>
+											<td>
+												<h:outputText value="" />
+											</td>
+										</tr>
+									</table>
+								</p:panel>
+							</div>
+						</div>
+					</p:panel>
+					
+						<p:fieldset legend="#{msg.busca} #{msg.de} #{msg.produtos}" styleClass="titulo"
+									style="float:left;clear:both; min-width:755px;">
+							<div style="float: left;">
+								<h:selectOneRadio value="1" layout="lineDirection" style="margin-right:auto;">
+									<f:selectItem itemLabel="#{msg.codigo}" itemValue="1"/>
+									<f:selectItem itemLabel="#{msg.descricao}" itemValue="2"/>
+								</h:selectOneRadio>
+								<h:inputText value="" rendered="true" />
+								<h:inputText value="" rendered="false" />
+								<p:commandButton icon="ui-icon-search" />
+								<h:outputText value="#{msg.descricao}: " style="margin-left:20px;"/>
+								<h:outputText value="Descrição do produto" />
+							</div>
+						</p:fieldset>
+						<p:fieldset legend="#{msg.detItem}" styleClass="titulo"
+									style="float:left;clear:both; min-width:755px;" >
+							<table style="margin-right:auto;">
+								<tr>
+									<td class="label">
+										<h:outputText value="#{msg.qtdEstoque}: " />
+									</td>
+									<td>
+										<h:inputText value="" disabled="true"/>
+									</td>
+									<td class="label">
+										<h:outputText value="#{msg.precoVenda}: " />
+									</td>
+									<td>
+										<h:inputText value=""  disabled="true"/>
+									</td>
+								</tr>
+								<tr>
+									<td class="label">
+										<h:outputText value="#{msg.quantidade}: " />
+									</td>
+									<td>
+										<h:inputText value=""  disabled="true"/>
+									</td>
+									<td class="label">
+										<p:commandButton value="#{msg.lancar}" />
+									</td>
+									<td>
+										<p:commandButton value="#{msg.cancelar}"  />
+									</td>
+								</tr>
+							</table>
+							<p:dataTable rows="10" paginator="true" paginatorPosition="bottom" style="margin-top:20px;">
+								<p:column>
+									<p:commandButton icon="ui-icon-trash" />
+									<p:commandButton icon="ui-icon-pencil" />
+								</p:column>
+								<p:column>
+									<f:facet name="header">
+										<h:outputText value="#{msg.codigo}" />
+									</f:facet>
+								</p:column>
+								<p:column>
+									<f:facet name="header">
+										<h:outputText value="#{msg.descricao}" />
+									</f:facet>
+								</p:column>
+								<p:column>
+									<f:facet name="header">
+										<h:outputText value="#{msg.quantidade}" />
+									</f:facet>
+								</p:column>
+								<p:column>
+									<f:facet name="header">
+										<h:outputText value="#{msg.precoVenda}" />
+									</f:facet>
+								</p:column>
+								<f:facet name="footer">
+									<p:toolbar style="border:none;">
+										<p:toolbarGroup align="right" >
+											<h:outputText value="#{msg.subTotal}: " />
+											<h:outputText value="" />
+										</p:toolbarGroup>
+									</p:toolbar>
+								</f:facet>
+							</p:dataTable>						
+						</p:fieldset>
+						<p:fieldset legend="#{msg.pagamento}" styleClass="titulo"
+									style="float:left;clear:both; min-width:755px;" >
+							<table style="margin-right: auto;">
+								<tr>
+									<td class="label">
+										<h:outputText value="#{msg.acrescimos}: " />
+									</td>
+									<td>
+										<h:inputText value="" />
+									</td>
+									<td>
+										<h:outputText value="#{msg.vlrTotal}: " style="margin-left:10px;" />
+										<h:outputText value="" />
+									</td>
+								</tr>
+								<tr>
+									<td class="label">
+										<h:outputText value="#{msg.descontos}: " />
+									</td>
+									<td>
+										<h:inputText value="" />
+									</td>
+									<td >
+										<h:outputText value="#{msg.pagamento}: " style="margin-left:10px;"/>
+										<h:selectOneListbox value="" size="1">
+											<f:selectItem itemLabel="#{msg.aVista}"/>
+											<f:selectItem itemLabel="1x"/>
+											<f:selectItem itemLabel="2x"/>
+											<f:selectItem itemLabel="3x"/>
+										</h:selectOneListbox>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<p:commandButton value="#{msg.finalizarPedido}" />
+									</td>
+									<td>
+										<p:commandButton value="#{msg.cancelar}" />
+									</td>
+								</tr>
+							</table>
+						</p:fieldset>
+				</div>
+			</h:form>		
+		</ui:define>
+	</ui:composition>
+	
+	
+</html>

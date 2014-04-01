@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	<h:head>
+       
+        <style type="text/css">
+            body {background-color: #eeeeee; font-size: 12px}
+            .center{margin: auto;}
+            .label {text-align: right;}
+            .titulo .ui-fieldset-legend{margin-right: auto}
+            .noborder{border: none;}
+        </style> 
+    </h:head>
+    <h:body>
+        <div align="center">
+            <p:layout >  
+                <p:layoutUnit position="north" size="100">  
+                    Titulo
+                </p:layoutUnit>  
+ 
+                <p:layoutUnit position="west" size="220">  
+                    <ui:insert name="menu">
+                        <h:form>
+                            <p:menu style="width: 200px">
+                                <p:submenu label="Menu">
+                                    <p:menuitem value="Login" icon="ui-icon-key" />
+                                    <p:menuitem value="Produtos" icon="ui-icon-contact" />         
+                                    <p:menuitem value="Clientes" icon="ui-icon-contact" />
+                                    <p:menuitem value="Fornecedores" icon="ui-icon-contact" />
+                                    <p:menuitem value="Compras" icon="ui-icon-contact" />
+                                    <p:menuitem value="Vendas" icon="ui-icon-contact" />
+                                </p:submenu>
+                            </p:menu>
+                        </h:form>
+                    </ui:insert>
+                </p:layoutUnit>  
+                <p:layoutUnit position="center">  
+                    <ui:insert name="centro">
+                    </ui:insert>
+                </p:layoutUnit>  
+            </p:layout>  
+        </div>
+    </h:body>
+</html>

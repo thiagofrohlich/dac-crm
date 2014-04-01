@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	
+	<ui:composition template="/template.xhtml">
+		<ui:define name="centro">
+			<h:form id="relatorio">
+				<div style="margin:auto; width: 900px;">
+					<div style="clear:both;" class="center">
+						<h:outputText value="#{msg.relatorios}" 
+										style="font-size:13px; "/>
+						
+					</div>
+					<div style="clear:both;" class="center">
+						<table>
+							<tr>
+								<td class="label">
+									<h:outputText value="#{msg.relatorio}: " />
+								</td>
+								<td>
+									<h:selectOneRadio value="1" layout="lineDirection">
+										<f:selectItem itemLabel="#{msg.compra}" itemValue="1"/>
+										<f:selectItem itemLabel="#{msg.venda}" itemValue="2"/>
+									</h:selectOneRadio>
+								</td>
+							</tr>
+							<tr>
+								<td class="label">
+									<h:outputText value="#{msg.data}: " />
+								</td>
+								<td>
+									<p:calendar locale="pt" showButtonPanel="false" navigator="true" />
+									<p:calendar locale="pt" showButtonPanel="false" navigator="true" />
+								</td>
+							</tr>
+							<tr>
+								<td class="label">
+									<h:outputText value="#{msg.pessoa}: " />
+								</td>
+								<td>
+									<h:inputText value="" />
+								</td>
+							</tr>
+							<tr>
+								<td class="label">
+									<h:outputText value="#{msg.produto}: " />
+								</td>
+								<td>
+									<h:inputText value="" />
+									<p:commandButton value="gerar" />
+								</td>
+							</tr>
+						</table>
+					</div>
+					
+						<p:dataTable id="tableCompra" paginator="true" rows="10" paginatorPosition="bottom" rendered="true">
+							<f:facet name="header" >
+								<p:toolbar style="border:none;">
+									<p:toolbarGroup align="center">
+										<h:outputText value="#{msg.compras}" />
+									</p:toolbarGroup>
+								</p:toolbar>
+							</f:facet>
+							<p:column>
+								<f:facet name="header">
+									<h:outputText value="#{msg.data}" />
+								</f:facet>
+							</p:column>
+							<p:column>
+								<f:facet name="header">
+									<h:outputText value="#{msg.codigo}" />
+								</f:facet>
+							</p:column>
+							<p:column>
+								<f:facet name="header">
+									<h:outputText value="#{msg.cnpj}" />
+								</f:facet>
+							</p:column>
+							<p:column>
+								<f:facet name="header">
+									<h:outputText value="#{msg.fornecedor}" />
+								</f:facet>
+							</p:column>
+							<p:column>
+								<f:facet name="header">
+									<h:outputText value="#{msg.produto}" />
+								</f:facet>
+							</p:column>
+							<p:column>
+								<f:facet name="header">
+									<h:outputText value="#{msg.valor}" />
+								</f:facet>
+							</p:column>
+							<p:column>
+								<f:facet name="header">
+									<h:outputText value="#{msg.quantidade}" />
+								</f:facet>
+							</p:column>
+						</p:dataTable>
+						
+						<p:dataTable id="tableVenda" paginator="true" rows="10" paginatorPosition="bottom" rendered="false">
+							<f:facet name="header" >
+								<p:toolbar style="border:none;">
+									<p:toolbarGroup align="center">
+										<h:outputText value="#{msg.vendas}" />
+									</p:toolbarGroup>
+								</p:toolbar>
+							</f:facet>
+							
+							<p:column>
+								<f:facet name="header">
+									<h:outputText value="#{msg.data}" />
+								</f:facet>
+							</p:column>
+							<p:column>
+								<f:facet name="header">
+									<h:outputText value="#{msg.codigo}" />
+								</f:facet>
+							</p:column>
+							<p:column>
+								<f:facet name="header">
+									<h:outputText value="#{msg.cpf}" />
+								</f:facet>
+							</p:column>
+							<p:column>
+								<f:facet name="header">
+									<h:outputText value="#{msg.cliente}" />
+								</f:facet>
+							</p:column>
+							<p:column>
+								<f:facet name="header">
+									<h:outputText value="#{msg.produto}" />
+								</f:facet>
+							</p:column>
+							<p:column>
+								<f:facet name="header">
+									<h:outputText value="#{msg.valor}" />
+								</f:facet>
+							</p:column>
+							<p:column>
+								<f:facet name="header">
+									<h:outputText value="#{msg.quantidade}" />
+								</f:facet>
+							</p:column>
+						</p:dataTable>
+					</div>
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</html>
