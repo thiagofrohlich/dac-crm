@@ -12,7 +12,22 @@ public class ProdutoSummary implements Summary {
 	private double valorCompra;
 	private double valorVenda;
 	private PessoaJuridicaSummary fornecedor;
+	private Long qtdEstoque;
+	private Long qtd; 
+	private String categoria;
 	
+	public Long getQtd() {
+		return qtd;
+	}
+	public void setQtd(Long qtd) {
+		this.qtd = qtd;
+	}
+	public Long getQtdEstoque() {
+		return qtdEstoque;
+	}
+	public void setQtdEstoque(Long qtdEstoque) {
+		this.qtdEstoque = qtdEstoque;
+	}
 	public Long getId() {
 		return id;
 	}
@@ -42,6 +57,12 @@ public class ProdutoSummary implements Summary {
 	}
 	public void setFornecedor(PessoaJuridicaSummary fornecedor) {
 		this.fornecedor = fornecedor;
+	}
+	public String getCategoria() {
+		return categoria;
+	}
+	public void setCategoria(String categoria) {
+		this.categoria = categoria;
 	}
 
 }
