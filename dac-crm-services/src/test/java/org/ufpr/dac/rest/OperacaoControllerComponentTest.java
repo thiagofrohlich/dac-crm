@@ -13,9 +13,6 @@ import orc.ufpr.dac.transformer.impl.OperacaoTransformer;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpEntity;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -42,8 +39,7 @@ public class OperacaoControllerComponentTest extends AbstractTransactionalJUnit4
 		OperacaoSummary summary = newSummaryBuilder().asCompra();
 		
 //		When
-		HttpEntity<OperacaoSummary> entity = operacaoController.create(summary);
-		OperacaoSummary result = entity.getBody();
+		OperacaoSummary result = operacaoController.create(summary);
 		
 //		Then
 		assertOperacao(summary, result);
@@ -59,8 +55,7 @@ public class OperacaoControllerComponentTest extends AbstractTransactionalJUnit4
 		summary.setValorTotal(11.11);;
 		
 //		When
-		HttpEntity<OperacaoSummary> entity = operacaoController.update(summary);
-		OperacaoSummary result = entity.getBody();
+		OperacaoSummary result = operacaoController.update(summary);
 		
 //		Then
 		assertOperacao(summary, result);
@@ -87,8 +82,7 @@ public class OperacaoControllerComponentTest extends AbstractTransactionalJUnit4
 		new OperacaoTransformer().transform(domain, persisted);
 		
 //		When
-		HttpEntity<OperacaoSummary> entity = operacaoController.getOne(domain.getId());
-		OperacaoSummary summary = entity.getBody();
+		OperacaoSummary summary = operacaoController.getOne(domain.getId());
 		
 //		Then
 		assertOperacao(persisted, summary);
@@ -99,11 +93,9 @@ public class OperacaoControllerComponentTest extends AbstractTransactionalJUnit4
 //		Given
 		newDomainBuilder().withId(new Date().getTime()).persisted().asCompra();
 		newDomainBuilder().withId(new Date().getTime()).persisted().asVenda();
-		Pageable page = givenDefaultPage();
 		
 //		When
-		HttpEntity<OperacaoWrapper> entity = operacaoController.getAll(page);
-		OperacaoWrapper wrapper = entity.getBody();
+		OperacaoWrapper wrapper = operacaoController.getAll(0);
 		
 //		Then
 		Long long0 = 0l;
@@ -115,10 +107,6 @@ public class OperacaoControllerComponentTest extends AbstractTransactionalJUnit4
 		assertEquals(long1, wrapper.getTotalPages());
 	}
 	
-	private Pageable givenDefaultPage() {
-		return new PageRequest(0, 10);
-	}
-
 	private void assertOperacao(OperacaoSummary expected, OperacaoSummary actual) {
 		assertNotNull(actual);
 		assertNotNull(actual.getId());

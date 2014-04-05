@@ -13,9 +13,6 @@ import orc.ufpr.dac.transformer.impl.ProdutoTransformer;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpEntity;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -47,8 +44,7 @@ public class ProdutoControllerComponentTest extends AbstractTransactionalJUnit4S
 		ProdutoSummary summary = newSummaryBuilder().asProduto();
 		
 //		When
-		HttpEntity<ProdutoSummary> entity = produtoController.create(summary);
-		ProdutoSummary result = entity.getBody();
+		ProdutoSummary result = produtoController.create(summary);
 		
 //		Then
 		assertProduto(summary, result);
@@ -64,8 +60,7 @@ public class ProdutoControllerComponentTest extends AbstractTransactionalJUnit4S
 		summary.setDescricao("NEW TEST NAME");
 		
 //		When
-		HttpEntity<ProdutoSummary> entity = produtoController.update(summary);
-		ProdutoSummary result = entity.getBody();
+		ProdutoSummary result = produtoController.update(summary);
 		
 //		Then
 		assertNotNull(result);
@@ -96,8 +91,7 @@ public class ProdutoControllerComponentTest extends AbstractTransactionalJUnit4S
 		new ProdutoTransformer().transform(domain, persisted);
 		
 //		When
-		HttpEntity<ProdutoSummary> entity = produtoController.getOne(domain.getId());
-		ProdutoSummary summary = entity.getBody();
+		ProdutoSummary summary = produtoController.getOne(domain.getId());
 		
 //		Then
 		assertProduto(persisted, summary);
@@ -109,11 +103,9 @@ public class ProdutoControllerComponentTest extends AbstractTransactionalJUnit4S
 		PessoaJuridica fornecedor = givenValidFornecedorDomain();
 		newDomainBuilder().withId(new Date().getTime()).withFornecedor(fornecedor).persisted().asProduto();
 		newDomainBuilder().withId(new Date().getTime()).withFornecedor(fornecedor).persisted().asProduto();
-		Pageable page = givenDefaultPage();
 		
 //		When
-		HttpEntity<ProdutoWrapper> entity = produtoController.getAll(page);
-		ProdutoWrapper wrapper = entity.getBody();
+		ProdutoWrapper wrapper = produtoController.getAll(0);
 		
 //		Then
 		Long long0 = 0l;
@@ -125,10 +117,6 @@ public class ProdutoControllerComponentTest extends AbstractTransactionalJUnit4S
 		assertEquals(long1, wrapper.getTotalPages());
 	}
 	
-	private Pageable givenDefaultPage() {
-		return new PageRequest(0, 10);
-	}
-
 	private void assertProduto(ProdutoSummary expected, ProdutoSummary actual) {
 		assertNotNull(actual);
 		assertNotNull(actual.getId());

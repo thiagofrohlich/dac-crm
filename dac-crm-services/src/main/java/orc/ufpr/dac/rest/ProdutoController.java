@@ -3,16 +3,18 @@ package orc.ufpr.dac.rest;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
+import orc.ufpr.dac.PageSize;
 import orc.ufpr.dac.transformer.impl.ProdutoTransformer;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.ufpr.dac.domain.Produto;
 import org.ufpr.dac.model.ProdutoSummary;
 import org.ufpr.dac.repository.ProdutoRepository;
@@ -31,11 +33,13 @@ public class ProdutoController {
 		this.produtoRepository = produtoRepository;
 	}
 	
-	@RequestMapping(method=RequestMethod.GET)
-	public HttpEntity<ProdutoWrapper> getAll(Pageable page) throws IllegalArgumentException, IllegalAccessException, InstantiationException, InvocationTargetException {
-		Page<Produto> result = produtoRepository.findAll(page);
+	@ResponseBody
+	@RequestMapping(value="/page/{page}", method=RequestMethod.GET)
+	public ProdutoWrapper getAll(@PathVariable Integer page) throws IllegalArgumentException, IllegalAccessException, InstantiationException, InvocationTargetException {
+		Pageable pageRequest = new PageRequest(page, PageSize.DEFAULT);
+		Page<Produto> result = produtoRepository.findAll(pageRequest);
 		ProdutoWrapper wrapper = new ProdutoWrapper(result);
-		wrapper.setList(new ArrayList<ProdutoSummary>(page.getPageSize()));
+		wrapper.setList(new ArrayList<ProdutoSummary>(PageSize.DEFAULT));
 		
 		for(Produto produto : result) {
 			ProdutoSummary p = instantiateProdutoSummary(produto);
@@ -43,28 +47,32 @@ public class ProdutoController {
 			wrapper.getList().add(p);
 		}
 		
-		return new HttpEntity<ProdutoWrapper>(wrapper);
+		return wrapper;
 	}
 
+	@ResponseBody
 	@RequestMapping(value="/{id}", method=RequestMethod.GET)
-	public HttpEntity<ProdutoSummary> getOne(@PathVariable Long id) throws IllegalArgumentException, IllegalAccessException, InstantiationException, InvocationTargetException {
+	public ProdutoSummary getOne(@PathVariable Long id) throws IllegalArgumentException, IllegalAccessException, InstantiationException, InvocationTargetException {
 		Produto result = produtoRepository.findOne(id);
 		ProdutoSummary summary = instantiateProdutoSummary(result);
 		produtoTransformer.transform(result, summary);
 		
-		return new HttpEntity<ProdutoSummary>(summary);
+		return summary;
 	}
 	
+	@ResponseBody
 	@RequestMapping(method=RequestMethod.POST)
-	public HttpEntity<ProdutoSummary> create(final ProdutoSummary produto) throws IllegalArgumentException, IllegalAccessException, InstantiationException, InvocationTargetException {
-		return new HttpEntity<ProdutoSummary>(saveOrUpdate(produto));
+	public ProdutoSummary create(final ProdutoSummary produto) throws IllegalArgumentException, IllegalAccessException, InstantiationException, InvocationTargetException {
+		return saveOrUpdate(produto);
 	}
 
+	@ResponseBody
 	@RequestMapping(method=RequestMethod.PUT)
-	public HttpEntity<ProdutoSummary> update(ProdutoSummary produto) throws IllegalArgumentException, IllegalAccessException, InstantiationException, InvocationTargetException {
-		return new HttpEntity<ProdutoSummary>(saveOrUpdate(produto));
+	public ProdutoSummary update(ProdutoSummary produto) throws IllegalArgumentException, IllegalAccessException, InstantiationException, InvocationTargetException {
+		return saveOrUpdate(produto);
 	}
 	
+	@ResponseBody
 	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
 	public boolean delete(@PathVariable Long id) {
 		produtoRepository.delete(id);

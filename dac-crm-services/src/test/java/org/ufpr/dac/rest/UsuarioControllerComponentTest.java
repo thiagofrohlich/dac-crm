@@ -13,9 +13,6 @@ import orc.ufpr.dac.transformer.impl.UsuarioTransformer;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpEntity;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -24,7 +21,6 @@ import org.ufpr.dac.builder.UsuarioDomainBuilder;
 import org.ufpr.dac.builder.UsuarioSummaryBuilder;
 import org.ufpr.dac.domain.Pessoa;
 import org.ufpr.dac.domain.Usuario;
-import org.ufpr.dac.model.EnderecoSummary;
 import org.ufpr.dac.model.UsuarioSummary;
 import org.ufpr.dac.repository.PessoaRepository;
 import org.ufpr.dac.repository.UsuarioRepository;
@@ -48,8 +44,7 @@ public class UsuarioControllerComponentTest extends AbstractTransactionalJUnit4S
 		UsuarioSummary summary = newSummaryBuilder().asUsuario();
 		
 //		When
-		HttpEntity<UsuarioSummary> entity = usuarioController.create(summary);
-		UsuarioSummary result = entity.getBody();
+		UsuarioSummary result = usuarioController.create(summary);
 		
 //		Then
 		assertUsuario(summary, result);
@@ -65,8 +60,7 @@ public class UsuarioControllerComponentTest extends AbstractTransactionalJUnit4S
 		summary.setNome("NEW TEST NAME");
 		
 //		When
-		HttpEntity<UsuarioSummary> entity = usuarioController.update(summary);
-		UsuarioSummary result = entity.getBody();
+		UsuarioSummary result = usuarioController.update(summary);
 		
 //		Then
 		assertUsuario(summary, result);
@@ -93,8 +87,7 @@ public class UsuarioControllerComponentTest extends AbstractTransactionalJUnit4S
 		new UsuarioTransformer().transform(domain, persisted);
 		
 //		When
-		HttpEntity<UsuarioSummary> entity = usuarioController.getOne(domain.getId());
-		UsuarioSummary summary = entity.getBody();
+		UsuarioSummary summary = usuarioController.getOne(domain.getId());
 		
 //		Then
 		assertUsuario(persisted, summary);
@@ -106,11 +99,9 @@ public class UsuarioControllerComponentTest extends AbstractTransactionalJUnit4S
 		Pessoa pessoa = givenValidPersistedPessoa();
 		newDomainBuilder().withId(new Date().getTime()).withPessoa(pessoa).persisted().asUsuario();
 		newDomainBuilder().withId(new Date().getTime()).withPessoa(pessoa).persisted().asUsuario();
-		Pageable page = givenDefaultPage();
 		
 //		When
-		HttpEntity<UsuarioWrapper> entity = usuarioController.getAll(page);
-		UsuarioWrapper wrapper = entity.getBody();
+		UsuarioWrapper wrapper = usuarioController.getAll(0);
 		
 //		Then
 		Long long0 = 0l;
@@ -122,10 +113,6 @@ public class UsuarioControllerComponentTest extends AbstractTransactionalJUnit4S
 		assertEquals(long1, wrapper.getTotalPages());
 	}
 	
-	private Pageable givenDefaultPage() {
-		return new PageRequest(0, 10);
-	}
-
 	private void assertUsuario(UsuarioSummary expected, UsuarioSummary actual) {
 		assertNotNull(actual);
 		assertEquals(expected.getLogin(), actual.getLogin());

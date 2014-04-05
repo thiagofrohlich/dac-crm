@@ -3,6 +3,7 @@ package orc.ufpr.dac.rest;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
+import orc.ufpr.dac.PageSize;
 import orc.ufpr.dac.transformer.impl.PessoaTransformer;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.ufpr.dac.domain.Pessoa;
 import org.ufpr.dac.model.PessoaFisicaSummary;
@@ -39,10 +39,10 @@ public class PessoaController {
 	@ResponseBody
 	@RequestMapping(value="/page/{page}", method=RequestMethod.GET)
 	public PessoaWrapper getAll(@PathVariable Integer page) throws IllegalArgumentException, IllegalAccessException, InstantiationException, InvocationTargetException {
-		Pageable pageRequest = new PageRequest(page, 10);
+		Pageable pageRequest = new PageRequest(page, PageSize.DEFAULT);
 		Page<Pessoa> result = pessoaRepository.findAll(pageRequest);
 		PessoaWrapper wrapper = new PessoaWrapper(result);
-		wrapper.setList(new ArrayList<PessoaSummary>(10));
+		wrapper.setList(new ArrayList<PessoaSummary>(PageSize.DEFAULT));
 		
 		for(Pessoa pessoa : result) {
 			PessoaSummary p = instantiatePessoaSummary(pessoa);
