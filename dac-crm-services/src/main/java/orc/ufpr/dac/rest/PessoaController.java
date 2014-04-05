@@ -7,12 +7,15 @@ import orc.ufpr.dac.transformer.impl.PessoaTransformer;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.ufpr.dac.domain.Pessoa;
 import org.ufpr.dac.model.PessoaFisicaSummary;
 import org.ufpr.dac.model.PessoaJuridicaSummary;
@@ -33,11 +36,13 @@ public class PessoaController {
 		this.pessoaRepository = pessoaRepository;
 	}
 	
-	@RequestMapping(method=RequestMethod.GET)
-	public HttpEntity<PessoaWrapper> getAll(Pageable page) throws IllegalArgumentException, IllegalAccessException, InstantiationException, InvocationTargetException {
-		Page<Pessoa> result = pessoaRepository.findAll(page);
+	@ResponseBody
+	@RequestMapping(value="/page/{page}", method=RequestMethod.GET)
+	public PessoaWrapper getAll(@PathVariable Integer page) throws IllegalArgumentException, IllegalAccessException, InstantiationException, InvocationTargetException {
+		Pageable pageRequest = new PageRequest(page, 10);
+		Page<Pessoa> result = pessoaRepository.findAll(pageRequest);
 		PessoaWrapper wrapper = new PessoaWrapper(result);
-		wrapper.setList(new ArrayList<PessoaSummary>(page.getPageSize()));
+		wrapper.setList(new ArrayList<PessoaSummary>(10));
 		
 		for(Pessoa pessoa : result) {
 			PessoaSummary p = instantiatePessoaSummary(pessoa);
@@ -45,30 +50,33 @@ public class PessoaController {
 			wrapper.getList().add(p);
 		}
 		
-		return new HttpEntity<PessoaWrapper>(wrapper);
+		return wrapper;
 	}
 
+	@ResponseBody
 	@RequestMapping(value="/{id}", method=RequestMethod.GET)
-	public HttpEntity<PessoaSummary> getOne(@PathVariable Long id) throws IllegalArgumentException, IllegalAccessException, InstantiationException, InvocationTargetException {
+	public PessoaSummary getOne(@PathVariable final Long id) throws IllegalArgumentException, IllegalAccessException, InstantiationException, InvocationTargetException {
 		Pessoa result = pessoaRepository.findOne(id);
 		PessoaSummary summary = instantiatePessoaSummary(result);
 		pessoaTransformer.transform(result, summary);
-		
-		return new HttpEntity<PessoaSummary>(summary);
+		return summary;
 	}
 	
+	@ResponseBody
 	@RequestMapping(method=RequestMethod.POST)
-	public HttpEntity<PessoaSummary> create(final PessoaSummary pessoa) throws IllegalArgumentException, IllegalAccessException, InstantiationException, InvocationTargetException {
-		return new HttpEntity<PessoaSummary>(saveOrUpdate(pessoa));
+	public PessoaSummary create(@RequestBody PessoaSummary pessoa) throws IllegalArgumentException, IllegalAccessException, InstantiationException, InvocationTargetException {
+		return saveOrUpdate(pessoa);
 	}
 
+	@ResponseBody
 	@RequestMapping(method=RequestMethod.PUT)
-	public HttpEntity<PessoaSummary> update(PessoaSummary pessoa) throws IllegalArgumentException, IllegalAccessException, InstantiationException, InvocationTargetException {
-		return new HttpEntity<PessoaSummary>(saveOrUpdate(pessoa));
+	public PessoaSummary update(@RequestBody PessoaSummary pessoa) throws IllegalArgumentException, IllegalAccessException, InstantiationException, InvocationTargetException {
+		return saveOrUpdate(pessoa);
 	}
 	
+	@ResponseBody
 	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
-	public boolean delete(@PathVariable Long id) {
+	public boolean delete(@PathVariable final Long id) {
 		pessoaRepository.delete(id);
 		return pessoaRepository.findOne(id) == null;
 	}

@@ -2,6 +2,9 @@ package org.ufpr.dac.model;
 
 import java.util.Date;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement
 public class PessoaFisicaSummary extends PessoaSummary {
 
 	private static final long serialVersionUID = 1L;

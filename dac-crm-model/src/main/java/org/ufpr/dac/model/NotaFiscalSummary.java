@@ -2,7 +2,9 @@ package org.ufpr.dac.model;
 
 import java.util.List;
 
-// FIXME Add operation and product complex type
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement
 public class NotaFiscalSummary implements Summary {
 
 	private static final long serialVersionUID = 1L;

@@ -43,8 +43,7 @@ public class PessoaControllerComponentTest extends AbstractTransactionalJUnit4Sp
 		PessoaSummary summary = newSummaryBuilder().asPessoaFisica();
 		
 //		When
-		HttpEntity<PessoaSummary> entity = pessoaController.create(summary);
-		PessoaSummary result = entity.getBody();
+		PessoaSummary result = pessoaController.create(summary);
 		
 //		Then
 		assertPessoa(summary, result);
@@ -60,8 +59,7 @@ public class PessoaControllerComponentTest extends AbstractTransactionalJUnit4Sp
 		summary.setNome("NEW TEST NAME");
 		
 //		When
-		HttpEntity<PessoaSummary> entity = pessoaController.update(summary);
-		PessoaSummary result = entity.getBody();
+		PessoaSummary result = pessoaController.update(summary);
 		
 //		Then
 		assertPessoa(summary, result);
@@ -88,8 +86,7 @@ public class PessoaControllerComponentTest extends AbstractTransactionalJUnit4Sp
 		new PessoaTransformer().transform(domain, persisted);
 		
 //		When
-		HttpEntity<PessoaSummary> entity = pessoaController.getOne(domain.getRootId());
-		PessoaSummary summary = entity.getBody();
+		PessoaSummary summary = pessoaController.getOne(domain.getRootId());
 		
 //		Then
 		assertPessoa(persisted, summary);
@@ -100,11 +97,9 @@ public class PessoaControllerComponentTest extends AbstractTransactionalJUnit4Sp
 //		Given
 		newDomainBuilder().withId(new Date().getTime()).persisted().asPessoaWithPessoaFisica();
 		newDomainBuilder().withId(new Date().getTime()).withCpf("111.111.111-11").persisted().asPessoaWithPessoaFisica();
-		Pageable page = givenDefaultPage();
 		
 //		When
-		HttpEntity<PessoaWrapper> entity = pessoaController.getAll(page);
-		PessoaWrapper wrapper = entity.getBody();
+		PessoaWrapper wrapper = pessoaController.getAll(0);
 		
 //		Then
 		Long long0 = 0l;
@@ -116,10 +111,6 @@ public class PessoaControllerComponentTest extends AbstractTransactionalJUnit4Sp
 		assertEquals(long1, wrapper.getTotalPages());
 	}
 	
-	private Pageable givenDefaultPage() {
-		return new PageRequest(0, 10);
-	}
-
 	private void assertPessoa(PessoaSummary expected, PessoaSummary actual) {
 		assertNotNull(actual);
 		assertNotNull(actual.getRootId());

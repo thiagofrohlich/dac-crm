@@ -1,5 +1,8 @@
 package org.ufpr.dac.model;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement
 public class EnderecoSummary implements Summary {
 
 	private static final long serialVersionUID = 1L;

@@ -10,8 +10,10 @@
 	<!-- Shared version number properties -->
 	<properties>
 		<dac-crm.version>0.0.1-SNAPSHOT</dac-crm.version>
-	    <org.springframework.version>3.1.1.RELEASE</org.springframework.version>
-	    <jackson.version>1.9.2</jackson.version>
+	    <org.springframework.version>4.0.2.RELEASE</org.springframework.version>
+	    <jackson.version>1.9.13</jackson.version>
+	    <jersey.version>1.18.1</jersey.version>
+	    <jackson-faster.version>2.3.2</jackson-faster.version>
 	</properties>
 	
 	<dependencies>
@@ -101,7 +103,59 @@
 			<artifactId>jackson-jaxrs</artifactId>
 			<version>${jackson.version}</version>
 		</dependency>
-			
+		
+		<dependency>
+			<groupId>com.sun.jersey</groupId>
+			<artifactId>jersey-client</artifactId>
+			<version>${jersey.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+			<version>4.3.3</version>
+		</dependency>
+		
+		<dependency>
+		    <groupId>com.fasterxml.jackson.core</groupId>
+		    <artifactId>jackson-core</artifactId>
+		    <version>${jackson-faster.version}</version>
+		</dependency>
+		
+		<dependency>
+		    <groupId>com.fasterxml.jackson.core</groupId>
+		    <artifactId>jackson-databind</artifactId>
+		    <version>${jackson-faster.version}</version>
+		</dependency>
+		
+		<dependency>
+		    <groupId>com.fasterxml.jackson.module</groupId>
+		    <artifactId>jackson-module-jaxb-annotations</artifactId>
+		    <version>${jackson-faster.version}</version>
+		</dependency>		
+		            		
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.11</version>
+			<scope>test</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<version>${org.springframework.version}</version>
+			<scope>test</scope>
+		</dependency>
+		
+        <dependency>
+        	<groupId>org.ufpr.dac</groupId>
+        	<artifactId>dac-crm-model</artifactId>
+        	<version>${dac-crm.version}</version>
+        	<type>test-jar</type>
+        	<scope>test</scope>
+        </dependency>
+        
 	</dependencies>
 	
 	<build>

@@ -2,6 +2,11 @@ package org.ufpr.dac.model;
 
 import java.util.List;
 
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlSeeAlso;
+
+@XmlRootElement
+@XmlSeeAlso({PessoaFisicaSummary.class, PessoaJuridicaSummary.class, UsuarioSummary.class})
 public abstract class PessoaSummary implements Summary {
 
 	private static final long serialVersionUID = 1L;
