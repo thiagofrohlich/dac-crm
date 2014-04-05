@@ -21,15 +21,7 @@
 								<h:outputText value="#{msg.nome}: " />
 							</td>
 							<td>
-								<h:inputText value="" />
-							</td>
-						</tr>
-						<tr>
-							<td class="label">
-								<h:outputText value="#{msg.descricao}: " />
-							</td>
-							<td>
-								<h:inputText value="" />
+								<h:inputText value="#{produtoBean.produto.descricao}" />
 							</td>
 						</tr>
 						<tr>
@@ -37,7 +29,7 @@
 								<h:outputText value="#{msg.categoria}: " />
 							</td>
 							<td>
-								<h:inputText value="" />
+								<h:inputText value="#{produtoBean.produto.categoria}" />
 							</td>
 						</tr>
 						<tr>
@@ -45,7 +37,7 @@
 								<h:outputText value="#{msg.quantidade}: " />
 							</td>
 							<td>
-								<h:inputText value="" />
+								<h:inputText value="#{produtoBean.produto.qtdEstoque}" />
 							</td>
 						</tr>
 						<tr>
@@ -53,15 +45,23 @@
 								<h:outputText value="#{msg.fornecedor}: " />
 							</td>
 							<td>
-								<h:inputText value="" />	
+								<h:inputText value="#{produtoBean.produto.fornecedor.nome}" />	
 							</td>
 						</tr>
 						<tr>
 							<td class="label">
-								<h:outputText value="#{msg.valor}: " />
+								<h:outputText value="#{msg.valorCompra}: " />
 							</td>
 							<td>
-								<h:inputText value="" />	
+								<h:inputText value="#{produtoBean.produto.valorCompra}" />	
+							</td>
+						</tr>
+						<tr>
+							<td class="label">
+								<h:outputText value="#{msg.valorVenda}: " />
+							</td>
+							<td>
+								<h:inputText value="#{produtoBean.produto.valorVenda}" />	
 							</td>
 						</tr>
 						<tr>
