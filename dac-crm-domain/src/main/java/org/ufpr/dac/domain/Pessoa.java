@@ -32,6 +32,8 @@ public class Pessoa implements Domain, Serializable {
 	private Long rootId;
 
 	private String nome;
+	
+	private String telefone;
 
 	@OneToOne(mappedBy="pessoa", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 	private Endereco endereco;
@@ -119,6 +121,14 @@ public class Pessoa implements Domain, Serializable {
 
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
+	}
+
+	public String getTelefone() {
+		return telefone;
+	}
+
+	public void setTelefone(String telefone) {
+		this.telefone = telefone;
 	}
 
 }

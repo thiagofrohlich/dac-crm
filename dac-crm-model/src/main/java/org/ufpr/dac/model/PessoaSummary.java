@@ -13,8 +13,7 @@ public abstract class PessoaSummary implements Summary {
 	
 	protected Long rootId;
 	protected String nome;
-	protected String telPrincipal;
-	protected String telAlternativo;
+	protected String telefone;
 	protected EnderecoSummary endereco;
 	protected List<NotaFiscalSummary> notasFiscais;
 	
@@ -46,17 +45,11 @@ public abstract class PessoaSummary implements Summary {
 	public void setNotasFiscais(List<NotaFiscalSummary> notasFiscais) {
 		this.notasFiscais = notasFiscais;
 	}
-	public String getTelPrincipal() {
-		return telPrincipal;
+	public String getTelefone() {
+		return telefone;
 	}
-	public void setTelPrincipal(String telPrincipal) {
-		this.telPrincipal = telPrincipal;
-	}
-	public String getTelAlternativo() {
-		return telAlternativo;
-	}
-	public void setTelAlternativo(String telAlternativo) {
-		this.telAlternativo = telAlternativo;
+	public void setTelefone(String telefone) {
+		this.telefone = telefone;
 	}
 
 }
