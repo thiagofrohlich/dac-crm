@@ -21,7 +21,7 @@
 								<h:outputText value="#{msg.login}: " />
 							</td>
 							<td>
-								<h:inputText value="" />
+								<h:inputText value="#{loginBean.user.login}" />
 							</td>
 						</tr>
 						<tr>
@@ -29,7 +29,7 @@
 								<h:outputText value="#{msg.senha}: " />
 							</td>
 							<td>
-								<h:inputText value="" />
+								<h:inputSecret value="#{loginBean.user.senha}" />
 							</td>
 						</tr>
 						<tr>
