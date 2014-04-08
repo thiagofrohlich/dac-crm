@@ -5,6 +5,8 @@ import java.io.Serializable;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 
 /**
  * The persistent class for the usuario database table.
@@ -20,9 +22,11 @@ public class Usuario implements Domain, Serializable {
 	private Long id;
 
 	@NotNull(message="org.ufpr.dac.loginCannotBeNull")
+	@NotEmpty(message="org.ufpr.dac.loginCannotBeNull")
 	private String login;
 
 	@NotNull(message="org.ufpr.dac.senhaCannotBeNull")
+	@NotEmpty(message="org.ufpr.dac.senhaCannotBeNull")
 	private String senha;
 
 	@OneToOne

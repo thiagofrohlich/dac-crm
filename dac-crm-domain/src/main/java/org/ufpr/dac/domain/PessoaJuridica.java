@@ -12,6 +12,8 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 
 /**
  * The persistent class for the pessoa_juridica database table.
@@ -30,6 +32,7 @@ public class PessoaJuridica implements Domain, Serializable {
 	private Boolean ativo;
 
 	@NotNull(message="org.ufpr.dac.cnpjCannotBeNull")
+	@NotEmpty(message="org.ufpr.dac.cnpjCannotBeNull")
 	@Size(min=18, max=18, message="org.ufpr.dac.cnpjMustHave18Digits")
 	private String cnpj;
 

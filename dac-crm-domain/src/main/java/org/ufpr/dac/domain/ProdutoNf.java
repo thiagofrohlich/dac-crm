@@ -5,6 +5,8 @@ import java.io.Serializable;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 
 /**
  * The persistent class for the produto_nf database table.
@@ -20,6 +22,7 @@ public class ProdutoNf implements Domain, Serializable {
 	private ProdutoNfPK id;
 
 	@NotNull(message="org.ufpr.dac.quantidadeProdutoNfCannotBeNull")
+	@NotEmpty(message="org.ufpr.dac.quantidadeProdutoNfCannotBeNull")
 	private Long quantidade;
 
 	//bi-directional many-to-one association to NotaFiscal

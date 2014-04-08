@@ -14,6 +14,8 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 
 /**
  * The persistent class for the operacao database table.
@@ -30,15 +32,18 @@ public class Operacao implements Domain, Serializable {
 
 	@Column(name="tipo_operacao")
 	@NotNull(message="org.ufpr.dac.tipoOperacaoCannotBeNull")
+	@NotEmpty(message="org.ufpr.dac.tipoOperacaoCannotBeNull")
 	private String tipoOperacao;
 
 	@Column(name="valor_total")
 	@NotNull(message="org.ufpr.dac.valorTotalCannotBeNull")
+	@NotEmpty(message="org.ufpr.dac.valorTotalCannotBeNull")
 	private double valorTotal;
 
 	@OneToOne(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 	@JoinColumn(name="nf_id")
 	@NotNull(message="org.ufpr.dac.nfOperacaCannotBeNull")
+	@NotEmpty(message="org.ufpr.dac.nfOperacaCannotBeNull")
 	private NotaFiscal notaFiscal;
 
 	public Operacao() {

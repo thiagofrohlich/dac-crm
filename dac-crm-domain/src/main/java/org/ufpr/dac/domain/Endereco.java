@@ -11,6 +11,8 @@ import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 
 /**
  * The persistent class for the endereco database table.
@@ -26,24 +28,30 @@ public class Endereco implements Domain, Serializable {
 	private Long id;
 
 	@NotNull(message="org.ufpr.dac.cepMustNotBeNull")
+	@NotEmpty(message="org.ufpr.dac.cepMustNotBeNull")
 	@Size(min=9, max=9, message="org.ufpr.dac.cepMustHave9Digits")
 	private String cep;
 
 	@NotNull(message="org.ufpr.dac.cidadeMustNotBeNull")
+	@NotEmpty(message="org.ufpr.dac.cidadeMustNotBeNull")
 	private String cidade;
 
 	private String complemento;
 
 	@NotNull(message="org.ufpr.dac.enderecoMustNotBeNull")
+	@NotEmpty(message="org.ufpr.dac.enderecoMustNotBeNull")
 	private String endereco;
 
 	@NotNull(message="org.ufpr.dac.estadoMustNotBeNull")
+	@NotEmpty(message="org.ufpr.dac.estadoMustNotBeNull")
 	private String estado;
 
 	@NotNull(message="org.ufpr.dac.numeroMustNotBeNull")
+	@NotEmpty(message="org.ufpr.dac.numeroMustNotBeNull")
 	private String numero;
 
 	@NotNull(message="org.ufpr.dac.paisMustNotBeNull")
+	@NotEmpty(message="org.ufpr.dac.paisMustNotBeNull")
 	private String pais;
 
 	@OneToOne

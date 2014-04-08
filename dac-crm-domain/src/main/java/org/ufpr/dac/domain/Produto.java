@@ -12,6 +12,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 
 /**
  * The persistent class for the produto database table.
@@ -27,20 +29,24 @@ public class Produto implements Domain, Serializable {
 	private Long id;
 
 	@NotNull(message="org.ufpr.dac.descricaoProdutoCannotBeNull")
+	@NotEmpty(message="org.ufpr.dac.descricaoProdutoCannotBeNull")
 	private String descricao;
 
 	@Column(name="valor_compra")
 	@NotNull(message="org.ufpr.dac.valorCompraCannotBeNull")
+	@NotEmpty(message="org.ufpr.dac.valorCompraCannotBeNull")
 	private double valorCompra;
 
 	@Column(name="valor_venda")
 	@NotNull(message="org.ufpr.dac.valorVendaCannotBeNull")
+	@NotEmpty(message="org.ufpr.dac.valorVendaCannotBeNull")
 	private double valorVenda;
 
 	//bi-directional many-to-one association to PessoaJuridica
 	@ManyToOne
 	@JoinColumn(name="pessoa_juridica_id")
 	@NotNull(message="org.ufpr.dac.fornecedorCannotBeNull")
+	@NotEmpty(message="org.ufpr.dac.fornecedorCannotBeNull")
 	private PessoaJuridica fornecedor;
 
 	public Produto() {

@@ -17,6 +17,8 @@ import javax.persistence.SequenceGenerator;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 
 /**
  * The persistent class for the pessoa database table.
@@ -34,6 +36,7 @@ public class Pessoa implements Domain, Serializable {
 	private Long rootId;
 
 	@NotNull(message="org.ufpr.dac.nomePessoaCannotBeNull")
+	@NotEmpty(message="org.ufpr.dac.nomePessoaCannotBeNull")
 	private String nome;
 	
 	@Max(value = 15, message="org.ufpr.dac.telephoneMustHave15DigitsMax")

@@ -5,6 +5,8 @@ import java.io.Serializable;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 import java.util.List;
 
 
@@ -26,10 +28,12 @@ public class NotaFiscal implements Domain, Serializable {
 
 	@ManyToOne
 	@NotNull(message="org.ufpr.dac.pessoaNfCannotBeNull")
+	@NotEmpty(message="org.ufpr.dac.pessoaNfCannotBeNull")
 	private Pessoa pessoa;
 
 	@OneToMany(mappedBy="notaFiscal", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 	@NotNull(message="org.ufpr.dac.produtosNfCannotBeNull")
+	@NotEmpty(message="org.ufpr.dac.produtosNfCannotBeNull")
 	private List<ProdutoNf> produtosNf;
 
 	public NotaFiscal() {

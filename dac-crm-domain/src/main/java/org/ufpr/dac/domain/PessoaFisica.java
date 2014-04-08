@@ -6,6 +6,8 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 import java.util.Date;
 
 
@@ -24,6 +26,7 @@ public class PessoaFisica implements Domain, Serializable {
 	private Long id;
 
 	@NotNull(message="org.ufpr.dac.cpfCannotBeNull")
+	@NotEmpty(message="org.ufpr.dac.cpfCannotBeNull")
 	@Size(min=14, max=14, message="org.ufpr.dac.cpfMustHave14Digits")
 	private String cpf;
 
