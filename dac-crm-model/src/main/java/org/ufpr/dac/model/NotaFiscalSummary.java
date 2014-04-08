@@ -12,6 +12,7 @@ public class NotaFiscalSummary implements Summary {
 	private Long id;
 	private String observacao;
 	private List<ProdutoNfSummary> produtosNf;
+	private PessoaSummary pessoa;
 	
 	public Long getId() {
 		return id;
@@ -30,6 +31,12 @@ public class NotaFiscalSummary implements Summary {
 	}
 	public void setProdutosNf(List<ProdutoNfSummary> produtosNf) {
 		this.produtosNf = produtosNf;
+	}
+	public PessoaSummary getPessoa() {
+		return pessoa;
+	}
+	public void setPessoa(PessoaSummary pessoa) {
+		this.pessoa = pessoa;
 	}
 
 }

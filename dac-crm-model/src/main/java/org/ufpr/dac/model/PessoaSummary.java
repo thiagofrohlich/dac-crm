@@ -1,7 +1,5 @@
 package org.ufpr.dac.model;
 
-import java.util.List;
-
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSeeAlso;
 
@@ -15,7 +13,6 @@ public abstract class PessoaSummary implements Summary {
 	protected String nome;
 	protected String telefone;
 	protected EnderecoSummary endereco;
-	protected List<NotaFiscalSummary> notasFiscais;
 	
 	
 	public abstract boolean isPessoaFisica();
@@ -38,12 +35,6 @@ public abstract class PessoaSummary implements Summary {
 	}
 	public void setEndereco(EnderecoSummary endereco) {
 		this.endereco = endereco;
-	}
-	public List<NotaFiscalSummary> getNotasFiscais() {
-		return notasFiscais;
-	}
-	public void setNotasFiscais(List<NotaFiscalSummary> notasFiscais) {
-		this.notasFiscais = notasFiscais;
 	}
 	public String getTelefone() {
 		return telefone;
