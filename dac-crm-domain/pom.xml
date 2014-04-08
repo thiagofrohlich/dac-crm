@@ -8,6 +8,7 @@
 	    <org.springframework.version>4.0.2.RELEASE</org.springframework.version>
 	    <postgresql.version>9.1-901.jdbc4</postgresql.version>
 		<hibernate.version>4.2.8.Final</hibernate.version>
+		<hibernate-validator.version>5.1.0.Final</hibernate-validator.version>
 	</properties>
 	
 	<dependencies>
@@ -78,6 +79,12 @@
 			<version>${postgresql.version}</version>
 		</dependency>
 
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>${hibernate-validator.version}</version>
+		</dependency>
+		            		
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>

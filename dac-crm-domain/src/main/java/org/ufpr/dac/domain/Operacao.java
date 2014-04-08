@@ -2,7 +2,17 @@ package org.ufpr.dac.domain;
 
 import java.io.Serializable;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
+import javax.validation.constraints.NotNull;
 
 
 /**
@@ -19,13 +29,16 @@ public class Operacao implements Domain, Serializable {
 	private Long id;
 
 	@Column(name="tipo_operacao")
+	@NotNull(message="org.ufpr.dac.tipoOperacaoCannotBeNull")
 	private String tipoOperacao;
 
 	@Column(name="valor_total")
+	@NotNull(message="org.ufpr.dac.valorTotalCannotBeNull")
 	private double valorTotal;
 
 	@OneToOne(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 	@JoinColumn(name="nf_id")
+	@NotNull(message="org.ufpr.dac.nfOperacaCannotBeNull")
 	private NotaFiscal notaFiscal;
 
 	public Operacao() {

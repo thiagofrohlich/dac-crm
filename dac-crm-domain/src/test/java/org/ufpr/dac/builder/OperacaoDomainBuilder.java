@@ -53,7 +53,6 @@ public class OperacaoDomainBuilder {
 		NotaFiscal nf = new NotaFiscal();
 		nf.setId(id);
 		nf.setObservacao("TESTE");
-		nf.setOperacao(op);
 		return nf;
 	}
 

@@ -3,6 +3,7 @@ package org.ufpr.dac.domain;
 import java.io.Serializable;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 
 /**
@@ -18,8 +19,10 @@ public class Usuario implements Domain, Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 
+	@NotNull(message="org.ufpr.dac.loginCannotBeNull")
 	private String login;
 
+	@NotNull(message="org.ufpr.dac.senhaCannotBeNull")
 	private String senha;
 
 	@OneToOne

@@ -3,6 +3,8 @@ package org.ufpr.dac.domain;
 import java.io.Serializable;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import java.util.Date;
 
@@ -21,6 +23,8 @@ public class PessoaFisica implements Domain, Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 
+	@NotNull(message="org.ufpr.dac.cpfCannotBeNull")
+	@Size(min=14, max=14, message="org.ufpr.dac.cpfMustHave14Digits")
 	private String cpf;
 
 	@Temporal(TemporalType.DATE)

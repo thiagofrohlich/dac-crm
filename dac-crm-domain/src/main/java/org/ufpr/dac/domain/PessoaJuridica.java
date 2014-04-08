@@ -9,6 +9,8 @@ import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 
 /**
@@ -27,6 +29,8 @@ public class PessoaJuridica implements Domain, Serializable {
 
 	private Boolean ativo;
 
+	@NotNull(message="org.ufpr.dac.cnpjCannotBeNull")
+	@Size(min=18, max=18, message="org.ufpr.dac.cnpjMustHave18Digits")
 	private String cnpj;
 
 	@OneToOne

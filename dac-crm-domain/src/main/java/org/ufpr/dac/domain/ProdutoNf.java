@@ -3,6 +3,7 @@ package org.ufpr.dac.domain;
 import java.io.Serializable;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 
 /**
@@ -18,6 +19,7 @@ public class ProdutoNf implements Domain, Serializable {
 	@EmbeddedId
 	private ProdutoNfPK id;
 
+	@NotNull(message="org.ufpr.dac.quantidadeProdutoNfCannotBeNull")
 	private Long quantidade;
 
 	//bi-directional many-to-one association to NotaFiscal

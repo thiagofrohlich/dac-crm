@@ -1,7 +1,15 @@
 package org.ufpr.dac.domain;
 
 import java.io.Serializable;
-import javax.persistence.*;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 
 /**
@@ -17,18 +25,25 @@ public class Endereco implements Domain, Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 
+	@NotNull(message="org.ufpr.dac.cepMustNotBeNull")
+	@Size(min=9, max=9, message="org.ufpr.dac.cepMustHave9Digits")
 	private String cep;
 
+	@NotNull(message="org.ufpr.dac.cidadeMustNotBeNull")
 	private String cidade;
 
 	private String complemento;
 
+	@NotNull(message="org.ufpr.dac.enderecoMustNotBeNull")
 	private String endereco;
 
+	@NotNull(message="org.ufpr.dac.estadoMustNotBeNull")
 	private String estado;
 
+	@NotNull(message="org.ufpr.dac.numeroMustNotBeNull")
 	private String numero;
 
+	@NotNull(message="org.ufpr.dac.paisMustNotBeNull")
 	private String pais;
 
 	@OneToOne

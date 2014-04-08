@@ -3,6 +3,7 @@ package org.ufpr.dac.domain;
 import java.io.Serializable;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 import java.util.List;
 
@@ -24,12 +25,11 @@ public class NotaFiscal implements Domain, Serializable {
 	private String observacao;
 
 	@ManyToOne
+	@NotNull(message="org.ufpr.dac.pessoaNfCannotBeNull")
 	private Pessoa pessoa;
 
-	@OneToOne(mappedBy="notaFiscal")
-	private Operacao operacao;
-
 	@OneToMany(mappedBy="notaFiscal", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	@NotNull(message="org.ufpr.dac.produtosNfCannotBeNull")
 	private List<ProdutoNf> produtosNf;
 
 	public NotaFiscal() {
@@ -57,14 +57,6 @@ public class NotaFiscal implements Domain, Serializable {
 
 	public void setPessoa(Pessoa pessoa) {
 		this.pessoa = pessoa;
-	}
-
-	public Operacao getOperacao() {
-		return operacao;
-	}
-
-	public void setOperacao(Operacao operacao) {
-		this.operacao = operacao;
 	}
 
 	public List<ProdutoNf> getProdutosNf() {

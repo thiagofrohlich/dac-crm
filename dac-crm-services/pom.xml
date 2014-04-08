@@ -12,6 +12,7 @@
 		<org.springframework.version>4.0.2.RELEASE</org.springframework.version>
 		<jackson.version>1.9.13</jackson.version>
 		<hibernate.version>4.2.8.Final</hibernate.version>
+		<hibernate-validator.version>5.1.0.Final</hibernate-validator.version>
 	</properties>
     
     <dependencies>
@@ -118,6 +119,12 @@
 			<version>${jackson.version}</version>
 		</dependency>
 		
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>${hibernate-validator.version}</version>
+		</dependency>
+		            		
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>

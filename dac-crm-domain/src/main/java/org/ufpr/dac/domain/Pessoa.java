@@ -14,6 +14,8 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.NotNull;
 
 
 /**
@@ -31,8 +33,10 @@ public class Pessoa implements Domain, Serializable {
 	@Column(name="id", nullable=false, unique=true)
 	private Long rootId;
 
+	@NotNull(message="org.ufpr.dac.nomePessoaCannotBeNull")
 	private String nome;
 	
+	@Max(value = 15, message="org.ufpr.dac.telephoneMustHave15DigitsMax")
 	private String telefone;
 
 	@OneToOne(mappedBy="pessoa", cascade=CascadeType.ALL, fetch=FetchType.EAGER)

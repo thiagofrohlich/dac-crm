@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
+import javax.validation.constraints.NotNull;
 
 
 /**
@@ -25,17 +26,21 @@ public class Produto implements Domain, Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 
+	@NotNull(message="org.ufpr.dac.descricaoProdutoCannotBeNull")
 	private String descricao;
 
 	@Column(name="valor_compra")
+	@NotNull(message="org.ufpr.dac.valorCompraCannotBeNull")
 	private double valorCompra;
 
 	@Column(name="valor_venda")
+	@NotNull(message="org.ufpr.dac.valorVendaCannotBeNull")
 	private double valorVenda;
 
 	//bi-directional many-to-one association to PessoaJuridica
 	@ManyToOne
 	@JoinColumn(name="pessoa_juridica_id")
+	@NotNull(message="org.ufpr.dac.fornecedorCannotBeNull")
 	private PessoaJuridica fornecedor;
 
 	public Produto() {
