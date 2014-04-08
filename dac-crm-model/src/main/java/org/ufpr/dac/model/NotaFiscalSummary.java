@@ -1,5 +1,6 @@
 package org.ufpr.dac.model;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlRootElement;
@@ -11,8 +12,9 @@ public class NotaFiscalSummary implements Summary {
 	
 	private Long id;
 	private String observacao;
-	private List<ProdutoNfSummary> produtosNf;
+	private Date dataOperacao;
 	private PessoaSummary pessoa;
+	private List<ProdutoNfSummary> produtosNf;
 	
 	public Long getId() {
 		return id;
@@ -31,6 +33,12 @@ public class NotaFiscalSummary implements Summary {
 	}
 	public void setProdutosNf(List<ProdutoNfSummary> produtosNf) {
 		this.produtosNf = produtosNf;
+	}
+	public Date getDataOperacao() {
+		return dataOperacao;
+	}
+	public void setDataOperacao(Date dataOperacao) {
+		this.dataOperacao = dataOperacao;
 	}
 	public PessoaSummary getPessoa() {
 		return pessoa;

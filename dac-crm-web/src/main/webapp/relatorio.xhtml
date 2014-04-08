@@ -23,7 +23,7 @@
 									<h:outputText value="#{msg.relatorio}: " />
 								</td>
 								<td>
-									<h:selectOneRadio value="1" layout="lineDirection">
+									<h:selectOneRadio value="#{relatorioBean.tipoPesquisa}" layout="lineDirection">
 										<f:selectItem itemLabel="#{msg.compra}" itemValue="1"/>
 										<f:selectItem itemLabel="#{msg.venda}" itemValue="2"/>
 									</h:selectOneRadio>
@@ -34,8 +34,9 @@
 									<h:outputText value="#{msg.data}: " />
 								</td>
 								<td>
-									<p:calendar locale="pt" showButtonPanel="false" navigator="true" />
-									<p:calendar locale="pt" showButtonPanel="false" navigator="true" />
+									<p:calendar locale="pt" showButtonPanel="false" navigator="true" value="#{relatorioBean.dataini}"/>
+									<h:outputText value="#{msg.a}:" style="padding-left:5px;" />
+									<p:calendar locale="pt" showButtonPanel="false" navigator="true" value="#{relatorioBean.datafim}" style="padding-left:5px;"/>
 								</td>
 							</tr>
 							<tr>
@@ -43,7 +44,11 @@
 									<h:outputText value="#{msg.pessoa}: " />
 								</td>
 								<td>
-									<h:inputText value="" />
+									<h:inputText value="#{relatorioBean.doc}" >
+									<!-- ajax tag -->
+									</h:inputText>
+									<h:inputText value="#{relatorioBean.pessoa.nome}" disabled="true"/>
+									<p:commandButton icon="ui-icon-search" style="margin-left: 10px;" onclick="pessoaDialog.show()"/>
 								</td>
 							</tr>
 							<tr>
@@ -51,63 +56,27 @@
 									<h:outputText value="#{msg.produto}: " />
 								</td>
 								<td>
-									<h:inputText value="" />
-									<p:commandButton value="gerar" />
+									<h:inputText value="#{relatorioBean.produto.id}" >
+									<!-- ajax tag -->
+									</h:inputText>
+									<h:inputText value="#{relatorioBean.produto.descricao}" disabled="true"/>
+									<p:commandButton icon="ui-icon-search" style="margin-left: 10px;" onclick="prodDialog.show()"/>
+								</td>
+							</tr>
+							<tr>
+								<td class="label">
+										<p:commandButton value="gerar" />
 								</td>
 							</tr>
 						</table>
 					</div>
 					
-						<p:dataTable id="tableCompra" paginator="true" rows="10" paginatorPosition="bottom" rendered="true">
+						<p:dataTable id="tableCompra" paginator="true" rows="10" paginatorPosition="bottom" rendered="true" value="#{relatorioBean.lstOperacao}" var="lst">
 							<f:facet name="header" >
 								<p:toolbar style="border:none;">
 									<p:toolbarGroup align="center">
-										<h:outputText value="#{msg.compras}" />
-									</p:toolbarGroup>
-								</p:toolbar>
-							</f:facet>
-							<p:column>
-								<f:facet name="header">
-									<h:outputText value="#{msg.data}" />
-								</f:facet>
-							</p:column>
-							<p:column>
-								<f:facet name="header">
-									<h:outputText value="#{msg.codigo}" />
-								</f:facet>
-							</p:column>
-							<p:column>
-								<f:facet name="header">
-									<h:outputText value="#{msg.cnpj}" />
-								</f:facet>
-							</p:column>
-							<p:column>
-								<f:facet name="header">
-									<h:outputText value="#{msg.fornecedor}" />
-								</f:facet>
-							</p:column>
-							<p:column>
-								<f:facet name="header">
-									<h:outputText value="#{msg.produto}" />
-								</f:facet>
-							</p:column>
-							<p:column>
-								<f:facet name="header">
-									<h:outputText value="#{msg.valor}" />
-								</f:facet>
-							</p:column>
-							<p:column>
-								<f:facet name="header">
-									<h:outputText value="#{msg.quantidade}" />
-								</f:facet>
-							</p:column>
-						</p:dataTable>
-						
-						<p:dataTable id="tableVenda" paginator="true" rows="10" paginatorPosition="bottom" rendered="false">
-							<f:facet name="header" >
-								<p:toolbar style="border:none;">
-									<p:toolbarGroup align="center">
-										<h:outputText value="#{msg.vendas}" />
+										<h:outputText value="#{msg.compras}" rendered="#{relatorioBean.tipoPesquisa == 1}"/>
+										<h:outputText value="#{msg.vendas}" rendered="#{relatorioBean.tipoPesquisa == 2}"/>
 									</p:toolbarGroup>
 								</p:toolbar>
 							</f:facet>
@@ -116,40 +85,111 @@
 								<f:facet name="header">
 									<h:outputText value="#{msg.data}" />
 								</f:facet>
+								<h:outputText value="#{lst.notaFiscal.dataOperacao}" />
 							</p:column>
+
 							<p:column>
 								<f:facet name="header">
 									<h:outputText value="#{msg.codigo}" />
 								</f:facet>
+								<h:outputText value="#{lst.id}" />
 							</p:column>
-							<p:column>
+
+							<p:column rendered="#{relatorioBean.tipoPesquisa == 1}">
+								<f:facet name="header">
+									<h:outputText value="#{msg.cnpj}" />
+								</f:facet>
+								<h:outputText value="#{lst.notaFiscal.pessoa.cnpj}" />
+							</p:column>
+
+							<p:column rendered="#{relatorioBean.tipoPesquisa == 2}">
 								<f:facet name="header">
 									<h:outputText value="#{msg.cpf}" />
 								</f:facet>
+								<h:outputText value="#{lst.notaFiscal.pessoa.cpf}" />
 							</p:column>
+
 							<p:column>
 								<f:facet name="header">
-									<h:outputText value="#{msg.cliente}" />
+									<h:outputText value="#{msg.fornecedor}" />
 								</f:facet>
+								<h:outputText value="#{lst.notaFiscal.pessoa.nome}" />
 							</p:column>
-							<p:column>
-								<f:facet name="header">
-									<h:outputText value="#{msg.produto}" />
-								</f:facet>
-							</p:column>
+							
 							<p:column>
 								<f:facet name="header">
 									<h:outputText value="#{msg.valor}" />
 								</f:facet>
+								<h:outputText value="#{lst.valorTotal}" />
 							</p:column>
-							<p:column>
-								<f:facet name="header">
-									<h:outputText value="#{msg.quantidade}" />
-								</f:facet>
-							</p:column>
+														
 						</p:dataTable>
+						
 					</div>
 			</h:form>
+			<p:dialog widgetVar="pessoaDialog" closable="true" id="pessoaDialog">
+				<p:panelGrid style="border: 0 !important">
+					<p:row>
+						<p:column style="text-align: right;">
+							<h:outputText value="#{msg.pessoa}" />
+						</p:column>
+						<p:column style="text-align: left;">
+							<h:inputText value="#{pessoaBean.pessoa.nome}" />
+							<p:commandButton value="#{msg.pesquisar}" />
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+				<p:dataTable value="#{pessoaBean.lstPessoa}" var="lstPessoa" rows="10" paginator="true" paginatorPosition="bottom"
+								selection="#{pessoaBean.pessoa}" selectionMode="single">
+						<p:ajax event="rowSelect" listener="#{pessoaBean}" update="@form" />
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="#{msg.nome}" />
+						</f:facet>
+						<h:outputText value="#{lstPessoa.nome}" />
+					</p:column>
+					
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="#{msg.doc}" />
+						</f:facet>
+						<h:outputText value="#{lstPessoa.cpf}" rendered="#{lstPessoa.pessoaFisica}" />
+						<h:outputText value="#{lstPessoa.cnpj}" rendered="#{lstPessoa.pessoaJuridica}" />
+					</p:column>
+					
+					
+				</p:dataTable>
+			</p:dialog>	 
+			<p:dialog widgetVar="prodDialog" closable="true" id="prodDialog">
+				<p:panelGrid style="border: 0 !important">
+					<p:row>
+						<p:column style="text-align: right;">
+							<h:outputText value="#{msg.produto}" />
+						</p:column>
+						<p:column style="text-align: left;">
+							<h:inputText value="#{produtoBean.produto.descricao}" />
+							<p:commandButton value="#{msg.pesquisar}" />
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+				<p:dataTable value="#{produtoBean.lstProd}" var="lstProd" rows="10" paginator="true" paginatorPosition="bottom"
+								selection="#{produtoBean.produto}" selectionMode="single">
+						<p:ajax event="rowSelect" listener="#{produtoBean}" update="@form" />
+					<p:column style="text-align: left;">
+						<f:facet name="header">
+							<h:outputText value="#{msg.nome}" />
+						</f:facet>
+						<h:outputText value="#{lstProd.descricao}" />
+					</p:column>
+					
+					<p:column style="text-align: right;">
+						<f:facet name="header">
+							<h:outputText value="#{msg.doc}" />
+						</f:facet>
+						<h:outputText value="#{lstProd.id}"  />
+					</p:column>
+				</p:dataTable>
+			</p:dialog>	
 		</ui:define>
 	</ui:composition>
 </html>

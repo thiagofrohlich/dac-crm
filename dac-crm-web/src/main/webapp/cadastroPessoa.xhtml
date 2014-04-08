@@ -12,7 +12,7 @@
 			<h:form id="cadastroPessoas">
 				<div style="clear:both;" class="center">
 					<h:outputText value="#{msg.cadastro} #{msg.de} #{msg.clientes}" style="font-size:13px; "/>
-					<p:commandButton icon="ui-icon-search" style="margin-left: 10px;"/>
+					<p:commandButton icon="ui-icon-search" style="margin-left: 10px;" onclick="pessoaDialog.show()"/>
 				</div>
 				<div class="center" style="padding-top: 15px;">
 					<table border="0" class="center">
@@ -129,13 +129,46 @@
 							<td class="label">
 								<p:commandButton value="#{msg.cancelar}" />
 							</td>
-							<td>
+							<td >
 								<p:commandButton value="#{msg.salvar}" />	
 							</td>
 						</tr>
 					</table>
 				</div>
-			</h:form>		
+			</h:form>	
+			<p:dialog widgetVar="pessoaDialog" closable="true" id="pessoaDialog">
+				<p:panelGrid style="border: 0 !important">
+					<p:row>
+						<p:column style="text-align: right;">
+							<h:outputText value="#{msg.pessoa}" />
+						</p:column>
+						<p:column style="text-align: left;">
+							<h:inputText value="#{pessoaBean.pessoa.nome}" />
+							<p:commandButton value="#{msg.pesquisar}" />
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+				<p:dataTable value="#{pessoaBean.lstPessoa}" var="lstPessoa" rows="10" paginator="true" paginatorPosition="bottom"
+								selection="#{pessoaBean.pessoa}" selectionMode="single">
+						<p:ajax event="rowSelect" listener="#{pessoaBean}" update="@form" />
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="#{msg.nome}" />
+						</f:facet>
+						<h:outputText value="#{lstPessoa.nome}" />
+					</p:column>
+					
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="#{msg.doc}" />
+						</f:facet>
+						<h:outputText value="#{lstPessoa.cpf}" rendered="#{lstPessoa.pessoaFisica}" />
+						<h:outputText value="#{lstPessoa.cnpj}" rendered="#{lstPessoa.pessoaJuridica}" />
+					</p:column>
+					
+					
+				</p:dataTable>
+			</p:dialog>	 
 		</ui:define>
 	</ui:composition>
 	

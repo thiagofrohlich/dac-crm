@@ -29,5 +29,5 @@ public class ProdutoNfSummary implements Summary {
 	public void setQuantidade(Long quantidade) {
 		this.quantidade = quantidade;
 	}
-
+	
 }
