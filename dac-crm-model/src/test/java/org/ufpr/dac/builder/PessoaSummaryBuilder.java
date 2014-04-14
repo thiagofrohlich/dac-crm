@@ -60,12 +60,16 @@ public class PessoaSummaryBuilder {
 
 	public PessoaSummaryBuilder withEndereco(String endereco) {
 		this.endereco = new EnderecoSummary();
-		this.endereco.setCep(endereco);
 		this.endereco.setCidade(endereco);
 		this.endereco.setComplemento(endereco);
 		this.endereco.setEstado(endereco);
 		this.endereco.setNumero(endereco);
 		this.endereco.setPais(endereco);
+		return this;
+	}
+
+	public PessoaSummaryBuilder withEndereco(EnderecoSummary enderecoSummary) {
+		this.endereco = enderecoSummary;
 		return this;
 	}
 
@@ -97,9 +101,10 @@ public class PessoaSummaryBuilder {
 	private EnderecoSummary makeDefaultEndereco() {
 		EnderecoSummary endereco = new EnderecoSummary();
 		String end = "TESTE ENDERECO";
-		endereco.setCep(end);
+		endereco.setCep("99999-999");
 		endereco.setCidade(end);
 		endereco.setComplemento(end);
+		endereco.setEndereco(end);
 		endereco.setEstado(end);
 		endereco.setNumero(end);
 		endereco.setPais(end);

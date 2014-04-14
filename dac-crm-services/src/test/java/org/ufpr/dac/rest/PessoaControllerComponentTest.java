@@ -60,7 +60,7 @@ public class PessoaControllerComponentTest extends AbstractTransactionalJUnit4Sp
 			fail();
 		} catch (ConstraintViolationException cve) {
 //			Then
-			cve.getMessage().contains("org.ufpr.dac.cpfCannotBeNull");
+			assertTrue(cve.getMessage().contains("org.ufpr.dac.cpfCannotBeNull"));
 		}
 		
 	}
