@@ -3,9 +3,12 @@ package org.ufpr.dac.rest;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.Date;
+
+import javax.validation.ConstraintViolationException;
 
 import orc.ufpr.dac.rest.PessoaController;
 import orc.ufpr.dac.transformer.impl.PessoaTransformer;
@@ -44,6 +47,22 @@ public class PessoaControllerComponentTest extends AbstractTransactionalJUnit4Sp
 		
 //		Then
 		assertPessoa(summary, result);
+	}
+
+	@Test
+	public void shouldNotCreatePessoaGivenInvalidCpf() throws IllegalArgumentException, IllegalAccessException, InstantiationException, InvocationTargetException {
+//		Given
+		PessoaSummary summary = newSummaryBuilder().withCpf("").asPessoaFisica();
+		
+		try {
+	//		When
+			pessoaController.create(summary);
+			fail();
+		} catch (ConstraintViolationException cve) {
+//			Then
+			cve.getMessage().contains("org.ufpr.dac.cpfCannotBeNull");
+		}
+		
 	}
 
 	@Test

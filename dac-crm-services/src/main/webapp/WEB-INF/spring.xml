@@ -12,6 +12,7 @@
 	
 	<import resource="spring-servlet.xml"/>
 	<import resource="spring-transformer.xml"/>
+	<import resource="spring-validator.xml"/>
 	<import resource="classpath*:spring-domain.xml"/>
 
 </beans>

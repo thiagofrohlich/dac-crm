@@ -11,7 +11,7 @@ public class PessoaSummaryBuilder {
 	
 	private Long rootId = 1l;
 	private String nome = "test name";
-	private String endereco = "test addres";
+	private EnderecoSummary endereco = makeDefaultEndereco();
 	
 //	Pessoa Fisica
 	private String cpf = "999.999.999-99";
@@ -42,8 +42,7 @@ public class PessoaSummaryBuilder {
 	}
 
 	private PessoaSummary setCommomFields(PessoaSummary p) {
-		p.setEndereco(new EnderecoSummary());
-		p.getEndereco().setEndereco(endereco);
+		p.setEndereco(endereco);
 		p.setNome(nome);
 		p.setRootId(rootId);
 		return p;
@@ -60,7 +59,13 @@ public class PessoaSummaryBuilder {
 	}
 
 	public PessoaSummaryBuilder withEndereco(String endereco) {
-		this.endereco = endereco;
+		this.endereco = new EnderecoSummary();
+		this.endereco.setCep(endereco);
+		this.endereco.setCidade(endereco);
+		this.endereco.setComplemento(endereco);
+		this.endereco.setEstado(endereco);
+		this.endereco.setNumero(endereco);
+		this.endereco.setPais(endereco);
 		return this;
 	}
 
@@ -87,6 +92,19 @@ public class PessoaSummaryBuilder {
 	public PessoaSummaryBuilder withCnpj(String cnpj) {
 		this.cnpj = cnpj;
 		return this;
+	}
+
+	private EnderecoSummary makeDefaultEndereco() {
+		EnderecoSummary endereco = new EnderecoSummary();
+		String end = "TESTE ENDERECO";
+		endereco.setCep(end);
+		endereco.setCidade(end);
+		endereco.setComplemento(end);
+		endereco.setEstado(end);
+		endereco.setNumero(end);
+		endereco.setPais(end);
+
+		return endereco;
 	}
 
 }
