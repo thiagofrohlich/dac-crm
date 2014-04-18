@@ -5,13 +5,14 @@ import java.util.Date;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
 
 import org.ufpr.dac.model.OperacaoSummary;
 import org.ufpr.dac.model.PessoaFisicaSummary;
 import org.ufpr.dac.model.PessoaJuridicaSummary;
 import org.ufpr.dac.model.PessoaSummary;
 import org.ufpr.dac.model.ProdutoSummary;
-
+@ViewScoped
 @ManagedBean(name="relatorioBean")
 public class RelatorioBean {
 

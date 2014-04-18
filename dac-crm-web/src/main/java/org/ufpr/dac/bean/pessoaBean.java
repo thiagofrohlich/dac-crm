@@ -4,12 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
 
 import org.ufpr.dac.model.PessoaFisicaSummary;
 import org.ufpr.dac.model.PessoaJuridicaSummary;
 import org.ufpr.dac.model.PessoaSummary;
 
-
+@ViewScoped
 @ManagedBean(name = "pessoaBean")
 public class pessoaBean {
 	
@@ -23,6 +24,13 @@ public class pessoaBean {
 			pessoa = new PessoaFisicaSummary();
 		}else{
 			pessoa = new PessoaJuridicaSummary();
+		}
+	}
+	
+	public void validaCadastro(){
+		boolean ret = true;
+		if(pessoa.getNome() != null){
+			
 		}
 	}
 	

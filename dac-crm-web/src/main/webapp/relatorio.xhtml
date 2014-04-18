@@ -126,70 +126,70 @@
 						</p:dataTable>
 						
 					</div>
+				<p:dialog widgetVar="pessoamodal" closable="true" id="pessoaDialog">
+					<p:panelGrid style="border: 0 !important">
+						<p:row>
+							<p:column style="text-align: right;">
+								<h:outputText value="#{msg.pessoa}" />
+							</p:column>
+							<p:column style="text-align: left;">
+								<h:inputText value="#{pessoaBean.pessoa.nome}" />
+								<p:commandButton value="#{msg.pesquisar}" />
+							</p:column>
+						</p:row>
+					</p:panelGrid>
+					<p:dataTable value="#{pessoaBean.lstPessoa}" var="lstPessoa" rows="10" paginator="true" paginatorPosition="bottom"
+									selection="#{pessoaBean.pessoa}" selectionMode="single">
+							<p:ajax event="rowSelect" listener="#{pessoaBean}" update="@form" />
+						<p:column>
+							<f:facet name="header">
+								<h:outputText value="#{msg.nome}" />
+							</f:facet>
+							<h:outputText value="#{lstPessoa.nome}" />
+						</p:column>
+						
+						<p:column>
+							<f:facet name="header">
+								<h:outputText value="#{msg.doc}" />
+							</f:facet>
+							<h:outputText value="#{lstPessoa.cpf}" rendered="#{lstPessoa.pessoaFisica}" />
+							<h:outputText value="#{lstPessoa.cnpj}" rendered="#{lstPessoa.pessoaJuridica}" />
+						</p:column>
+						
+						
+					</p:dataTable>
+				</p:dialog>	 
+				<p:dialog widgetVar="prodmodal" closable="true" id="prodDialog">
+					<p:panelGrid style="border: 0 !important">
+						<p:row>
+							<p:column style="text-align: right;">
+								<h:outputText value="#{msg.produto}" />
+							</p:column>
+							<p:column style="text-align: left;">
+								<h:inputText value="#{produtoBean.produto.descricao}" />
+								<p:commandButton value="#{msg.pesquisar}" />
+							</p:column>
+						</p:row>
+					</p:panelGrid>
+					<p:dataTable value="#{produtoBean.lstProd}" var="lstProd" rows="10" paginator="true" paginatorPosition="bottom"
+									selection="#{produtoBean.produto}" selectionMode="single">
+							<p:ajax event="rowSelect" listener="#{produtoBean}" update="@form" />
+						<p:column style="text-align: left;">
+							<f:facet name="header">
+								<h:outputText value="#{msg.nome}" />
+							</f:facet>
+							<h:outputText value="#{lstProd.descricao}" />
+						</p:column>
+						
+						<p:column style="text-align: right;">
+							<f:facet name="header">
+								<h:outputText value="#{msg.doc}" />
+							</f:facet>
+							<h:outputText value="#{lstProd.id}"  />
+						</p:column>
+					</p:dataTable>
+				</p:dialog>	
 			</h:form>
-			<p:dialog widgetVar="pessoaDialog" closable="true" id="pessoaDialog">
-				<p:panelGrid style="border: 0 !important">
-					<p:row>
-						<p:column style="text-align: right;">
-							<h:outputText value="#{msg.pessoa}" />
-						</p:column>
-						<p:column style="text-align: left;">
-							<h:inputText value="#{pessoaBean.pessoa.nome}" />
-							<p:commandButton value="#{msg.pesquisar}" />
-						</p:column>
-					</p:row>
-				</p:panelGrid>
-				<p:dataTable value="#{pessoaBean.lstPessoa}" var="lstPessoa" rows="10" paginator="true" paginatorPosition="bottom"
-								selection="#{pessoaBean.pessoa}" selectionMode="single">
-						<p:ajax event="rowSelect" listener="#{pessoaBean}" update="@form" />
-					<p:column>
-						<f:facet name="header">
-							<h:outputText value="#{msg.nome}" />
-						</f:facet>
-						<h:outputText value="#{lstPessoa.nome}" />
-					</p:column>
-					
-					<p:column>
-						<f:facet name="header">
-							<h:outputText value="#{msg.doc}" />
-						</f:facet>
-						<h:outputText value="#{lstPessoa.cpf}" rendered="#{lstPessoa.pessoaFisica}" />
-						<h:outputText value="#{lstPessoa.cnpj}" rendered="#{lstPessoa.pessoaJuridica}" />
-					</p:column>
-					
-					
-				</p:dataTable>
-			</p:dialog>	 
-			<p:dialog widgetVar="prodDialog" closable="true" id="prodDialog">
-				<p:panelGrid style="border: 0 !important">
-					<p:row>
-						<p:column style="text-align: right;">
-							<h:outputText value="#{msg.produto}" />
-						</p:column>
-						<p:column style="text-align: left;">
-							<h:inputText value="#{produtoBean.produto.descricao}" />
-							<p:commandButton value="#{msg.pesquisar}" />
-						</p:column>
-					</p:row>
-				</p:panelGrid>
-				<p:dataTable value="#{produtoBean.lstProd}" var="lstProd" rows="10" paginator="true" paginatorPosition="bottom"
-								selection="#{produtoBean.produto}" selectionMode="single">
-						<p:ajax event="rowSelect" listener="#{produtoBean}" update="@form" />
-					<p:column style="text-align: left;">
-						<f:facet name="header">
-							<h:outputText value="#{msg.nome}" />
-						</f:facet>
-						<h:outputText value="#{lstProd.descricao}" />
-					</p:column>
-					
-					<p:column style="text-align: right;">
-						<f:facet name="header">
-							<h:outputText value="#{msg.doc}" />
-						</f:facet>
-						<h:outputText value="#{lstProd.id}"  />
-					</p:column>
-				</p:dataTable>
-			</p:dialog>	
 		</ui:define>
 	</ui:composition>
 </html>

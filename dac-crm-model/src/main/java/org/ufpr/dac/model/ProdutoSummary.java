@@ -11,7 +11,7 @@ public class ProdutoSummary implements Summary {
 	private String descricao;
 	private double valorCompra;
 	private double valorVenda;
-	private PessoaJuridicaSummary fornecedor;
+	private PessoaJuridicaSummary fornecedor = new PessoaJuridicaSummary();
 	private Long qtdEstoque;
 	private Long qtd; 
 	private String categoria;

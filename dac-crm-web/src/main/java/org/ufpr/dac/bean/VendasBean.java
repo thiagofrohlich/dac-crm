@@ -3,14 +3,18 @@ package org.ufpr.dac.bean;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 
 import org.ufpr.dac.model.OperacaoSummary;
 import org.ufpr.dac.model.PessoaFisicaSummary;
 import org.ufpr.dac.model.ProdutoNfSummary;
 import org.ufpr.dac.model.ProdutoSummary;
-
+@ViewScoped
 @ManagedBean(name = "vendasBean")
 public class VendasBean {
 	
@@ -23,17 +27,21 @@ public class VendasBean {
 	private BigDecimal acrescimos = new BigDecimal(0);
 	private BigDecimal descontos = new BigDecimal(0);
 	private Integer pagto;
-	
+	private ResourceBundle rb = ResourceBundle.getBundle("resources/messages.properties");
 
 
 	public void lancar(){
-		ProdutoNfSummary produtoNf = new ProdutoNfSummary();
-		produtoNf.setProdutoId(produto.getId());
-		produtoNf.setQuantidade(produto.getQtd());
-		operacao.getNotaFiscal().getProdutosNf().add(produtoNf);
-		lstProdutos.add(produto);
-		BigDecimal valor = new BigDecimal(produto.getValorVenda()*produto.getQtd());
-		subTotal = subTotal.add(valor);
+		if(produto.getQtd() < produto.getQtdEstoque()){
+			ProdutoNfSummary produtoNf = new ProdutoNfSummary();
+			produtoNf.setProdutoId(produto.getId());
+			produtoNf.setQuantidade(produto.getQtd());
+			operacao.getNotaFiscal().getProdutosNf().add(produtoNf);
+			lstProdutos.add(produto);
+			BigDecimal valor = new BigDecimal(produto.getValorVenda()*produto.getQtd());
+			subTotal = subTotal.add(valor);
+		}else{
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(null, "ERRO", rb.getString("erroQtdEQtdEstoque")));
+		}
 	}
 	
 	public void apagarProd(ProdutoSummary prod){
@@ -52,6 +60,30 @@ public class VendasBean {
 	
 	public void subtraiDesconto(){
 		operacao.setValorTotal(subTotal.subtract(descontos).doubleValue());
+	}
+	
+	public boolean validaVenda(){
+		boolean ret = true;
+		if(cliente.getRootId() == null || cliente.getRootId() == 0){
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(null, "ERRO", rb.getString("erroFornecedor")));
+			ret = false;
+		}
+		if(lstProdutos.isEmpty()){
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(null, "ERRO", rb.getString("erroProd")));
+			ret = false;
+		}else{
+			boolean erro = false;
+			for(ProdutoSummary prod : lstProdutos){
+				if(prod.getQtd() == null || prod.getQtd() == 0){
+					erro = true;
+				}
+			}
+			if(erro){
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(null, "ERRO", rb.getString("erroQtdProd")));
+				ret = false;
+			}
+		}
+		return ret;
 	}
 	
 	public Integer getTipoPesquisa() {

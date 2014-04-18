@@ -1,9 +1,10 @@
 package org.ufpr.dac.bean;
 
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 
 import org.ufpr.dac.model.UsuarioSummary;
-
+@SessionScoped
 @ManagedBean(name="loginBean")
 public class LoginBean {
 	

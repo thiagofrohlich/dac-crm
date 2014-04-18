@@ -3,15 +3,19 @@ package org.ufpr.dac.bean;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 
 import org.ufpr.dac.model.OperacaoSummary;
 import org.ufpr.dac.model.PessoaJuridicaSummary;
 import org.ufpr.dac.model.ProdutoNfSummary;
 import org.ufpr.dac.model.ProdutoSummary;
 
-
+@ViewScoped
 @ManagedBean(name="comprasBean")
 public class ComprasBean {
 
@@ -24,7 +28,7 @@ public class ComprasBean {
 	private BigDecimal acrescimos = new BigDecimal(0);
 	private BigDecimal descontos = new BigDecimal(0);
 	private Integer pagto;
-	
+	private ResourceBundle rb = ResourceBundle.getBundle("resources/messages.properties");
 
 
 	public void lancar(){
@@ -53,6 +57,30 @@ public class ComprasBean {
 	
 	public void subtraiDesconto(){
 		operacao.setValorTotal(subTotal.subtract(descontos).doubleValue());
+	}
+	
+	public boolean validaCompra(){
+		boolean ret = true;
+		if(fornecedor.getRootId() == null || fornecedor.getRootId() == 0){
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(null, "ERRO", rb.getString("erroFornecedor")));
+			ret = false;
+		}
+		if(lstProdutos.isEmpty()){
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(null, "ERRO", rb.getString("erroProd")));
+			ret = false;
+		}else{
+			boolean erro = false;
+			for(ProdutoSummary prod : lstProdutos){
+				if(prod.getQtd() == null || prod.getQtd() == 0){
+					erro = true;
+				}
+			}
+			if(erro){
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(null, "ERRO", rb.getString("erroQtdProd")));
+				ret = false;
+			}
+		}
+		return ret;
 	}
 	
 	public Integer getTipoPesquisa() {

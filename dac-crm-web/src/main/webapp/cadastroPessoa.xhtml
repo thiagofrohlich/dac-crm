@@ -11,6 +11,7 @@
 		<ui:define name="centro">
 			<h:form id="cadastroPessoas">
 				<div style="clear:both;" class="center">
+				<p:messages showDetail="true" />
 					<h:outputText value="#{msg.cadastro} #{msg.de} #{msg.clientes}" style="font-size:13px; "/>
 					<p:commandButton icon="ui-icon-search" style="margin-left: 10px;" onclick="pessoaDialog.show()"/>
 				</div>
@@ -111,18 +112,10 @@
 						</tr>
 						<tr>
 							<td class="label">
-								<h:outputText value="#{msg.telPrincipal}: " />
+								<h:outputText value="#{msg.telefone}: " />
 							</td>
 							<td>
-								<h:inputText value="#{pessoaBean.pessoa.telPrincipal}" />	
-							</td>
-						</tr>
-						<tr>
-							<td class="label">
-								<h:outputText value="#{msg.telAlternativo}: " />
-							</td>
-							<td>
-								<h:inputText value="#{pessoaBean.pessoa.telAlternativo}" />	
+								<h:inputText value="#{pessoaBean.pessoa.telefone}" />	
 							</td>
 						</tr>
 						<tr>
@@ -135,8 +128,7 @@
 						</tr>
 					</table>
 				</div>
-			</h:form>	
-			<p:dialog widgetVar="pessoaDialog" closable="true" id="pessoaDialog">
+			<p:dialog widgetVar="pessoamodal" closable="true" id="pessoaDialog">
 				<p:panelGrid style="border: 0 !important">
 					<p:row>
 						<p:column style="text-align: right;">
@@ -150,7 +142,7 @@
 				</p:panelGrid>
 				<p:dataTable value="#{pessoaBean.lstPessoa}" var="lstPessoa" rows="10" paginator="true" paginatorPosition="bottom"
 								selection="#{pessoaBean.pessoa}" selectionMode="single">
-						<p:ajax event="rowSelect" listener="#{pessoaBean}" update="@form" />
+						<p:ajax event="rowSelect" listener="#{pessoaBean}" update=":cadastroPessoas" />
 					<p:column>
 						<f:facet name="header">
 							<h:outputText value="#{msg.nome}" />
@@ -169,6 +161,7 @@
 					
 				</p:dataTable>
 			</p:dialog>	 
+			</h:form>	
 		</ui:define>
 	</ui:composition>
 	

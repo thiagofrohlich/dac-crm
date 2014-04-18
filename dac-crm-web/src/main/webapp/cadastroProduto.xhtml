@@ -11,6 +11,7 @@
 		<ui:define name="centro">
 			<h:form id="cadastroProduto">
 				<div style="clear:both;" class="center">
+				<p:messages showDetail="true" />
 					<h:outputText value="#{msg.cadastro} #{msg.de} #{msg.produtos}" style="font-size:13px; "/>
 					<p:commandButton icon="ui-icon-search" style="margin-left: 10px;" onclick="prodDialog.show()"/>
 				</div>
@@ -26,14 +27,6 @@
 						</tr>
 						<tr>
 							<td class="label">
-								<h:outputText value="#{msg.categoria}: " />
-							</td>
-							<td>
-								<h:inputText value="#{produtoBean.produto.categoria}" />
-							</td>
-						</tr>
-						<tr>
-							<td class="label">
 								<h:outputText value="#{msg.quantidade}: " />
 							</td>
 							<td>
@@ -45,7 +38,9 @@
 								<h:outputText value="#{msg.fornecedor}: " />
 							</td>
 							<td>
-								<h:inputText value="#{produtoBean.produto.fornecedor.nome}" />	
+								<h:inputText value="#{produtoBean.produto.fornecedor.cnpj}" />
+								<h:inputText value="#{produtoBean.produto.fornecedor.nome}" disabled="true" />
+								<p:commandButton icon="ui-icon-search" onclick="pessoaDialog.show()"/>
 							</td>
 						</tr>
 						<tr>
@@ -74,8 +69,7 @@
 						</tr>
 					</table>
 				</div>
-			</h:form>
-			<p:dialog widgetVar="prodDialog" closable="true" id="prodDialog">
+			<p:dialog widgetVar="prodmodal" closable="true" id="prodDialog">
 				<p:panelGrid style="border: 0 !important">
 					<p:row>
 						<p:column style="text-align: right;">
@@ -87,7 +81,7 @@
 						</p:column>
 					</p:row>
 				</p:panelGrid>
-				<p:dataTable value="#{produtoBean.lstProd}" var="lstProd" rows="10" paginator="true" paginatorPosition="bottom"
+				<p:dataTable value="#{produtoBean.lstProd}" var="lstProd" rows="10" paginator="true" paginatorPosition="bottom" rowKey="#{lstProd.id}"
 								selection="#{produtoBean.produto}" selectionMode="single">
 						<p:ajax event="rowSelect" listener="#{produtoBean}" update="@form" />
 					<p:column style="text-align: left;">
@@ -105,6 +99,39 @@
 					</p:column>
 				</p:dataTable>
 			</p:dialog>	
+			<p:dialog widgetVar="pessoamodal" closable="true" id="pessoaDialog">
+					<p:panelGrid style="border: 0 !important">
+						<p:row>
+							<p:column style="text-align: right;">
+								<h:outputText value="#{msg.pessoa}" />
+							</p:column>
+							<p:column style="text-align: left;">
+								<h:inputText value="#{pessoaBean.pessoa.nome}" />
+								<p:commandButton value="#{msg.pesquisar}" />
+							</p:column>
+						</p:row>
+					</p:panelGrid>
+					<p:dataTable value="#{pessoaBean.lstPessoa}" var="lstPessoa" rows="10" paginator="true" paginatorPosition="bottom" rowKey="#{lstPessoa.rootId}"
+									selection="#{pessoaBean.pessoa}" selectionMode="single">
+							<p:ajax event="rowSelect" listener="#{pessoaBean}" update="@form" />
+						<p:column>
+							<f:facet name="header">
+								<h:outputText value="#{msg.nome}" />
+							</f:facet>
+							<h:outputText value="#{lstPessoa.nome}" />
+						</p:column>
+						
+						<p:column>
+							<f:facet name="header">
+								<h:outputText value="#{msg.doc}" />
+							</f:facet>
+							<h:outputText value="#{lstPessoa.cpf}" rendered="#{lstPessoa.pessoaFisica}" />
+							<h:outputText value="#{lstPessoa.cnpj}" rendered="#{lstPessoa.pessoaJuridica}" />
+						</p:column>
+						
+					</p:dataTable>
+				</p:dialog>	 
+			</h:form>
 		</ui:define>
 	</ui:composition>
 	

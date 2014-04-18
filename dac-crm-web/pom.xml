@@ -60,6 +60,25 @@
 			<artifactId>jsp-api</artifactId>
 			<version>2.1</version>
 		</dependency>
+		
+		<!-- STELLA  -->
+		<dependency>
+		    <groupId>br.com.caelum.stella</groupId>
+		    <artifactId>caelum-stella-core</artifactId>
+		    <version>2.1.0</version>
+		</dependency>
+		
+		<dependency>
+		    <groupId>br.com.caelum.stella</groupId>
+		    <artifactId>caelum-stella-bean-validation</artifactId>
+		    <version>2.1.0</version>
+		</dependency>
+		
+		<dependency>
+		    <groupId>br.com.caelum.stella</groupId>
+		    <artifactId>caelum-stella-faces</artifactId>
+		    <version>2.1.0</version>
+		</dependency>
  
 		<!-- EL -->
 		<dependency>
