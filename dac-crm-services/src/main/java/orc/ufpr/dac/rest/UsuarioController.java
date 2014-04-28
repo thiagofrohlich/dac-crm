@@ -79,6 +79,12 @@ public class UsuarioController {
 		return usuarioRepository.findOne(id) == null;
 	}
 	
+	@ResponseBody
+	@RequestMapping(value="/authentication", method=RequestMethod.POST)
+	public boolean authenticate(UsuarioSummary usuario) {
+		return usuarioRepository.exists(usuario.getLogin(), usuario.getSenha()) > 0l;
+	}
+	
 	private UsuarioSummary saveOrUpdate(final UsuarioSummary usuario)
 			throws IllegalAccessException, InstantiationException, IllegalArgumentException, InvocationTargetException {
 		Usuario p = new Usuario();

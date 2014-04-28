@@ -89,6 +89,30 @@ public class UsuarioRepositoryComponentTest extends AbstractTransactionalJUnit4S
 		assertFalse(result.isEmpty());
 		assertTrue(result.size() >= 2);
 	}
+	
+	@Test
+	public void shouldReturnTrueGivenExistingLoginAndPassword() {
+//		Given
+		Usuario usuario = newBuilder().withPessoa(validPessoa).persisted().asUsuario();
+		
+//		When
+		boolean exists = usuarioRepository.exists(usuario.getLogin(), usuario.getSenha()) > 0;
+		
+//		Then
+		assertTrue(exists);
+	}
+
+	@Test
+	public void shouldReturnFalseGivenExistingLoginAndPassword() {
+//		Given
+		Usuario usuario = newBuilder().withPessoa(validPessoa).persisted().asUsuario();
+		
+//		When
+		boolean exists = usuarioRepository.exists(usuario.getLogin(), usuario.getSenha()+"1") > 0;
+		
+//		Then
+		assertFalse(exists);
+	}
 
 	private void assertUsuario(Usuario expected, Usuario actual) {
 		assertNotNull(actual);

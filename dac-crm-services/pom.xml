@@ -10,6 +10,7 @@
 	<properties>
 		<dac-crm.version>0.0.1-SNAPSHOT</dac-crm.version>
 		<org.springframework.version>4.0.2.RELEASE</org.springframework.version>
+		<spring-security.version>3.2.3.RELEASE</spring-security.version>
 		<jackson.version>1.9.13</jackson.version>
 		<hibernate.version>4.2.8.Final</hibernate.version>
 		<hibernate-validator.version>5.1.0.Final</hibernate-validator.version>
@@ -84,6 +85,25 @@
 			<artifactId>spring-data-jpa</artifactId>
 			<version>1.5.0.RELEASE</version>
 		</dependency>
+		
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-core</artifactId>
+			<version>${spring-security.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-config</artifactId>
+			<version>${spring-security.version}</version>
+		</dependency>
+		            		
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-web</artifactId>
+			<version>${spring-security.version}</version>
+		</dependency>
+		            
 		
         <dependency>
 			<groupId>org.hibernate</groupId>
