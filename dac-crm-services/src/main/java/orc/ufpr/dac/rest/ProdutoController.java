@@ -12,6 +12,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -62,13 +63,13 @@ public class ProdutoController {
 	
 	@ResponseBody
 	@RequestMapping(method=RequestMethod.POST)
-	public ProdutoSummary create(final ProdutoSummary produto) throws IllegalArgumentException, IllegalAccessException, InstantiationException, InvocationTargetException {
+	public ProdutoSummary create(@RequestBody ProdutoSummary produto) throws IllegalArgumentException, IllegalAccessException, InstantiationException, InvocationTargetException {
 		return saveOrUpdate(produto);
 	}
 
 	@ResponseBody
 	@RequestMapping(method=RequestMethod.PUT)
-	public ProdutoSummary update(ProdutoSummary produto) throws IllegalArgumentException, IllegalAccessException, InstantiationException, InvocationTargetException {
+	public ProdutoSummary update(@RequestBody ProdutoSummary produto) throws IllegalArgumentException, IllegalAccessException, InstantiationException, InvocationTargetException {
 		return saveOrUpdate(produto);
 	}
 	

@@ -4,8 +4,9 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.ufpr.dac.model.PessoaFisicaSummary;
+import org.ufpr.dac.model.PessoaSummary;
 
-@Ignore
+//@Ignore
 public class PessoaServiceHandlerComponentTest {
 	
 	private PessoaServiceHandler pessoaServiceHandler;
@@ -27,7 +28,9 @@ public class PessoaServiceHandlerComponentTest {
 
 	@Test
 	public void shouldCallCreate() {
-		pessoaServiceHandler.create(new PessoaFisicaSummary());
+		PessoaSummary ps = new PessoaFisicaSummary();
+		ps.setNome("TESTE");
+		pessoaServiceHandler.create(ps);
 	}
 
 	@Test

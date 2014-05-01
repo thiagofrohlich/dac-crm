@@ -1,8 +1,10 @@
 package org.ufpr.dac.model;
 
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlSeeAlso;
 
 @XmlRootElement
+@XmlSeeAlso(PessoaJuridicaSummary.class)
 public class ProdutoSummary implements Summary {
 
 	private static final long serialVersionUID = 1L;
