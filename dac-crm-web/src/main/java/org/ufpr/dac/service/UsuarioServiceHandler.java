@@ -10,6 +10,16 @@ public class UsuarioServiceHandler extends AbstractServiceHandler<UsuarioSummary
 		return super.getPath() + "usuario/";
 	}
 	
+	@Override
+	protected Class<?> getSummary() {
+		return UsuarioSummary.class;
+	}
+	
+	@Override
+	protected Class<?> getWrapper() {
+		return UsuarioWrapper.class;
+	}
+	
 	public UsuarioSummary getByLogin(String login) {
 		return (UsuarioSummary) getRestTemplate().getForObject(getPath()+"login/{login}", UsuarioSummary.class, login);
 	}

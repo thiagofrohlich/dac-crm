@@ -13,15 +13,15 @@ public abstract class AbstractServiceHandler<S, W extends Wrapper<S>, ID> {
 	private final String path = "http://localhost:8080/dac-crm-services/";
 	
 	public W getAll(Integer page) {
-		return (W) getRestTemplate().getForObject(getPath()+"/page/{page}", Wrapper.class, page);
+		return (W) getRestTemplate().getForObject(getPath()+"/page/{page}", getWrapper(), page);
 	}
 
 	public S getOne(ID id) {
-		return (S) getRestTemplate().getForObject(getPath()+"{id}", Summary.class, id);
+		return (S) getRestTemplate().getForObject(getPath()+"{id}", getSummary(), id);
 	}
 	
 	public S create(S model) {
-		return (S) getRestTemplate().postForEntity(getPath(), model, Summary.class);
+		return (S) getRestTemplate().postForEntity(getPath(), model, getSummary());
 	}
 	
 	public void update(S model) {
@@ -43,6 +43,14 @@ public abstract class AbstractServiceHandler<S, W extends Wrapper<S>, ID> {
 
 	public String getPath() {
 		return path;
+	}
+	
+	protected Class<?> getSummary() {
+		return Summary.class;
+	}
+	
+	protected Class<?> getWrapper() {
+		return Wrapper.class;
 	}
 	
 }
