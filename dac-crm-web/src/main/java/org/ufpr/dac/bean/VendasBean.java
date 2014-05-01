@@ -1,5 +1,6 @@
 package org.ufpr.dac.bean;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,8 +17,12 @@ import org.ufpr.dac.model.ProdutoNfSummary;
 import org.ufpr.dac.model.ProdutoSummary;
 @ViewScoped
 @ManagedBean(name = "vendasBean")
-public class VendasBean {
+public class VendasBean implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private OperacaoSummary operacao = new OperacaoSummary();
 	private PessoaFisicaSummary cliente = new PessoaFisicaSummary();
 	private ProdutoSummary produto = new ProdutoSummary();
@@ -27,7 +32,7 @@ public class VendasBean {
 	private BigDecimal acrescimos = new BigDecimal(0);
 	private BigDecimal descontos = new BigDecimal(0);
 	private Integer pagto;
-	private ResourceBundle rb = ResourceBundle.getBundle("resources/messages.properties");
+	private ResourceBundle rb = ResourceBundle.getBundle("messages");
 
 
 	public void lancar(){
@@ -40,7 +45,7 @@ public class VendasBean {
 			BigDecimal valor = new BigDecimal(produto.getValorVenda()*produto.getQtd());
 			subTotal = subTotal.add(valor);
 		}else{
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(null, "ERRO", rb.getString("erroQtdEQtdEstoque")));
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERRO", rb.getString("erroQtdEQtdEstoque")));
 		}
 	}
 	
@@ -65,11 +70,11 @@ public class VendasBean {
 	public boolean validaVenda(){
 		boolean ret = true;
 		if(cliente.getRootId() == null || cliente.getRootId() == 0){
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(null, "ERRO", rb.getString("erroFornecedor")));
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERRO", rb.getString("erroFornecedor")));
 			ret = false;
 		}
 		if(lstProdutos.isEmpty()){
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(null, "ERRO", rb.getString("erroProd")));
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERRO", rb.getString("erroProd")));
 			ret = false;
 		}else{
 			boolean erro = false;
@@ -79,11 +84,15 @@ public class VendasBean {
 				}
 			}
 			if(erro){
-				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(null, "ERRO", rb.getString("erroQtdProd")));
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERRO", rb.getString("erroQtdProd")));
 				ret = false;
 			}
 		}
 		return ret;
+	}
+	
+	public void salvar(){
+		validaVenda();
 	}
 	
 	public Integer getTipoPesquisa() {

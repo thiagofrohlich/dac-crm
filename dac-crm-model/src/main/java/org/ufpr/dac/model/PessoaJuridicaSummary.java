@@ -7,9 +7,10 @@ public class PessoaJuridicaSummary extends PessoaSummary {
 
 	private static final long serialVersionUID = 1L;
 	
+	private Long id;
 	private Boolean ativo;
 	private String cnpj;
-	
+	private String email;
 	public Boolean getAtivo() {
 		return ativo;
 	}
@@ -30,6 +31,18 @@ public class PessoaJuridicaSummary extends PessoaSummary {
 	@Override
 	public boolean isPessoaJuridica() {
 		return true;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 }

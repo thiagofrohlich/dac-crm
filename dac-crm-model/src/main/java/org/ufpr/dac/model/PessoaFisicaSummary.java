@@ -9,6 +9,7 @@ public class PessoaFisicaSummary extends PessoaSummary {
 
 	private static final long serialVersionUID = 1L;
 	
+	private Long id;
 	private String cpf;
 	private Date dataNascimento;
 	private String email;
@@ -39,6 +40,12 @@ public class PessoaFisicaSummary extends PessoaSummary {
 	@Override
 	public boolean isPessoaJuridica() {
 		return false;
+	}
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 }

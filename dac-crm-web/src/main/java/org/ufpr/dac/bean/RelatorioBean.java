@@ -1,5 +1,6 @@
 package org.ufpr.dac.bean;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -14,8 +15,12 @@ import org.ufpr.dac.model.PessoaSummary;
 import org.ufpr.dac.model.ProdutoSummary;
 @ViewScoped
 @ManagedBean(name="relatorioBean")
-public class RelatorioBean {
+public class RelatorioBean implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Integer tipoPesquisa = 1;
 	private Date dataini;
 	private Date datafim;

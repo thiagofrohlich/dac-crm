@@ -21,7 +21,7 @@ public abstract class AbstractServiceHandler<S, W extends Wrapper<S>, ID> {
 	}
 	
 	public S create(S model) {
-		return (S) getRestTemplate().postForEntity(getPath(), model, Summary.class);
+		return (S) getRestTemplate().postForEntity(getPath(), model, model.getClass());
 	}
 	
 	public void update(S model) {
@@ -32,7 +32,7 @@ public abstract class AbstractServiceHandler<S, W extends Wrapper<S>, ID> {
 		getRestTemplate().delete(getPath()+"{id}", id);
 	}
 	
-	private RestTemplate getRestTemplate() {
+	protected RestTemplate getRestTemplate() {
 		if(restTemplate == null) {
 			restTemplate = new RestTemplate();
 			restTemplate.setRequestFactory(new HttpComponentsClientHttpRequestFactory());

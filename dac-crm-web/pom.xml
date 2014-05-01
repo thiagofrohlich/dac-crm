@@ -151,7 +151,13 @@
 		    <groupId>com.fasterxml.jackson.module</groupId>
 		    <artifactId>jackson-module-jaxb-annotations</artifactId>
 		    <version>${jackson-faster.version}</version>
-		</dependency>		
+		</dependency>
+		
+		 <dependency>
+		   <groupId>org.codehaus.jackson</groupId>
+		   <artifactId>jackson-mapper-asl</artifactId>
+		   <version>${jackson.version}</version>
+		  </dependency>	
 		            		
 		<dependency>
 			<groupId>junit</groupId>

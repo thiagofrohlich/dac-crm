@@ -23,7 +23,7 @@
 							</td>
 							<td>
 								<h:selectOneRadio value="#{pessoaBean.tipoPessoa}" layout="lineDirection">
-									<p:ajax event="select" listener="#{pessoaBean.escolhePessoa()}" update=":cadastroPessoas" />
+									<p:ajax event="valueChange"  update=":cadastroPessoas" />
 									<f:selectItem itemLabel="#{msg.fisica}" itemValue="1"  />
 									<f:selectItem itemLabel="#{msg.juridica}" itemValue="2"/>
 								</h:selectOneRadio>
@@ -34,7 +34,8 @@
 								<h:outputText value="#{msg.nome}: " />
 							</td>
 							<td>
-								<h:inputText value="#{pessoaBean.pessoa.nome}" />
+								<h:inputText value="#{pessoaBean.pessoaFisica.nome}" rendered="#{pessoaBean.tipoPessoa == 1}"/>
+								<h:inputText value="#{pessoaBean.pessoaJuridica.nome}" rendered="#{pessoaBean.tipoPessoa == 2}"/>
 							</td>
 						</tr>
 						<tr>
@@ -43,23 +44,18 @@
 								<h:outputText value="#{msg.cnpj}: " rendered="#{pessoaBean.tipoPessoa == 2}" />
 							</td>
 							<td>
-								<h:inputText value="#{pessoaBean.pessoa.cnpj}" />
+								<h:inputText value="#{pessoaBean.pessoaFisica.cpf}"  rendered="#{pessoaBean.tipoPessoa == 1}" />
+								<h:inputText value="#{pessoaBean.pessoaJuridica.cnpj}"  rendered="#{pessoaBean.tipoPessoa == 2}" />
 							</td>
 						</tr>
-						<tr>
-							<td class="label">
-								<h:outputText value="#{msg.datanasc}: " />
-							</td>
-							<td>
-								<h:inputText value="#{pessoaBean.pessoa.datanasc}" />
-							</td>
-						</tr>
+						
 						<tr>
 							<td class="label">
 								<h:outputText value="#{msg.endereco}: " />
 							</td>
 							<td>
-								<h:inputText value="#{pessoaBean.pessoa.endereco.endereco}" />
+								<h:inputText value="#{pessoaBean.pessoaFisica.endereco.endereco}" rendered="#{pessoaBean.tipoPessoa == 1}"/>
+								<h:inputText value="#{pessoaBean.pessoaJuridica.endereco.endereco}" rendered="#{pessoaBean.tipoPessoa == 2}"/>
 							</td>
 						</tr>
 						<tr>
@@ -67,7 +63,8 @@
 								<h:outputText value="#{msg.numero}: " />
 							</td>
 							<td>
-								<h:inputText value="#{pessoaBean.pessoa.endereco.numero}" />	
+								<h:inputText value="#{pessoaBean.pessoaFisica.endereco.numero}" rendered="#{pessoaBean.tipoPessoa  == 1}"/>
+								<h:inputText value="#{pessoaBean.pessoaJuridica.endereco.numero}" rendered="#{pessoaBean.tipoPessoa  == 2}"/>	
 							</td>
 						</tr>
 						<tr>
@@ -75,7 +72,17 @@
 								<h:outputText value="#{msg.complemento}: " />
 							</td>
 							<td>
-								<h:inputText value="#{pessoaBean.pessoa.endereco.complemento}" />	
+								<h:inputText value="#{pessoaBean.pessoaFisica.endereco.complemento}" rendered="#{pessoaBean.tipoPessoa == 1}"/>	
+								<h:inputText value="#{pessoaBean.pessoaJuridica.endereco.complemento}" rendered="#{pessoaBean.tipoPessoa == 2}"/>
+							</td>
+						</tr>
+						<tr>
+							<td class="label">
+								<h:outputText value="#{msg.cep}: " />
+							</td>
+							<td>
+								<h:inputText value="#{pessoaBean.pessoaFisica.endereco.cep}" rendered="#{pessoaBean.tipoPessoa == 1}"/>	
+								<h:inputText value="#{pessoaBean.pessoaJuridica.endereco.cep}" rendered="#{pessoaBean.tipoPessoa == 2}"/>
 							</td>
 						</tr>
 						<tr>
@@ -83,7 +90,8 @@
 								<h:outputText value="#{msg.cidade}: " />
 							</td>
 							<td>
-								<h:inputText value="#{pessoaBean.pessoa.endereco.cidade}" />	
+								<h:inputText value="#{pessoaBean.pessoaFisica.endereco.cidade}" rendered="#{pessoaBean.tipoPessoa == 1}"/>	
+								<h:inputText value="#{pessoaBean.pessoaJuridica.endereco.cidade}" rendered="#{pessoaBean.tipoPessoa == 2}"/>
 							</td>
 						</tr>
 						<tr>
@@ -91,7 +99,8 @@
 								<h:outputText value="#{msg.estado}: " />
 							</td>
 							<td>
-								<h:inputText value="#{pessoaBean.pessoa.endereco.estado}" />	
+								<h:inputText value="#{pessoaBean.pessoaFisica.endereco.estado}" rendered="#{pessoaBean.tipoPessoa == 1}"/>	
+								<h:inputText value="#{pessoaBean.pessoaJuridica.endereco.estado}" rendered="#{pessoaBean.tipoPessoa == 2}"/>
 							</td>
 						</tr>
 						<tr>
@@ -99,7 +108,8 @@
 								<h:outputText value="#{msg.pais}: " />
 							</td>
 							<td>
-								<h:inputText value="#{pessoaBean.pessoa.endereco.pais}" />	
+								<h:inputText value="#{pessoaBean.pessoaFisica.endereco.pais}" rendered="#{pessoaBean.tipoPessoa == 1}"/>
+								<h:inputText value="#{pessoaBean.pessoaJuridica.endereco.pais}" rendered="#{pessoaBean.tipoPessoa == 2}"/>
 							</td>
 						</tr>
 						<tr>
@@ -107,7 +117,8 @@
 								<h:outputText value="#{msg.email}: " />
 							</td>
 							<td>
-								<h:inputText value="#{pessoaBean.pessoa.email}" />	
+								<h:inputText value="#{pessoaBean.pessoaFisica.email}" rendered="#{pessoaBean.tipoPessoa ==1 }"/>	
+								<h:inputText value="#{pessoaBean.pessoaJuridica.email}" rendered="#{pessoaBean.tipoPessoa ==2 }"/>
 							</td>
 						</tr>
 						<tr>
@@ -115,7 +126,8 @@
 								<h:outputText value="#{msg.telefone}: " />
 							</td>
 							<td>
-								<h:inputText value="#{pessoaBean.pessoa.telefone}" />	
+								<h:inputText value="#{pessoaBean.pessoaFisica.telefone}" rendered="#{pessoaBean.tipoPessoa == 1}"/>	
+								<h:inputText value="#{pessoaBean.pessoaJuridica.telefone}" rendered="#{pessoaBean.tipoPessoa == 2}"/>
 							</td>
 						</tr>
 						<tr>
@@ -123,7 +135,7 @@
 								<p:commandButton value="#{msg.cancelar}" />
 							</td>
 							<td >
-								<p:commandButton value="#{msg.salvar}" />	
+								<p:commandButton value="#{msg.salvar}" action="#{pessoaBean.validaCadastro()}" />	
 							</td>
 						</tr>
 					</table>
@@ -132,16 +144,49 @@
 				<p:panelGrid style="border: 0 !important">
 					<p:row>
 						<p:column style="text-align: right;">
+							<h:outputText value="#{msg.pessoa}: " />
+						</p:column>
+						<p:column style="text-align: left;">
+							<h:selectOneRadio value="#{pessoaBean.tipoPessoaPesquisa}" layout="lineDirection">
+								<p:ajax event="select"  update=":cadastroPessoas:pessoaDialog" />
+								<f:selectItem itemLabel="#{msg.fisica}" itemValue="1"  />
+								<f:selectItem itemLabel="#{msg.juridica}" itemValue="2"/>
+							</h:selectOneRadio>
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column style="text-align: right;">
 							<h:outputText value="#{msg.pessoa}" />
 						</p:column>
 						<p:column style="text-align: left;">
-							<h:inputText value="#{pessoaBean.pessoa.nome}" />
+							<h:inputText value="#{pessoaBean.pessoaFisica.nome}" rendered="#{pessoaBean.tipoPessoaPesquisa == 1}"/>
+							<h:inputText value="#{pessoaBean.pessoaJuridica.nome}" rendered="#{pessoaBean.tipoPessoaPesquisa == 2}"/>
 							<p:commandButton value="#{msg.pesquisar}" />
 						</p:column>
 					</p:row>
 				</p:panelGrid>
-				<p:dataTable value="#{pessoaBean.lstPessoa}" var="lstPessoa" rows="10" paginator="true" paginatorPosition="bottom"
-								selection="#{pessoaBean.pessoa}" selectionMode="single">
+				<p:dataTable value="#{pessoaBean.lstPessoaFisica}" var="lstPessoa" rows="10" paginator="true" paginatorPosition="bottom" rowKey="#{lstPessoa.rootId}"
+								selection="#{pessoaBean.pessoaFisica}" selectionMode="single" rendered="#{pessoaBean.tipoPessoaPesquisa == 1}">
+						<p:ajax event="rowSelect" listener="#{pessoaBean}" update=":cadastroPessoas" />
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="#{msg.nome}" />
+						</f:facet>
+						<h:outputText value="#{lstPessoa.nome}" />
+					</p:column>
+					
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="#{msg.doc}" />
+						</f:facet>
+						<h:outputText value="#{lstPessoa.cpf}" rendered="#{lstPessoa.pessoaFisica}" />
+						<h:outputText value="#{lstPessoa.cnpj}" rendered="#{lstPessoa.pessoaJuridica}" />
+					</p:column>
+					
+					
+				</p:dataTable>
+				<p:dataTable value="#{pessoaBean.lstPessoaJuridica}" var="lstPessoa" rows="10" paginator="true" paginatorPosition="bottom" rowKey="#{lstPessoa.rootId}"
+								selection="#{pessoaBean.pessoaJuridica}" selectionMode="single" rendered="#{pessoaBean.tipoPessoaPesquisa == 2}">
 						<p:ajax event="rowSelect" listener="#{pessoaBean}" update=":cadastroPessoas" />
 					<p:column>
 						<f:facet name="header">

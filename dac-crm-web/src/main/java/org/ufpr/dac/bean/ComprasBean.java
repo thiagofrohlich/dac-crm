@@ -1,5 +1,6 @@
 package org.ufpr.dac.bean;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,8 +18,12 @@ import org.ufpr.dac.model.ProdutoSummary;
 
 @ViewScoped
 @ManagedBean(name="comprasBean")
-public class ComprasBean {
+public class ComprasBean implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private OperacaoSummary operacao = new OperacaoSummary();
 	private PessoaJuridicaSummary fornecedor = new PessoaJuridicaSummary();
 	private ProdutoSummary produto = new ProdutoSummary();
@@ -28,7 +33,7 @@ public class ComprasBean {
 	private BigDecimal acrescimos = new BigDecimal(0);
 	private BigDecimal descontos = new BigDecimal(0);
 	private Integer pagto;
-	private ResourceBundle rb = ResourceBundle.getBundle("resources/messages.properties");
+	private ResourceBundle rb = ResourceBundle.getBundle("messages");
 
 
 	public void lancar(){
@@ -62,11 +67,11 @@ public class ComprasBean {
 	public boolean validaCompra(){
 		boolean ret = true;
 		if(fornecedor.getRootId() == null || fornecedor.getRootId() == 0){
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(null, "ERRO", rb.getString("erroFornecedor")));
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERRO", rb.getString("erroFornecedor")));
 			ret = false;
 		}
 		if(lstProdutos.isEmpty()){
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(null, "ERRO", rb.getString("erroProd")));
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERRO", rb.getString("erroProd")));
 			ret = false;
 		}else{
 			boolean erro = false;
@@ -76,7 +81,7 @@ public class ComprasBean {
 				}
 			}
 			if(erro){
-				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(null, "ERRO", rb.getString("erroQtdProd")));
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERRO", rb.getString("erroQtdProd")));
 				ret = false;
 			}
 		}

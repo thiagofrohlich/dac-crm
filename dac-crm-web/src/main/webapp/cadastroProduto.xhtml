@@ -8,10 +8,17 @@
 	xmlns:p="http://primefaces.org/ui">
 	
 	<ui:composition template="/template.xhtml">
+		<ui:define name="style">
+			<style type="text/css">
+				.dsc{width: 200px;}
+				.cod{width: 45px;}
+			</style>
+		</ui:define>
+	
 		<ui:define name="centro">
 			<h:form id="cadastroProduto">
 				<div style="clear:both;" class="center">
-				<p:messages showDetail="true" />
+				<p:messages showDetail="true" autoUpdate="true"  />
 					<h:outputText value="#{msg.cadastro} #{msg.de} #{msg.produtos}" style="font-size:13px; "/>
 					<p:commandButton icon="ui-icon-search" style="margin-left: 10px;" onclick="prodDialog.show()"/>
 				</div>
@@ -22,7 +29,7 @@
 								<h:outputText value="#{msg.nome}: " />
 							</td>
 							<td>
-								<h:inputText value="#{produtoBean.produto.descricao}" />
+								<h:inputText value="#{produtoBean.produto.descricao}" styleClass="dsc"/>
 							</td>
 						</tr>
 						<tr>
@@ -30,7 +37,7 @@
 								<h:outputText value="#{msg.quantidade}: " />
 							</td>
 							<td>
-								<h:inputText value="#{produtoBean.produto.qtdEstoque}" />
+								<h:inputText value="#{produtoBean.produto.qtdEstoque}" styleClass="dsc"/>
 							</td>
 						</tr>
 						<tr>
@@ -38,7 +45,7 @@
 								<h:outputText value="#{msg.fornecedor}: " />
 							</td>
 							<td>
-								<h:inputText value="#{produtoBean.produto.fornecedor.cnpj}" />
+								<h:inputText value="#{produtoBean.produto.fornecedor.cnpj}" styleClass="cod"/>
 								<h:inputText value="#{produtoBean.produto.fornecedor.nome}" disabled="true" />
 								<p:commandButton icon="ui-icon-search" onclick="pessoaDialog.show()"/>
 							</td>
@@ -48,7 +55,7 @@
 								<h:outputText value="#{msg.valorCompra}: " />
 							</td>
 							<td>
-								<h:inputText value="#{produtoBean.produto.valorCompra}" />	
+								<h:inputText value="#{produtoBean.produto.valorCompra}" styleClass="dsc"/>	
 							</td>
 						</tr>
 						<tr>
@@ -56,7 +63,7 @@
 								<h:outputText value="#{msg.valorVenda}: " />
 							</td>
 							<td>
-								<h:inputText value="#{produtoBean.produto.valorVenda}" />	
+								<h:inputText value="#{produtoBean.produto.valorVenda}" styleClass="dsc"/>	
 							</td>
 						</tr>
 						<tr>
@@ -64,7 +71,7 @@
 								<p:commandButton value="#{msg.cancelar}" />
 							</td>
 							<td>
-								<p:commandButton value="#{msg.salvar}" />	
+								<p:commandButton value="#{msg.salvar}"  action="#{produtoBean.salvar()}"/>	
 							</td>
 						</tr>
 					</table>
@@ -76,13 +83,13 @@
 							<h:outputText value="#{msg.produto}" />
 						</p:column>
 						<p:column style="text-align: left;">
-							<h:inputText value="#{produtoBean.produto.descricao}" />
+							<h:inputText value="#{produtoBean.prodDialog.descricao}" />
 							<p:commandButton value="#{msg.pesquisar}" />
 						</p:column>
 					</p:row>
 				</p:panelGrid>
 				<p:dataTable value="#{produtoBean.lstProd}" var="lstProd" rows="10" paginator="true" paginatorPosition="bottom" rowKey="#{lstProd.id}"
-								selection="#{produtoBean.produto}" selectionMode="single">
+								selection="#{produtoBean.prodDialog}" selectionMode="single">
 						<p:ajax event="rowSelect" listener="#{produtoBean}" update="@form" />
 					<p:column style="text-align: left;">
 						<f:facet name="header">
@@ -106,14 +113,14 @@
 								<h:outputText value="#{msg.pessoa}" />
 							</p:column>
 							<p:column style="text-align: left;">
-								<h:inputText value="#{pessoaBean.pessoa.nome}" />
+								<h:inputText value="#{pessoaBean.pessoaJuridicaSelecionada.nome}" />
 								<p:commandButton value="#{msg.pesquisar}" />
 							</p:column>
 						</p:row>
 					</p:panelGrid>
-					<p:dataTable value="#{pessoaBean.lstPessoa}" var="lstPessoa" rows="10" paginator="true" paginatorPosition="bottom" rowKey="#{lstPessoa.rootId}"
-									selection="#{pessoaBean.pessoa}" selectionMode="single">
-							<p:ajax event="rowSelect" listener="#{pessoaBean}" update="@form" />
+					<p:dataTable value="#{pessoaBean.lstPessoaJuridica}" var="lstPessoa" rows="10" paginator="true" paginatorPosition="bottom" rowKey="#{lstPessoa.rootId}"
+									selection="#{pessoaBean.pessoaJuridicaSelecionada}" selectionMode="single">
+							<p:ajax event="rowSelect"  update="@form" />
 						<p:column>
 							<f:facet name="header">
 								<h:outputText value="#{msg.nome}" />
@@ -125,7 +132,7 @@
 							<f:facet name="header">
 								<h:outputText value="#{msg.doc}" />
 							</f:facet>
-							<h:outputText value="#{lstPessoa.cpf}" rendered="#{lstPessoa.pessoaFisica}" />
+							
 							<h:outputText value="#{lstPessoa.cnpj}" rendered="#{lstPessoa.pessoaJuridica}" />
 						</p:column>
 						

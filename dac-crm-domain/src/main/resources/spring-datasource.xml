@@ -10,7 +10,7 @@
         <property name="driverClassName" value="${data_source.driver_class}" />
         <property name="url" value="${data_source.url}" />
         <property name="username" value="${data_source.username}" />
-        <property name="password" value="${data_source.password}" />
+        <property name="password" value="admin" />
     </bean>
     
 </beans>
