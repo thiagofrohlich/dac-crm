@@ -10,6 +10,7 @@ public class UsuarioSummary extends PessoaSummary {
 	private String login;
 	private String senha;
 	private PessoaSummary pessoa;
+	private String acessos;
 
 	@Override
 	public boolean isPessoaFisica() {
@@ -43,6 +44,14 @@ public class UsuarioSummary extends PessoaSummary {
 
 	public void setPessoa(PessoaSummary pessoa) {
 		this.pessoa = pessoa;
+	}
+
+	public String getAcessos() {
+		return acessos;
+	}
+
+	public void setAcessos(String acessos) {
+		this.acessos = acessos;
 	}
 
 }

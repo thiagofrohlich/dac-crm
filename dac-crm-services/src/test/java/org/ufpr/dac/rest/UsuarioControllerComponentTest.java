@@ -2,6 +2,7 @@ package org.ufpr.dac.rest;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.lang.reflect.InvocationTargetException;
@@ -97,8 +98,9 @@ public class UsuarioControllerComponentTest extends AbstractTransactionalJUnit4S
 	public void shouldReturnAllUsuarios() throws IllegalArgumentException, IllegalAccessException, InstantiationException, InvocationTargetException {
 //		Given
 		Pessoa pessoa = givenValidPersistedPessoa();
+		Pessoa pessoa2 = givenValidPersistedPessoa("TEST ADDRESS");
 		newDomainBuilder().withId(new Date().getTime()).withPessoa(pessoa).persisted().asUsuario();
-		newDomainBuilder().withId(new Date().getTime()).withPessoa(pessoa).persisted().asUsuario();
+		newDomainBuilder().withId(new Date().getTime()).withPessoa(pessoa2).withLogin("anothertestlogin").persisted().asUsuario();
 		
 //		When
 		UsuarioWrapper wrapper = usuarioController.getAll(0);
@@ -111,6 +113,38 @@ public class UsuarioControllerComponentTest extends AbstractTransactionalJUnit4S
 		assertEquals(long2, wrapper.getFoundQuantity());
 		assertEquals(long2, wrapper.getReturnedQuantity());
 		assertEquals(long1, wrapper.getTotalPages());
+	}
+	
+	@Test
+	public void shouldReturnTrueGivenValidLoginAndPassword() throws IllegalAccessException, InstantiationException, InvocationTargetException {
+//		Given
+		Pessoa pessoa = givenValidPersistedPessoa();
+		Usuario usuario = newDomainBuilder().withId(new Date().getTime()).withPessoa(pessoa).persisted().asUsuario();
+		
+		UsuarioSummary summary = new UsuarioSummary();
+		summary.setLogin(usuario.getLogin());
+		
+//		When
+		UsuarioSummary user = usuarioController.getByLogin(usuario.getLogin());
+		
+//		Then
+		assertNotNull(user);
+	}
+	
+	@Test
+	public void shouldReturnFalseGivenInvalidLoginAndPassword() throws IllegalAccessException, InstantiationException, InvocationTargetException {
+//		Given
+		Pessoa pessoa = givenValidPersistedPessoa();
+		Usuario usuario = newDomainBuilder().withId(new Date().getTime()).withPessoa(pessoa).persisted().asUsuario();
+		
+		UsuarioSummary summary = new UsuarioSummary();
+		summary.setLogin(usuario.getLogin());
+		
+//		When
+		UsuarioSummary user = usuarioController.getByLogin(usuario.getLogin()+"1");
+		
+//		Then
+		assertNull(user);
 	}
 	
 	private void assertUsuario(UsuarioSummary expected, UsuarioSummary actual) {
@@ -129,6 +163,9 @@ public class UsuarioControllerComponentTest extends AbstractTransactionalJUnit4S
 	
 	private Pessoa givenValidPersistedPessoa() {
 		return new PessoaDomainBuilder(pessoaRepository).persisted().asPessoa();
+	}
+	private Pessoa givenValidPersistedPessoa(String endereco) {
+		return new PessoaDomainBuilder(pessoaRepository).withEndereco(endereco).persisted().asPessoa();
 	}
 	
 }

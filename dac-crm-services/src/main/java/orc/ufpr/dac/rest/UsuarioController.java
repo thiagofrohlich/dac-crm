@@ -12,6 +12,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -62,13 +63,13 @@ public class UsuarioController {
 	
 	@ResponseBody
 	@RequestMapping(method=RequestMethod.POST)
-	public UsuarioSummary create(final UsuarioSummary usuario) throws IllegalArgumentException, IllegalAccessException, InstantiationException, InvocationTargetException {
+	public UsuarioSummary create(@RequestBody UsuarioSummary usuario) throws IllegalArgumentException, IllegalAccessException, InstantiationException, InvocationTargetException {
 		return saveOrUpdate(usuario);
 	}
 
 	@ResponseBody
 	@RequestMapping(method=RequestMethod.PUT)
-	public UsuarioSummary update(UsuarioSummary usuario) throws IllegalArgumentException, IllegalAccessException, InstantiationException, InvocationTargetException {
+	public UsuarioSummary update(@RequestBody UsuarioSummary usuario) throws IllegalArgumentException, IllegalAccessException, InstantiationException, InvocationTargetException {
 		return saveOrUpdate(usuario);
 	}
 	
@@ -77,6 +78,25 @@ public class UsuarioController {
 	public boolean delete(@PathVariable Long id) {
 		usuarioRepository.delete(id);
 		return usuarioRepository.findOne(id) == null;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/login/{login}", method=RequestMethod.GET)
+	public UsuarioSummary getByLogin(@PathVariable String login) throws IllegalAccessException, InstantiationException, InvocationTargetException {
+		Usuario usuario = usuarioRepository.findByLogin(login);
+		
+		return transformUsuarioIfProvided(usuario);
+	}
+
+	private UsuarioSummary transformUsuarioIfProvided(Usuario usuario) throws IllegalAccessException,
+			InstantiationException, InvocationTargetException {
+		UsuarioSummary summary = new UsuarioSummary();
+		if(usuario != null) {
+			usuarioTransformer.transform(usuario, summary);
+		} else {
+			summary = null;
+		}
+		return summary;
 	}
 	
 	private UsuarioSummary saveOrUpdate(final UsuarioSummary usuario)

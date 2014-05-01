@@ -32,6 +32,8 @@ public class Usuario implements Domain, Serializable {
 	@OneToOne
 	@JoinColumn(name="pessoa_id")
 	private Pessoa pessoaUsuario;
+	
+	private String acessos;
 
 	public Usuario() {
 	}
@@ -66,6 +68,14 @@ public class Usuario implements Domain, Serializable {
 
 	public void setPessoaUsuario(Pessoa pessoa) {
 		this.pessoaUsuario = pessoa;
+	}
+	
+	public String getAcessos() {
+		return acessos;
+	}
+
+	public void setAcessos(String acessos) {
+		this.acessos = acessos;
 	}
 
 }

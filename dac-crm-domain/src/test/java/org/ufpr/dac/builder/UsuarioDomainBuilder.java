@@ -17,8 +17,8 @@ public class UsuarioDomainBuilder {
 	}
 	
 	private Long id;
-	private String login;
-	private String senha;
+	private String login = "test";
+	private String senha = "test";
 	private Pessoa pessoa;
 	private boolean persisted = false;
 	

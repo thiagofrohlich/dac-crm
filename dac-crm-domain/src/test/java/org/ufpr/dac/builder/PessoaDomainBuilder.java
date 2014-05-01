@@ -22,7 +22,7 @@ public class PessoaDomainBuilder {
 	
 	private Long rootId = 1l;
 	private String nome = "test name";
-	private String endereco = "test addres";
+	private Endereco endereco = makeDefaultEndereco();
 	
 	private Long id = 1l;
 	
@@ -42,7 +42,7 @@ public class PessoaDomainBuilder {
 		pessoa.setRootId(rootId);
 		pessoa.setNome(nome);
 		pessoa.setEndereco(new Endereco());
-		pessoa.getEndereco().setEndereco(endereco);
+		pessoa.setEndereco(endereco);
 		
 		return persist(pessoa);
 	}
@@ -87,8 +87,12 @@ public class PessoaDomainBuilder {
 		this.nome = nome;
 		return this;
 	}
-	public PessoaDomainBuilder withEndereco(String endereco) {
+	public PessoaDomainBuilder withEndereco(Endereco endereco) {
 		this.endereco = endereco;
+		return this;
+	}
+	public PessoaDomainBuilder withEndereco(String endereco) {
+		this.endereco = makeDefaultEndereco(endereco);
 		return this;
 	}
 	public PessoaDomainBuilder withId(Long id) {
@@ -120,4 +124,29 @@ public class PessoaDomainBuilder {
 		return this;
 	}
 	
+	private Endereco makeDefaultEndereco() {
+		Endereco endereco = new Endereco();
+		String end = "TESTE ENDERECO";
+		endereco.setCep("99999-999");
+		endereco.setCidade(end);
+		endereco.setComplemento(end);
+		endereco.setEndereco(end);
+		endereco.setEstado(end);
+		endereco.setNumero(end);
+		endereco.setPais(end);
+		return endereco;
+	}
+	
+	private Endereco makeDefaultEndereco(String end) {
+		Endereco endereco = new Endereco();
+		endereco.setCep("99999-999");
+		endereco.setCidade(end);
+		endereco.setComplemento(end);
+		endereco.setEndereco(end);
+		endereco.setEstado(end);
+		endereco.setNumero(end);
+		endereco.setPais(end);
+		return endereco;
+	}
+
 }
