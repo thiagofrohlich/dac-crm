@@ -9,5 +9,9 @@ public class UsuarioServiceHandler extends AbstractServiceHandler<UsuarioSummary
 	public String getPath() {
 		return super.getPath() + "usuario/";
 	}
+	
+	public UsuarioSummary getByLogin(String login) {
+		return (UsuarioSummary) getRestTemplate().getForObject(getPath()+"login/{login}", UsuarioSummary.class, login);
+	}
 
 }

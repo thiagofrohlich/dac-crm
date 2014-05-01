@@ -1,8 +1,8 @@
 package org.ufpr.dac.rest;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.lang.reflect.InvocationTargetException;
@@ -116,37 +116,35 @@ public class UsuarioControllerComponentTest extends AbstractTransactionalJUnit4S
 	}
 	
 	@Test
-	public void shouldReturnTrueGivenValidLoginAndPassword() {
+	public void shouldReturnTrueGivenValidLoginAndPassword() throws IllegalAccessException, InstantiationException, InvocationTargetException {
 //		Given
 		Pessoa pessoa = givenValidPersistedPessoa();
 		Usuario usuario = newDomainBuilder().withId(new Date().getTime()).withPessoa(pessoa).persisted().asUsuario();
 		
 		UsuarioSummary summary = new UsuarioSummary();
 		summary.setLogin(usuario.getLogin());
-		summary.setSenha(usuario.getSenha());
 		
 //		When
-		boolean exists = usuarioController.authenticate(summary);
+		UsuarioSummary user = usuarioController.getByLogin(usuario.getLogin());
 		
 //		Then
-		assertTrue(exists);
+		assertNotNull(user);
 	}
 	
 	@Test
-	public void shouldReturnFalseGivenInvalidLoginAndPassword() {
+	public void shouldReturnFalseGivenInvalidLoginAndPassword() throws IllegalAccessException, InstantiationException, InvocationTargetException {
 //		Given
 		Pessoa pessoa = givenValidPersistedPessoa();
 		Usuario usuario = newDomainBuilder().withId(new Date().getTime()).withPessoa(pessoa).persisted().asUsuario();
 		
 		UsuarioSummary summary = new UsuarioSummary();
 		summary.setLogin(usuario.getLogin());
-		summary.setSenha(usuario.getSenha()+"1");
 		
 //		When
-		boolean exists = usuarioController.authenticate(summary);
+		UsuarioSummary user = usuarioController.getByLogin(usuario.getLogin()+"1");
 		
 //		Then
-		assertFalse(exists);
+		assertNull(user);
 	}
 	
 	private void assertUsuario(UsuarioSummary expected, UsuarioSummary actual) {

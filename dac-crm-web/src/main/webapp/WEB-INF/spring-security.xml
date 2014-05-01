@@ -1,0 +1,26 @@
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+	xmlns:beans="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+	http://www.springframework.org/schema/security
+	http://www.springframework.org/schema/security/spring-security-3.2.xsd
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+ 
+	<context:component-scan base-package="org.ufpr.dac.security" />
+	
+	<http auto-config="true" use-expressions="true">
+        <intercept-url pattern="/cadastro**" access="hasRole('CADASTRO')" />
+        <intercept-url pattern="/compras**" access="hasRole('COMPRAS')" />
+        <intercept-url pattern="/vendas**" access="hasRole('VENDAS')" />
+        <intercept-url pattern="/relatorio**" access="hasRole('GERENTE_OPERACAO')" />
+        <!-- <logout logout-url="/logout" /> -->
+    </http>
+ 
+    <authentication-manager alias="authenticationManager">
+        <authentication-provider ref="dacCrmAuthenticationProvider" />
+    </authentication-manager>	
+ 
+</beans:beans>
