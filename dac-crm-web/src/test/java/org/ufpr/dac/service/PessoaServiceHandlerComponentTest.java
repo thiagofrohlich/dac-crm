@@ -6,7 +6,7 @@ import org.junit.Test;
 import org.ufpr.dac.model.PessoaFisicaSummary;
 import org.ufpr.dac.model.PessoaSummary;
 
-//@Ignore
+@Ignore
 public class PessoaServiceHandlerComponentTest {
 	
 	private PessoaServiceHandler pessoaServiceHandler;
