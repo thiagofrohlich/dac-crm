@@ -63,6 +63,15 @@ public class PessoaController {
 	}
 	
 	@ResponseBody
+	@RequestMapping(value="/cnpj/{cnpj}", method=RequestMethod.GET)
+	public PessoaJuridicaSummary getByCNPJ(@PathVariable final String cnpj) throws IllegalArgumentException, IllegalAccessException, InstantiationException, InvocationTargetException {
+		Pessoa result = pessoaRepository.findByCNPJ(cnpj);
+		PessoaSummary summary = instantiatePessoaSummary(result);
+		pessoaTransformer.transform(result, summary);
+		return (PessoaJuridicaSummary) summary;
+	}
+	
+	@ResponseBody
 	@RequestMapping(method=RequestMethod.POST)
 	public PessoaSummary create(@RequestBody PessoaSummary pessoa) throws IllegalArgumentException, IllegalAccessException, InstantiationException, InvocationTargetException {
 		return saveOrUpdate(pessoa);

@@ -84,7 +84,6 @@ public class ProdutoController {
 			throws IllegalAccessException, InstantiationException, IllegalArgumentException, InvocationTargetException {
 		Produto p = new Produto();
 		produtoTransformer.transform(produto, p);
-		
 		p = produtoRepository.save(p);
 
 		ProdutoSummary summary = instantiateProdutoSummary(p);

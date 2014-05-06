@@ -8,6 +8,12 @@
 	xmlns:p="http://primefaces.org/ui">
 	
 	<ui:composition template="/template.xhtml">
+		<ui:define name="style">
+			<style type="text/css">
+				.dsc{width: 200px;}
+				.cod{width: 45px;}
+			</style>
+		</ui:define>
 		<ui:define name="centro">
 			<h:form id="compras">
 				<div style="margin:auto; width: 900px;">
@@ -33,7 +39,7 @@
 											<h:outputText value="#{msg.fornecedor}: " />
 										</td>
 										<td>
-											<h:inputText value="#{comprasBean.fornecedor.cnpj}" />
+											<h:inputText value="#{comprasBean.fornecedor.cnpj}" styleClass="cod"/>
 											<h:inputText value="#{comprasBean.fornecedor.nome}" disabled="true" />
 											<p:commandButton icon="ui-icon-search" onclick="pessoaDialog.show()"/>
 										</td>
@@ -204,7 +210,7 @@
 							</p:column>
 						</p:row>
 					</p:panelGrid>
-					<p:dataTable value="#{pessoaBean.lstPessoa}" var="lstPessoa" rows="10" paginator="true" paginatorPosition="bottom"
+					<p:dataTable value="#{pessoaBean.lstPessoa}" var="lstPessoa" rows="10" paginator="true" paginatorPosition="bottom" rowKey="#{lstPessoa.rootId}"
 									selection="#{pessoaBean.pessoa}" selectionMode="single">
 							<p:ajax event="rowSelect" listener="#{pessoaBean}" update="@form" />
 						<p:column>
@@ -237,8 +243,8 @@
 							</p:column>
 						</p:row>
 					</p:panelGrid>
-					<p:dataTable value="#{produtoBean.lstProd}" var="lstProd" rows="10" paginator="true" paginatorPosition="bottom"
-									selection="#{produtoBean.produto}" selectionMode="single">
+					<p:dataTable value="#{produtoBean.lstProd}" var="lstProd" rows="10" paginator="true" paginatorPosition="bottom" rowKey="#{lstProd.id}"
+									selection="#{produtoBean.prodDialog}" selectionMode="single">
 							<p:ajax event="rowSelect" listener="#{produtoBean}" update="@form" />
 						<p:column style="text-align: left;">
 							<f:facet name="header">

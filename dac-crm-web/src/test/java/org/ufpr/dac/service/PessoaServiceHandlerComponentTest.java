@@ -29,7 +29,6 @@ public class PessoaServiceHandlerComponentTest {
 	@Test
 	public void shouldCallCreate() {
 		PessoaSummary ps = new PessoaFisicaSummary();
-		ps.setNome("TESTE");
 		pessoaServiceHandler.create(ps);
 	}
 

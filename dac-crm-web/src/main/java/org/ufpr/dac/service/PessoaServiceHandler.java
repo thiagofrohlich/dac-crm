@@ -30,4 +30,8 @@ public class PessoaServiceHandler extends AbstractServiceHandler<PessoaSummary, 
 		return super.getPath() + "pessoa/";
 	}
 	
+	public PessoaJuridicaSummary getByCnpj(String cnpj) {
+		return  (PessoaJuridicaSummary) getRestTemplate().getForObject(getPath()+"cnpj/{cnpj}", PessoaJuridicaSummary.class, cnpj);
+	}
+	
 }

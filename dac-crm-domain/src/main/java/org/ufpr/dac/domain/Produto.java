@@ -34,19 +34,19 @@ public class Produto implements Domain, Serializable {
 
 	@Column(name="valor_compra")
 	@NotNull(message="org.ufpr.dac.valorCompraCannotBeNull")
-	@NotEmpty(message="org.ufpr.dac.valorCompraCannotBeNull")
+//	@NotEmpty(message="org.ufpr.dac.valorCompraCannotBeNull")
 	private double valorCompra;
 
 	@Column(name="valor_venda")
 	@NotNull(message="org.ufpr.dac.valorVendaCannotBeNull")
-	@NotEmpty(message="org.ufpr.dac.valorVendaCannotBeNull")
+//	@NotEmpty(message="org.ufpr.dac.valorVendaCannotBeNull")
 	private double valorVenda;
 
 	//bi-directional many-to-one association to PessoaJuridica
 	@ManyToOne
 	@JoinColumn(name="pessoa_juridica_id")
 	@NotNull(message="org.ufpr.dac.fornecedorCannotBeNull")
-	@NotEmpty(message="org.ufpr.dac.fornecedorCannotBeNull")
+//	@NotEmpty(message="org.ufpr.dac.fornecedorCannotBeNull")
 	private PessoaJuridica fornecedor;
 
 	public Produto() {

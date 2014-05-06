@@ -12,7 +12,7 @@ public abstract class PessoaSummary implements Summary {
 	protected Long rootId;
 	protected String nome;
 	protected String telefone;
-	protected EnderecoSummary endereco;
+	protected EnderecoSummary endereco = new EnderecoSummary();
 	
 	
 	public abstract boolean isPessoaFisica();
