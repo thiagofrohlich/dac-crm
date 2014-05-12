@@ -1,9 +1,14 @@
 package org.ufpr.dac.builder;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.ufpr.dac.model.NotaFiscalSummary;
 import org.ufpr.dac.model.OperacaoSummary;
+import org.ufpr.dac.model.PessoaFisicaSummary;
+import org.ufpr.dac.model.PessoaSummary;
+import org.ufpr.dac.model.ProdutoNfSummary;
 import org.ufpr.dac.model.TipoOperacao;
 
 public class OperacaoSummaryBuilder {
@@ -33,7 +38,26 @@ public class OperacaoSummaryBuilder {
 		NotaFiscalSummary nf = new NotaFiscalSummary();
 		nf.setId(new Date().getTime());
 		nf.setObservacao("TEST");
+		nf.setProdutosNf(makeDefaultProdutosNfList(nf.getId()));
+		nf.setPessoa(makeDefaultPessoa());
 		return nf;
+	}
+	private PessoaSummary makeDefaultPessoa() {
+		PessoaSummary pessoa = new PessoaFisicaSummary();
+		pessoa.setRootId(new Date().getTime());
+		return pessoa;
+	}
+	private List<ProdutoNfSummary> makeDefaultProdutosNfList(Long nfId) {
+		List<ProdutoNfSummary> produtosNf = new ArrayList<ProdutoNfSummary>();
+		produtosNf.add(makeDefaultProdutoNf(nfId));
+		return produtosNf;
+	}
+	private ProdutoNfSummary makeDefaultProdutoNf(Long nfId) {
+		ProdutoNfSummary produtoNfSummary = new ProdutoNfSummary();
+		produtoNfSummary.setProdutoId(new Date().getTime());
+		produtoNfSummary.setNfId(nfId);
+		produtoNfSummary.setQuantidade(1L);
+		return produtoNfSummary;
 	}
 	public OperacaoSummaryBuilder withId(Long id) {
 		this.id = id;
