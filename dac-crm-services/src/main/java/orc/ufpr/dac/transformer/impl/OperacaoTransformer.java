@@ -5,15 +5,21 @@ import java.util.ArrayList;
 
 import org.springframework.stereotype.Component;
 import org.ufpr.dac.domain.Operacao;
+import org.ufpr.dac.domain.Pessoa;
 import org.ufpr.dac.domain.ProdutoNf;
 import org.ufpr.dac.domain.ProdutoNfPK;
 import org.ufpr.dac.model.OperacaoSummary;
+import org.ufpr.dac.model.PessoaFisicaSummary;
+import org.ufpr.dac.model.PessoaJuridicaSummary;
+import org.ufpr.dac.model.PessoaSummary;
 import org.ufpr.dac.model.ProdutoNfSummary;
 import org.ufpr.dac.model.TipoOperacao;
 
 @Component
 public class OperacaoTransformer extends AbstractTransformer {
-
+	
+	private PessoaTransformer pessoaTransformer = new PessoaTransformer();
+	
 	@Override
 	public void transform(Object objectFrom, Object objectTo)
 			throws IllegalArgumentException, IllegalAccessException,
@@ -39,9 +45,19 @@ public class OperacaoTransformer extends AbstractTransformer {
 			Operacao opDomain = (Operacao) objectFrom;
 			OperacaoSummary op = (OperacaoSummary) objectTo;
 			op.setTipoOperacao(TipoOperacao.valueOf(opDomain.getTipoOperacao()));
+			transformNotaFiscalPessoa(opDomain, op);
 		}
 		
 		
+	}
+
+	private void transformNotaFiscalPessoa(Operacao opDomain, OperacaoSummary op)
+			throws IllegalAccessException, InstantiationException,
+			InvocationTargetException {
+		Pessoa pessoaDomain = opDomain.getNotaFiscal().getPessoa();
+		PessoaSummary pessoaSummary = instantiatePessoaSummary(pessoaDomain);
+		pessoaTransformer.transform(pessoaDomain, pessoaSummary);
+		op.getNotaFiscal().setPessoa(pessoaSummary);
 	}
 
 	private boolean isDomain(Object objectFrom) {
@@ -51,5 +67,16 @@ public class OperacaoTransformer extends AbstractTransformer {
 	private boolean isSummary(Object objectFrom) {
 		return objectFrom instanceof OperacaoSummary;
 	}
+	
+	private PessoaSummary instantiatePessoaSummary(Pessoa pessoa) {
+		PessoaSummary p = null;
+		if(pessoa.getPessoaFisica() != null) {
+			p = new PessoaFisicaSummary();
+		} else if(pessoa.getPessoaJuridica() != null) {
+			p = new PessoaJuridicaSummary();
+		}
+		return p;
+	}
+
 	
 }

@@ -1,8 +1,11 @@
 package org.ufpr.dac.transformer.impl;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
 import java.lang.reflect.InvocationTargetException;
 
-import static org.junit.Assert.*;
 import orc.ufpr.dac.transformer.impl.OperacaoTransformer;
 
 import org.junit.Before;
@@ -11,8 +14,10 @@ import org.ufpr.dac.builder.OperacaoDomainBuilder;
 import org.ufpr.dac.builder.OperacaoSummaryBuilder;
 import org.ufpr.dac.domain.NotaFiscal;
 import org.ufpr.dac.domain.Operacao;
+import org.ufpr.dac.domain.Pessoa;
 import org.ufpr.dac.model.NotaFiscalSummary;
 import org.ufpr.dac.model.OperacaoSummary;
+import org.ufpr.dac.model.PessoaSummary;
 
 public class OperacaoTransformerTest {
 	
@@ -92,11 +97,25 @@ public class OperacaoTransformerTest {
 	private void assertNotaFiscal(NotaFiscalSummary expected, NotaFiscal actual) {
 		assertEquals(expected.getId(), actual.getId());
 		assertEquals(expected.getObservacao(), actual.getObservacao());
+		assertPessoa(expected.getPessoa(), actual.getPessoa());
+		assertEquals(expected.getProdutosNf().size(), actual.getProdutosNf().size());
 	}
 	
 	private void assertNotaFiscal(NotaFiscal expected, NotaFiscalSummary actual) {
 		assertEquals(expected.getId(), actual.getId());
 		assertEquals(expected.getObservacao(), actual.getObservacao());
+		assertPessoa(expected.getPessoa(), actual.getPessoa());
+		assertEquals(expected.getProdutosNf().size(), actual.getProdutosNf().size());
+	}
+	
+	private void assertPessoa(PessoaSummary expected, Pessoa actual) {
+		assertNotNull(actual);
+		assertEquals(expected.getRootId(), actual.getRootId());
+	}
+	
+	private void assertPessoa(Pessoa expected, PessoaSummary actual) {
+		assertNotNull(actual);
+		assertEquals(expected.getRootId(), actual.getRootId());
 	}
 	
 	private OperacaoSummaryBuilder newSummaryBuilder() {

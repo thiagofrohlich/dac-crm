@@ -134,7 +134,7 @@ public class PessoaController {
 		Pessoa p = new Pessoa();
 		pessoaTransformer.transform(pessoa, p);
 		
-		p = pessoaRepository.save(p);
+//		p = pessoaRepository.save(p);
 
 		PessoaSummary summary = instantiatePessoaSummary(p);
 		pessoaTransformer.transform(p, summary);

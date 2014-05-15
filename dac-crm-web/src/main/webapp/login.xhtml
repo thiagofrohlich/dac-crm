@@ -9,10 +9,11 @@
 	
 	<ui:composition template="/template.xhtml">
 		<ui:define name="centro">
-			<h:form id="cadastroProduto">
+			<h:form id="cadastroProduto" prependId="false">
+				
 				<div style="clear:both;" class="center">
 					<h:outputText value="#{msg.bemVindo}" style="font-size:13px; "/>
-					
+					<h:messages globalOnly="true"/>
 				</div>
 				<div class="center" style="padding-top: 15px;">
 					<table border="0">
@@ -21,7 +22,7 @@
 								<h:outputText value="#{msg.login}: " />
 							</td>
 							<td>
-								<h:inputText value="#{loginBean.user.login}" />
+								<h:inputText value="#{loginBean.user.login}" id="username" />
 							</td>
 						</tr>
 						<tr>
@@ -29,7 +30,7 @@
 								<h:outputText value="#{msg.senha}: " />
 							</td>
 							<td>
-								<h:inputSecret value="#{loginBean.user.senha}" />
+								<h:inputSecret value="#{loginBean.user.senha}" id="password" />
 							</td>
 						</tr>
 						<tr>
@@ -37,7 +38,7 @@
 								<p:commandButton value="#{msg.voltar}" />
 							</td>
 							<td>
-								<p:commandButton value="#{msg.entrar}" />	
+								<p:commandButton value="#{msg.entrar}" type="submit" action="#{loginController.doLogin}" ajax="false" />
 							</td>
 						</tr>
 					</table>

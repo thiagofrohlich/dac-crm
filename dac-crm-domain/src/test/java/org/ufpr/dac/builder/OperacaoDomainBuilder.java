@@ -1,9 +1,17 @@
 package org.ufpr.dac.builder;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.ufpr.dac.domain.NotaFiscal;
 import org.ufpr.dac.domain.Operacao;
+import org.ufpr.dac.domain.Pessoa;
+import org.ufpr.dac.domain.PessoaFisica;
+import org.ufpr.dac.domain.ProdutoNf;
+import org.ufpr.dac.domain.ProdutoNfPK;
 import org.ufpr.dac.repository.OperacaoRepository;
 
 @Component
@@ -53,7 +61,30 @@ public class OperacaoDomainBuilder {
 		NotaFiscal nf = new NotaFiscal();
 		nf.setId(id);
 		nf.setObservacao("TESTE");
+		nf.setProdutosNf(makeDefaultProdutosNf(nf.getId()));
+		nf.setPessoa(makeDefaultPessoa());
 		return nf;
+	}
+
+	private Pessoa makeDefaultPessoa() {
+		Pessoa pessoa = new Pessoa();
+		pessoa.setRootId(new Date().getTime());
+		pessoa.setPessoaFisica(new PessoaFisica());
+		return pessoa;
+	}
+
+	private List<ProdutoNf> makeDefaultProdutosNf(Long nfId) {
+		List<ProdutoNf> produtosNf = new ArrayList<>();
+		produtosNf.add(makeDefaultProdutoNf(nfId));
+		return produtosNf;
+	}
+
+	private ProdutoNf makeDefaultProdutoNf(Long nfId) {
+		ProdutoNf produtoNf = new ProdutoNf();
+		produtoNf.setId(new ProdutoNfPK());
+		produtoNf.getId().setNfId(nfId);
+		produtoNf.getId().setProdutoId(new Date().getTime());
+		return produtoNf;
 	}
 
 	public OperacaoDomainBuilder withId(Long id) {

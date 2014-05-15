@@ -44,20 +44,44 @@ public abstract class AbstractTransformer implements Transformer {
 
     private void transformObjectType(Object objectTo, Field fieldTo, Object fieldFromObject)
             throws IllegalArgumentException, IllegalAccessException, InstantiationException, InvocationTargetException {
-        if (Domain.class.isAssignableFrom(fieldTo.getType()) || Model.class.isAssignableFrom(fieldTo.getType())) {
+        if (isDomainOrModel(fieldTo.getType())) {
 
-            Object objTo = createNewInstanceIfObjectIsNull(objectTo, fieldTo);
-
-            if (objTo != null) {
-            	transform(fieldFromObject, objTo);
-            } else {
-                setToObject(objectTo, fieldTo, objTo);
-            }
+        	setTransformedObjectIfNotNull(objectTo, fieldTo, fieldFromObject);
 
         } else {
             setToObject(objectTo, fieldTo, fieldFromObject);
         }
     }
+    
+    private boolean isDomainOrModel(Class<?> clazz) {
+    	return isDomain(clazz) || isModel(clazz);
+    }
+
+	private boolean isModel(Class<?> clazz) {
+		return Model.class.isAssignableFrom(clazz);
+	}
+
+	private boolean isDomain(Class<?> clazz) {
+		return Domain.class.isAssignableFrom(clazz);
+	}
+    
+	private void setTransformedObjectIfNotNull(Object objectTo, Field fieldTo,
+			Object fieldFromObject) throws IllegalAccessException,
+			InvocationTargetException {
+		if(!isNull(fieldFromObject)) {
+			try {
+				Object objTo = createNewInstanceIfObjectIsNull(objectTo, fieldTo);
+
+		        if (objTo != null) {
+		        	transform(fieldFromObject, objTo);
+		        } else {
+		            setToObject(objectTo, fieldTo, objTo);
+		        }
+			} catch(InstantiationException ie) {
+				setToObject(objectTo, fieldTo, null);
+			}
+		}
+	}
 
     private Object createNewInstanceIfObjectIsNull(Object objectTo, Field fieldTo)
             throws IllegalAccessException, InstantiationException, IllegalArgumentException, InvocationTargetException {
