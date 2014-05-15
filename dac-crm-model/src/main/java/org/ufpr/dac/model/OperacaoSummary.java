@@ -1,5 +1,7 @@
 package org.ufpr.dac.model;
 
+import java.util.Date;
+
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
@@ -10,7 +12,8 @@ public class OperacaoSummary implements Summary {
 	private Long id;
 	private double valorTotal;
 	private TipoOperacao tipoOperacao;
-	private NotaFiscalSummary notaFiscal;
+	private NotaFiscalSummary notaFiscal = new NotaFiscalSummary();
+	private Date dataOperacao;
 	
 	public Long getId() {
 		return id;
@@ -35,6 +38,12 @@ public class OperacaoSummary implements Summary {
 	}
 	public void setNotaFiscal(NotaFiscalSummary notaFiscal) {
 		this.notaFiscal = notaFiscal;
+	}
+	public Date getDataOperacao() {
+		return dataOperacao;
+	}
+	public void setDataOperacao(Date dataOperacao) {
+		this.dataOperacao = dataOperacao;
 	}
 
 }

@@ -2,6 +2,7 @@ package orc.ufpr.dac.rest;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.List;
 
 import orc.ufpr.dac.PageSize;
 import orc.ufpr.dac.transformer.impl.PessoaTransformer;
@@ -52,6 +53,25 @@ public class PessoaController {
 		
 		return wrapper;
 	}
+	
+	@ResponseBody
+	@RequestMapping(value="/nome/{nome}", method=RequestMethod.GET)
+	public PessoaWrapper getByNome(@PathVariable String nome) throws IllegalArgumentException, IllegalAccessException, InstantiationException, InvocationTargetException {
+		List<Pessoa> result = pessoaRepository.findByNome("%"+nome+"%");
+		PessoaWrapper wrapper = new PessoaWrapper();
+		wrapper.setList(new ArrayList<PessoaSummary>(PageSize.DEFAULT));
+		
+		for(Pessoa pessoa : result) {
+			PessoaSummary p = instantiatePessoaSummary(pessoa);
+			pessoaTransformer.transform(pessoa, p);
+			wrapper.getList().add(p);
+		}
+		
+		return wrapper;
+	}
+	
+	
+	
 
 	@ResponseBody
 	@RequestMapping(value="/{id}", method=RequestMethod.GET)
@@ -66,9 +86,28 @@ public class PessoaController {
 	@RequestMapping(value="/cnpj/{cnpj}", method=RequestMethod.GET)
 	public PessoaJuridicaSummary getByCNPJ(@PathVariable final String cnpj) throws IllegalArgumentException, IllegalAccessException, InstantiationException, InvocationTargetException {
 		Pessoa result = pessoaRepository.findByCNPJ(cnpj);
-		PessoaSummary summary = instantiatePessoaSummary(result);
-		pessoaTransformer.transform(result, summary);
-		return (PessoaJuridicaSummary) summary;
+		if(result != null){
+			PessoaSummary summary = instantiatePessoaSummary(result);
+			pessoaTransformer.transform(result, summary);
+			return (PessoaJuridicaSummary) summary;
+		}else{
+			return null;
+		}
+		
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/cpf/{cpf}", method=RequestMethod.GET)
+	public PessoaFisicaSummary getByCPF(@PathVariable final String cpf) throws IllegalArgumentException, IllegalAccessException, InstantiationException, InvocationTargetException {
+		Pessoa result = pessoaRepository.findByCPF(cpf);
+		if(result != null){
+			PessoaSummary summary = instantiatePessoaSummary(result);
+			pessoaTransformer.transform(result, summary);
+			return (PessoaFisicaSummary) summary;
+		}else{
+			return null;
+		}
+		
 	}
 	
 	@ResponseBody
@@ -104,11 +143,13 @@ public class PessoaController {
 
 	private PessoaSummary instantiatePessoaSummary(Pessoa pessoa) {
 		PessoaSummary p = null;
-		if(pessoa.getPessoaFisica() != null) {
-			p = new PessoaFisicaSummary();
-		} else if(pessoa.getPessoaJuridica() != null) {
-			p = new PessoaJuridicaSummary();
-		}
+		
+			if(pessoa.getPessoaFisica() != null) {
+				p = new PessoaFisicaSummary();
+			} else if(pessoa.getPessoaJuridica() != null) {
+				p = new PessoaJuridicaSummary();
+			}
+		
 		return p;
 	}
 

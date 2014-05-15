@@ -13,9 +13,13 @@ import javax.faces.context.FacesContext;
 import org.ufpr.dac.model.EnderecoSummary;
 import org.ufpr.dac.model.PessoaFisicaSummary;
 import org.ufpr.dac.model.PessoaJuridicaSummary;
+import org.ufpr.dac.model.ProdutoSummary;
+import org.ufpr.dac.service.PessoaServiceHandler;
 
 import br.com.caelum.stella.bean.validation.CNPJ;
 import br.com.caelum.stella.bean.validation.CPF;
+import br.com.caelum.stella.format.CNPJFormatter;
+import br.com.caelum.stella.format.CPFFormatter;
 
 @ViewScoped
 @ManagedBean(name = "pessoaBean")
@@ -25,6 +29,7 @@ public class pessoaBean implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	private PessoaServiceHandler pessoaService = new PessoaServiceHandler();
 	private PessoaFisicaSummary pessoaFisica = new PessoaFisicaSummary();
 	private PessoaJuridicaSummary pessoaJuridica = new PessoaJuridicaSummary();
 	private PessoaFisicaSummary pessoaFisicaSelecionada = new PessoaFisicaSummary();
@@ -38,15 +43,35 @@ public class pessoaBean implements Serializable{
 	@CNPJ(message="CNPJ inválido")
 	private String cnpj;
 	private ResourceBundle rb = ResourceBundle.getBundle("messages");
-
+	private String nome;
+	boolean apaga = false;
+	
 	public void salva(){
 		if(tipoPessoa == 1){
 			if(validaPessoaFisica()){
-				
+				try{
+					CPFFormatter cpfFormatter = new CPFFormatter();
+					pessoaFisica.setCpf(cpfFormatter.unformat(cpf));
+					pessoaService.create(pessoaFisica);
+					FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "INFO", rb.getString("salvaPessoa")));
+					apaga = false;
+				}catch(Exception e){
+					e.printStackTrace();
+					FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERRO", rb.getString("erroPessoa")));
+				}
 			}
 		}else{
 			if(validaPessoaJuridica()){
-				
+				try{
+					CNPJFormatter cnpjFormatter = new CNPJFormatter();
+					pessoaJuridica.setCnpj(cnpjFormatter.unformat(cnpj));
+					pessoaService.create(pessoaJuridica);
+					FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "INFO", rb.getString("salvaPessoa")));
+					apaga = false;
+				}catch(Exception e){
+					e.printStackTrace();
+					FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERRO", rb.getString("erroPessoa")));
+				}
 			}
 		}
 	}
@@ -119,19 +144,41 @@ public class pessoaBean implements Serializable{
 	}
 	
 	
-
+	public void apagar(){
+		if(tipoPessoa == 1){
+			pessoaService.delete(pessoaFisica.getId());
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "INFO", rb.getString("deletaProd")));
+		}else{
+			pessoaService.delete(pessoaJuridica.getId());
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "INFO", rb.getString("deletaProd")));
+		}
+		
+	}
+	
+	public void pesquisaProduto(){
+		if(tipoPessoaPesquisa == 1){
+			lstPessoaFisica = (List<PessoaFisicaSummary>) pessoaService.getByNome(nome);
+		}else{
+			lstPessoaJuridica = (List<PessoaJuridicaSummary>) pessoaService.getByNome(nome);
+		}
+	}
+	
+	public void selecionaProduto(){
+		pessoaFisica = pessoaFisicaSelecionada;
+		pessoaJuridica = pessoaJuridicaSelecionada;
+		apaga = true;
+	}
+	
+	
+	
+	
+	
 	public Integer getTipoPessoa() {
 		return tipoPessoa;
 	}
 	public void setTipoPessoa(Integer tipoPessoa) {
 		this.tipoPessoa = tipoPessoa;
 	}
-
-
-
-	
-
-
 
 
 	public PessoaFisicaSummary getPessoaFisica() {
@@ -221,6 +268,36 @@ public class pessoaBean implements Serializable{
 	public void setPessoaJuridicaSelecionada(
 			PessoaJuridicaSummary pessoaJuridicaSelecionada) {
 		this.pessoaJuridicaSelecionada = pessoaJuridicaSelecionada;
+	}
+
+
+	public String getNome() {
+		return nome;
+	}
+
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+
+	public String getCpf() {
+		return cpf;
+	}
+
+
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
+	}
+
+
+	public String getCnpj() {
+		return cnpj;
+	}
+
+
+	public void setCnpj(String cnpj) {
+		this.cnpj = cnpj;
 	}
 
 

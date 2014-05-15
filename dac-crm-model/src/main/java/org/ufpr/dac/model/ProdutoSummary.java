@@ -3,8 +3,11 @@ package org.ufpr.dac.model;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSeeAlso;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @XmlRootElement
 @XmlSeeAlso(PessoaJuridicaSummary.class)
+@JsonIgnoreProperties(ignoreUnknown=true)
 public class ProdutoSummary implements Summary {
 
 	private static final long serialVersionUID = 1L;
@@ -14,7 +17,7 @@ public class ProdutoSummary implements Summary {
 	private double valorCompra;
 	private double valorVenda;
 	private PessoaJuridicaSummary fornecedor = new PessoaJuridicaSummary();
-	private Long qtdEstoque;
+	private Double estoque;
 	private Long qtd; 
 	private String categoria;
 	
@@ -23,12 +26,6 @@ public class ProdutoSummary implements Summary {
 	}
 	public void setQtd(Long qtd) {
 		this.qtd = qtd;
-	}
-	public Long getQtdEstoque() {
-		return qtdEstoque;
-	}
-	public void setQtdEstoque(Long qtdEstoque) {
-		this.qtdEstoque = qtdEstoque;
 	}
 	public Long getId() {
 		return id;
@@ -65,6 +62,12 @@ public class ProdutoSummary implements Summary {
 	}
 	public void setCategoria(String categoria) {
 		this.categoria = categoria;
+	}
+	public Double getEstoque() {
+		return estoque;
+	}
+	public void setEstoque(Double estoque) {
+		this.estoque = estoque;
 	}
 
 }

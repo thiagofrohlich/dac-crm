@@ -3,6 +3,7 @@ package org.ufpr.dac.bean;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -15,6 +16,12 @@ import org.ufpr.dac.model.OperacaoSummary;
 import org.ufpr.dac.model.PessoaJuridicaSummary;
 import org.ufpr.dac.model.ProdutoNfSummary;
 import org.ufpr.dac.model.ProdutoSummary;
+import org.ufpr.dac.model.TipoOperacao;
+import org.ufpr.dac.service.OperacaoServiceHandler;
+import org.ufpr.dac.service.PessoaServiceHandler;
+import org.ufpr.dac.service.ProdutoServiceHandler;
+
+import br.com.caelum.stella.format.CNPJFormatter;
 
 @ViewScoped
 @ManagedBean(name="comprasBean")
@@ -24,6 +31,9 @@ public class ComprasBean implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	private PessoaServiceHandler pessoaService = new PessoaServiceHandler();
+	private ProdutoServiceHandler produtoService = new ProdutoServiceHandler();
+	private OperacaoServiceHandler operacaoService = new OperacaoServiceHandler();
 	private OperacaoSummary operacao = new OperacaoSummary();
 	private PessoaJuridicaSummary fornecedor = new PessoaJuridicaSummary();
 	private ProdutoSummary produto = new ProdutoSummary();
@@ -43,17 +53,20 @@ public class ComprasBean implements Serializable{
 		operacao.getNotaFiscal().getProdutosNf().add(produtoNf);
 		lstProdutos.add(produto);
 		BigDecimal valor = new BigDecimal(produto.getValorVenda()*produto.getQtd());
+		valor = valor.setScale(2, BigDecimal.ROUND_HALF_UP);
+		produto = new ProdutoSummary();
 		subTotal = subTotal.add(valor);
 	}
 	
 	public void apagarProd(ProdutoSummary prod){
 		lstProdutos.remove(prod);
 		ProdutoNfSummary produtoNf = new ProdutoNfSummary();
-		produtoNf.setProdutoId(produto.getId());
-		produtoNf.setQuantidade(produto.getQtd());
+		produtoNf.setProdutoId(prod.getId());
+		produtoNf.setQuantidade(prod.getQtd());
 		operacao.getNotaFiscal().getProdutosNf().remove(produtoNf);
-		BigDecimal valor = new BigDecimal(produto.getValorVenda()*produto.getQtd());
-		subTotal.subtract(valor);
+		BigDecimal valor = new BigDecimal(prod.getValorVenda()*prod.getQtd());
+		valor = valor.setScale(2, BigDecimal.ROUND_HALF_UP);
+		subTotal =  subTotal.subtract(valor);
 	}
 	
 	public void somaAcrescimo(){
@@ -86,6 +99,35 @@ public class ComprasBean implements Serializable{
 			}
 		}
 		return ret;
+	}
+	
+	public void salva(){
+		if(validaCompra()){
+			operacao.setTipoOperacao(TipoOperacao.COMPRA);
+			operacao.getNotaFiscal().setPessoa(fornecedor);
+			operacao.setValorTotal(subTotal.doubleValue());
+			operacao.setDataOperacao(Calendar.getInstance().getTime());
+			try{
+				operacaoService.create(operacao);
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "INFO", rb.getString("salvaCompra")));
+			}catch(Exception e){
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "INFO", rb.getString("erroCompra")));
+			}
+		}
+	}
+	
+	public void buscaFornecedor(){
+		CNPJFormatter formatter = new CNPJFormatter();
+		String cnpj = formatter.unformat(fornecedor.getCnpj());
+		fornecedor = (pessoaService.getByCnpj(cnpj));
+		if(fornecedor == null){
+			fornecedor = (new PessoaJuridicaSummary());
+			fornecedor.setNome(rb.getString("naoEncontrado"));
+		}
+	}
+	
+	public void buscaProduto(){
+		produto = produtoService.getOne(produto.getId());
 	}
 	
 	public Integer getTipoPesquisa() {

@@ -1,5 +1,6 @@
 package org.ufpr.dac.model;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -12,9 +13,9 @@ public class NotaFiscalSummary implements Summary {
 	
 	private Long id;
 	private String observacao;
-	private Date dataOperacao;
+	
 	private PessoaSummary pessoa;
-	private List<ProdutoNfSummary> produtosNf;
+	private List<ProdutoNfSummary> produtosNf = new ArrayList<>();
 	
 	public Long getId() {
 		return id;
@@ -34,12 +35,8 @@ public class NotaFiscalSummary implements Summary {
 	public void setProdutosNf(List<ProdutoNfSummary> produtosNf) {
 		this.produtosNf = produtosNf;
 	}
-	public Date getDataOperacao() {
-		return dataOperacao;
-	}
-	public void setDataOperacao(Date dataOperacao) {
-		this.dataOperacao = dataOperacao;
-	}
+	
+	
 	public PessoaSummary getPessoa() {
 		return pessoa;
 	}

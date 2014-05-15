@@ -1,6 +1,7 @@
 package org.ufpr.dac.domain;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -12,6 +13,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotEmpty;
@@ -37,14 +40,19 @@ public class Operacao implements Domain, Serializable {
 
 	@Column(name="valor_total")
 	@NotNull(message="org.ufpr.dac.valorTotalCannotBeNull")
-	@NotEmpty(message="org.ufpr.dac.valorTotalCannotBeNull")
+//	@NotEmpty(message="org.ufpr.dac.valorTotalCannotBeNull")
 	private double valorTotal;
 
 	@OneToOne(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 	@JoinColumn(name="nf_id")
 	@NotNull(message="org.ufpr.dac.nfOperacaCannotBeNull")
-	@NotEmpty(message="org.ufpr.dac.nfOperacaCannotBeNull")
+//	@NotEmpty(message="org.ufpr.dac.nfOperacaCannotBeNull")
 	private NotaFiscal notaFiscal;
+	
+	@Temporal(TemporalType.DATE)
+	@Column(name="data_operacao")
+	private Date dataOperacao;
+
 
 	public Operacao() {
 	}

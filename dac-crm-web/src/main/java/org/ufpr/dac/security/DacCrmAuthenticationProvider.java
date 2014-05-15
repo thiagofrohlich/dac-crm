@@ -19,7 +19,7 @@ import org.ufpr.dac.service.UsuarioServiceHandler;
 public class DacCrmAuthenticationProvider implements AuthenticationProvider {
 
 	private UsuarioServiceHandler usuarioServiceHandler = new UsuarioServiceHandler();
-	@Autowired private LoginBean loginBean;
+//	@Autowired private LoginBean loginBean;
 
 	@Override
 	public Authentication authenticate(Authentication authentication)
@@ -31,7 +31,7 @@ public class DacCrmAuthenticationProvider implements AuthenticationProvider {
 		throwExceptionIfNotFound(usuario);
 		throwExceptionIfPasswordIsInvalid(password, usuario);
 		
-		loginBean.setUser(usuario);
+//		loginBean.setUser(usuario);
 		Collection<GrantedAuthority> authorities = getAuthorities(usuario);
 		
 		return new UsernamePasswordAuthenticationToken(login, password, authorities);

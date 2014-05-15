@@ -39,7 +39,7 @@ public class Pessoa implements Domain, Serializable {
 	@NotEmpty(message="org.ufpr.dac.nomePessoaCannotBeNull")
 	private String nome;
 	
-	@Max(value = 15, message="org.ufpr.dac.telephoneMustHave15DigitsMax")
+	
 	private String telefone;
 
 	@OneToOne(mappedBy="pessoa", cascade=CascadeType.ALL, fetch=FetchType.EAGER)

@@ -16,8 +16,9 @@ public class ProdutoNfPK implements Domain, Serializable {
 	@Column(name="produto_id", insertable=false, updatable=false)
 	private Long produtoId;
 
-	@Column(name="nf_id", insertable=false, updatable=false)
-	private Long nfId;
+	@ManyToOne
+	@JoinColumn(name="nf_id",referencedColumnName="id")
+	private NotaFiscal notaFiscal;
 
 	public ProdutoNfPK() {
 	}
@@ -27,32 +28,42 @@ public class ProdutoNfPK implements Domain, Serializable {
 	public void setProdutoId(Long produtoId) {
 		this.produtoId = produtoId;
 	}
-	public Long getNfId() {
-		return this.nfId;
+	public NotaFiscal getNotaFiscal() {
+		return notaFiscal;
 	}
-	public void setNfId(Long nfId) {
-		this.nfId = nfId;
+	public void setNotaFiscal(NotaFiscal notaFiscal) {
+		this.notaFiscal = notaFiscal;
 	}
-
-	public boolean equals(Object other) {
-		if (this == other) {
-			return true;
-		}
-		if (!(other instanceof ProdutoNfPK)) {
-			return false;
-		}
-		ProdutoNfPK castOther = (ProdutoNfPK)other;
-		return 
-			this.produtoId.equals(castOther.produtoId)
-			&& this.nfId.equals(castOther.nfId);
-	}
-
+	@Override
 	public int hashCode() {
 		final int prime = 31;
-		int hash = 17;
-		hash = hash * prime + this.produtoId.hashCode();
-		hash = hash * prime + this.nfId.hashCode();
-		
-		return hash;
+		int result = 1;
+		result = prime * result
+				+ ((notaFiscal == null) ? 0 : notaFiscal.hashCode());
+		result = prime * result
+				+ ((produtoId == null) ? 0 : produtoId.hashCode());
+		return result;
 	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		ProdutoNfPK other = (ProdutoNfPK) obj;
+		if (notaFiscal == null) {
+			if (other.notaFiscal != null)
+				return false;
+		} else if (!notaFiscal.equals(other.notaFiscal))
+			return false;
+		if (produtoId == null) {
+			if (other.produtoId != null)
+				return false;
+		} else if (!produtoId.equals(other.produtoId))
+			return false;
+		return true;
+	}
+	
 }

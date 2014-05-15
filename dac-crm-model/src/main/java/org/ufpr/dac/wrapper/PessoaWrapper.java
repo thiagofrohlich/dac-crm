@@ -8,5 +8,8 @@ public class PessoaWrapper extends Wrapper<PessoaSummary> {
 	public PessoaWrapper(Page<? extends Object> page) {
 		super(page);
 	}
+
+	public PessoaWrapper() {
+	}
 	
 }

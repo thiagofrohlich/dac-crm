@@ -2,6 +2,7 @@ package orc.ufpr.dac.rest;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.List;
 
 import orc.ufpr.dac.PageSize;
 import orc.ufpr.dac.transformer.impl.ProdutoTransformer;
@@ -40,6 +41,22 @@ public class ProdutoController {
 		Pageable pageRequest = new PageRequest(page, PageSize.DEFAULT);
 		Page<Produto> result = produtoRepository.findAll(pageRequest);
 		ProdutoWrapper wrapper = new ProdutoWrapper(result);
+		wrapper.setList(new ArrayList<ProdutoSummary>(PageSize.DEFAULT));
+		
+		for(Produto produto : result) {
+			ProdutoSummary p = instantiateProdutoSummary(produto);
+			produtoTransformer.transform(produto, p);
+			wrapper.getList().add(p);
+		}
+		
+		return wrapper;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/nome/{nome}", method=RequestMethod.GET)
+	public ProdutoWrapper getByNome(@PathVariable String nome) throws IllegalArgumentException, IllegalAccessException, InstantiationException, InvocationTargetException {
+		List<Produto> result = produtoRepository.BuscaPorDescricao("%"+nome+"%");
+		ProdutoWrapper wrapper = new ProdutoWrapper();
 		wrapper.setList(new ArrayList<ProdutoSummary>(PageSize.DEFAULT));
 		
 		for(Produto produto : result) {

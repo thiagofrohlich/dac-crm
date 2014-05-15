@@ -16,7 +16,7 @@
 										style="font-size:13px; "/>
 						
 					</div>
-					<div style="clear:both;" class="center">
+					<p:outputPanel style="clear:both;" styleClass="center" id="formulario">
 						<table>
 							<tr>
 								<td class="label">
@@ -24,6 +24,7 @@
 								</td>
 								<td>
 									<h:selectOneRadio value="#{relatorioBean.tipoPesquisa}" layout="lineDirection">
+										<p:ajax event="valueChange"  update=":relatorio:formulario" />
 										<f:selectItem itemLabel="#{msg.compra}" itemValue="1"/>
 										<f:selectItem itemLabel="#{msg.venda}" itemValue="2"/>
 									</h:selectOneRadio>
@@ -34,9 +35,9 @@
 									<h:outputText value="#{msg.data}: " />
 								</td>
 								<td>
-									<p:calendar locale="pt" showButtonPanel="false" navigator="true" value="#{relatorioBean.dataini}"/>
+									<p:calendar locale="pt" showButtonPanel="false" navigator="true" value="#{relatorioBean.dataini}" pattern="dd/MM/yyyy"/>
 									<h:outputText value="#{msg.a}:" style="padding-left:5px;" />
-									<p:calendar locale="pt" showButtonPanel="false" navigator="true" value="#{relatorioBean.datafim}" style="padding-left:5px;"/>
+									<p:calendar locale="pt" showButtonPanel="false" navigator="true" value="#{relatorioBean.datafim}" style="padding-left:5px;" pattern="dd/MM/yyyy"/>
 								</td>
 							</tr>
 							<tr>
@@ -44,11 +45,15 @@
 									<h:outputText value="#{msg.pessoa}: " />
 								</td>
 								<td>
-									<h:inputText value="#{relatorioBean.doc}" >
-									<!-- ajax tag -->
+									<h:inputText value="#{relatorioBean.pessoaFisica.cpf}" rendered="#{relatorioBean.tipoPesquisa == 1}" >
+										<p:ajax event="valueChange" listener="#{relatorioBean.buscaCliente()}" update=":relatorio:formulario" />
 									</h:inputText>
-									<h:inputText value="#{relatorioBean.pessoa.nome}" disabled="true"/>
-									<p:commandButton icon="ui-icon-search" style="margin-left: 10px;" onclick="pessoaDialog.show()"/>
+									<h:inputText value="#{relatorioBean.pessoaJuridica.cnpj}" rendered="#{relatorioBean.tipoPesquisa == 2}" >
+										<p:ajax event="valueChange" listener="#{relatorioBean.buscaFornecedor()}" update=":relatorio:formulario" />
+									</h:inputText>
+									<h:inputText value="#{relatorioBean.pessoaFisica.nome}" disabled="true" rendered="#{relatorioBean.tipoPesquisa == 1}"/>
+									<h:inputText value="#{relatorioBean.pessoaJuridica.nome}" disabled="true" rendered="#{relatorioBean.tipoPesquisa == 2}"/>
+									<p:commandButton icon="ui-icon-search" style="margin-left: 10px;" onclick="pessoamodal.show()"/>
 								</td>
 							</tr>
 							<tr>
@@ -60,16 +65,16 @@
 									<!-- ajax tag -->
 									</h:inputText>
 									<h:inputText value="#{relatorioBean.produto.descricao}" disabled="true"/>
-									<p:commandButton icon="ui-icon-search" style="margin-left: 10px;" onclick="prodDialog.show()"/>
+									<p:commandButton icon="ui-icon-search" style="margin-left: 10px;" onclick="prodmodal.show()"/>
 								</td>
 							</tr>
 							<tr>
 								<td class="label">
-										<p:commandButton value="gerar" />
+										<p:commandButton value="gerar" action="#{relatorioBean.confirmaCampos()}" ajax="false" />
 								</td>
 							</tr>
 						</table>
-					</div>
+					</p:outputPanel>
 					
 						<p:dataTable id="tableCompra" paginator="true" rows="10" paginatorPosition="bottom" rendered="true" value="#{relatorioBean.lstOperacao}" var="lst">
 							<f:facet name="header" >
@@ -85,7 +90,7 @@
 								<f:facet name="header">
 									<h:outputText value="#{msg.data}" />
 								</f:facet>
-								<h:outputText value="#{lst.notaFiscal.dataOperacao}" />
+								<h:outputText value="#{lst.dataOperacao}" />
 							</p:column>
 
 							<p:column>
@@ -133,14 +138,25 @@
 								<h:outputText value="#{msg.pessoa}" />
 							</p:column>
 							<p:column style="text-align: left;">
-								<h:inputText value="#{pessoaBean.pessoa.nome}" />
+								<h:selectOneRadio value="#{pessoaBean.tipoPessoaPesquisa}" layout="lineDirection">
+									<f:selectItem itemLabel="#{msg.fisica}" itemValue="1"/>
+									<f:selectItem itemLabel="#{msg.juridica}" itemValue="2"/>
+								</h:selectOneRadio>
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column style="text-align: right;">
+								<h:outputText value="#{msg.nome}" />
+							</p:column>
+							<p:column style="text-align: left;">
+								<h:inputText value="#{pessoaBean.nome}" />
 								<p:commandButton value="#{msg.pesquisar}" />
 							</p:column>
 						</p:row>
 					</p:panelGrid>
-					<p:dataTable value="#{pessoaBean.lstPessoa}" var="lstPessoa" rows="10" paginator="true" paginatorPosition="bottom" rowKey="#{lstPessoa.rootId}"
-									selection="#{pessoaBean.pessoa}" selectionMode="single">
-							<p:ajax event="rowSelect" listener="#{pessoaBean}" update="@form" />
+					<p:dataTable value="#{pessoaBean.lstPessoaFisica}" var="lstPessoa" rows="10" paginator="true" paginatorPosition="bottom" rowKey="#{lstPessoa.rootId}"
+									selection="#{pessoaBean.pessoaFisicaSelecionada}" selectionMode="single" rendered="#{pessoaBean.tipoPessoaPesquisa == 1}">
+							<p:ajax event="rowSelect"  update="@form" />
 						<p:column>
 							<f:facet name="header">
 								<h:outputText value="#{msg.nome}" />
@@ -152,8 +168,26 @@
 							<f:facet name="header">
 								<h:outputText value="#{msg.doc}" />
 							</f:facet>
-							<h:outputText value="#{lstPessoa.cpf}" rendered="#{lstPessoa.pessoaFisica}" />
-							<h:outputText value="#{lstPessoa.cnpj}" rendered="#{lstPessoa.pessoaJuridica}" />
+							<h:outputText value="#{lstPessoa.cpf}"  />
+						</p:column>
+						
+						
+					</p:dataTable>
+					<p:dataTable value="#{pessoaBean.lstPessoaJuridica}" var="lstPessoa" rows="10" paginator="true" paginatorPosition="bottom" rowKey="#{lstPessoa.rootId}"
+									selection="#{pessoaBean.pessoaJuridicaSelecionada}" selectionMode="single" rendered="#{pessoaBean.tipoPessoaPesquisa == 2}">
+							<p:ajax event="rowSelect"  update="@form" />
+						<p:column>
+							<f:facet name="header">
+								<h:outputText value="#{msg.nome}" />
+							</f:facet>
+							<h:outputText value="#{lstPessoa.nome}" />
+						</p:column>
+						
+						<p:column>
+							<f:facet name="header">
+								<h:outputText value="#{msg.doc}" />
+							</f:facet>
+							<h:outputText value="#{lstPessoa.cnpj}"  />
 						</p:column>
 						
 						

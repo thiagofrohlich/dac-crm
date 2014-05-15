@@ -9,4 +9,8 @@ public class OperacaoWrapper extends Wrapper<OperacaoSummary> {
 		super(page);
 	}
 
+	public OperacaoWrapper() {
+		super();
+	}
+
 }

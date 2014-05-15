@@ -3,6 +3,7 @@ package org.ufpr.dac.bean;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -15,6 +16,12 @@ import org.ufpr.dac.model.OperacaoSummary;
 import org.ufpr.dac.model.PessoaFisicaSummary;
 import org.ufpr.dac.model.ProdutoNfSummary;
 import org.ufpr.dac.model.ProdutoSummary;
+import org.ufpr.dac.model.TipoOperacao;
+import org.ufpr.dac.service.OperacaoServiceHandler;
+import org.ufpr.dac.service.PessoaServiceHandler;
+import org.ufpr.dac.service.ProdutoServiceHandler;
+
+import br.com.caelum.stella.format.CPFFormatter;
 @ViewScoped
 @ManagedBean(name = "vendasBean")
 public class VendasBean implements Serializable{
@@ -23,6 +30,9 @@ public class VendasBean implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	private PessoaServiceHandler pessoaService = new PessoaServiceHandler();
+	private OperacaoServiceHandler operacaoService = new OperacaoServiceHandler();
+	private ProdutoServiceHandler produtoService = new ProdutoServiceHandler();
 	private OperacaoSummary operacao = new OperacaoSummary();
 	private PessoaFisicaSummary cliente = new PessoaFisicaSummary();
 	private ProdutoSummary produto = new ProdutoSummary();
@@ -36,14 +46,16 @@ public class VendasBean implements Serializable{
 
 
 	public void lancar(){
-		if(produto.getQtd() < produto.getQtdEstoque()){
+		if(produto.getQtd() < produto.getEstoque()){
 			ProdutoNfSummary produtoNf = new ProdutoNfSummary();
 			produtoNf.setProdutoId(produto.getId());
 			produtoNf.setQuantidade(produto.getQtd());
 			operacao.getNotaFiscal().getProdutosNf().add(produtoNf);
 			lstProdutos.add(produto);
 			BigDecimal valor = new BigDecimal(produto.getValorVenda()*produto.getQtd());
+			valor = valor.setScale(2, BigDecimal.ROUND_HALF_UP);
 			subTotal = subTotal.add(valor);
+			produto = new ProdutoSummary();
 		}else{
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERRO", rb.getString("erroQtdEQtdEstoque")));
 		}
@@ -52,11 +64,12 @@ public class VendasBean implements Serializable{
 	public void apagarProd(ProdutoSummary prod){
 		lstProdutos.remove(prod);
 		ProdutoNfSummary produtoNf = new ProdutoNfSummary();
-		produtoNf.setProdutoId(produto.getId());
-		produtoNf.setQuantidade(produto.getQtd());
+		produtoNf.setProdutoId(prod.getId());
+		produtoNf.setQuantidade(prod.getQtd());
 		operacao.getNotaFiscal().getProdutosNf().remove(produtoNf);
-		BigDecimal valor = new BigDecimal(produto.getValorVenda()*produto.getQtd());
-		subTotal.subtract(valor);
+		BigDecimal valor = new BigDecimal(prod.getValorVenda()*prod.getQtd());
+		valor = valor.setScale(2, BigDecimal.ROUND_HALF_UP);
+		subTotal = subTotal.subtract(valor);
 	}
 	
 	public void somaAcrescimo(){
@@ -91,9 +104,42 @@ public class VendasBean implements Serializable{
 		return ret;
 	}
 	
-	public void salvar(){
-		validaVenda();
+	public void salva(){
+		if(validaVenda()){
+			operacao.setTipoOperacao(TipoOperacao.VENDA);
+			operacao.getNotaFiscal().setPessoa(cliente);
+			operacao.setValorTotal(subTotal.doubleValue());
+			operacao.setDataOperacao(Calendar.getInstance().getTime());
+			try{
+				operacaoService.create(operacao);
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "INFO", rb.getString("salvaCompra")));
+			}catch(Exception e){
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "INFO", rb.getString("erroCompra")));
+			}
+		}
 	}
+	
+	public void buscaCliente(){
+		CPFFormatter formatter = new CPFFormatter();
+		String cpf = formatter.unformat(cliente.getCpf());
+		cliente = (pessoaService.getByCPF(cpf));
+		if(cliente == null){
+			cliente = (new PessoaFisicaSummary());
+			cliente.setNome(rb.getString("naoEncontrado"));
+		}
+	}
+	
+	public void buscaProduto(){
+		try{
+			produto = produtoService.getOne(produto.getId());
+		}catch(Exception e){
+			e.printStackTrace();
+			produto = new ProdutoSummary();
+			produto.setDescricao(rb.getString("naoEncontrado"));
+		}
+	}
+	
+
 	
 	public Integer getTipoPesquisa() {
 		return tipoPesquisa;

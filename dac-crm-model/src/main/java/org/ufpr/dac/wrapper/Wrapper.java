@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.data.domain.Page;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 public abstract class Wrapper<T> {
 	
 	private Long returnedQuantity;
@@ -11,6 +13,8 @@ public abstract class Wrapper<T> {
 	private Long currentPage;
 	private Long totalPages;
 	private List<T> list;
+	
+	public Wrapper(){}
 	
 	public Wrapper(Page<? extends Object> page) {
 		returnedQuantity = (long) page.getNumberOfElements();

@@ -11,7 +11,7 @@
 		<ui:define name="centro">
 			<h:form id="cadastroPessoas">
 				<div style="clear:both;" class="center">
-				<p:messages showDetail="true" />
+				<p:messages showDetail="true" autoUpdate="true"/>
 					<h:outputText value="#{msg.cadastro} #{msg.de} #{msg.clientes}" style="font-size:13px; "/>
 					<p:commandButton icon="ui-icon-search" style="margin-left: 10px;" onclick="pessoaDialog.show()"/>
 				</div>
@@ -44,8 +44,8 @@
 								<h:outputText value="#{msg.cnpj}: " rendered="#{pessoaBean.tipoPessoa == 2}" />
 							</td>
 							<td>
-								<h:inputText value="#{pessoaBean.pessoaFisica.cpf}"  rendered="#{pessoaBean.tipoPessoa == 1}" />
-								<h:inputText value="#{pessoaBean.pessoaJuridica.cnpj}"  rendered="#{pessoaBean.tipoPessoa == 2}" />
+								<p:inputMask mask="999.999.999-99" value="#{pessoaBean.cpf}"  rendered="#{pessoaBean.tipoPessoa == 1}" />
+								<p:inputMask mask="99.999.999/9999-99" value="#{pessoaBean.cnpj}"  rendered="#{pessoaBean.tipoPessoa == 2}" />
 							</td>
 						</tr>
 						
@@ -81,8 +81,8 @@
 								<h:outputText value="#{msg.cep}: " />
 							</td>
 							<td>
-								<h:inputText value="#{pessoaBean.pessoaFisica.endereco.cep}" rendered="#{pessoaBean.tipoPessoa == 1}"/>	
-								<h:inputText value="#{pessoaBean.pessoaJuridica.endereco.cep}" rendered="#{pessoaBean.tipoPessoa == 2}"/>
+								<p:inputMask mask="99999-999" value="#{pessoaBean.pessoaFisica.endereco.cep}" rendered="#{pessoaBean.tipoPessoa == 1}"/>	
+								<p:inputMask mask="99999-999" value="#{pessoaBean.pessoaJuridica.endereco.cep}" rendered="#{pessoaBean.tipoPessoa == 2}"/>
 							</td>
 						</tr>
 						<tr>
@@ -135,7 +135,7 @@
 								<p:commandButton value="#{msg.cancelar}" />
 							</td>
 							<td >
-								<p:commandButton value="#{msg.salvar}" action="#{pessoaBean.validaCadastro()}" />	
+								<p:commandButton value="#{msg.salvar}" action="#{pessoaBean.salva()}" />	
 							</td>
 						</tr>
 					</table>
@@ -159,14 +159,14 @@
 							<h:outputText value="#{msg.pessoa}" />
 						</p:column>
 						<p:column style="text-align: left;">
-							<h:inputText value="#{pessoaBean.pessoaFisica.nome}" rendered="#{pessoaBean.tipoPessoaPesquisa == 1}"/>
-							<h:inputText value="#{pessoaBean.pessoaJuridica.nome}" rendered="#{pessoaBean.tipoPessoaPesquisa == 2}"/>
+							<h:inputText value="#{pessoaBean.nome}" rendered="#{pessoaBean.tipoPessoaPesquisa == 1}"/>
+							<h:inputText value="#{pessoaBean.nome}" rendered="#{pessoaBean.tipoPessoaPesquisa == 2}"/>
 							<p:commandButton value="#{msg.pesquisar}" />
 						</p:column>
 					</p:row>
 				</p:panelGrid>
 				<p:dataTable value="#{pessoaBean.lstPessoaFisica}" var="lstPessoa" rows="10" paginator="true" paginatorPosition="bottom" rowKey="#{lstPessoa.rootId}"
-								selection="#{pessoaBean.pessoaFisica}" selectionMode="single" rendered="#{pessoaBean.tipoPessoaPesquisa == 1}">
+								selection="#{pessoaBean.pessoaFisicaSelecionada}" selectionMode="single" rendered="#{pessoaBean.tipoPessoaPesquisa == 1}">
 						<p:ajax event="rowSelect" listener="#{pessoaBean}" update=":cadastroPessoas" />
 					<p:column>
 						<f:facet name="header">
@@ -186,7 +186,7 @@
 					
 				</p:dataTable>
 				<p:dataTable value="#{pessoaBean.lstPessoaJuridica}" var="lstPessoa" rows="10" paginator="true" paginatorPosition="bottom" rowKey="#{lstPessoa.rootId}"
-								selection="#{pessoaBean.pessoaJuridica}" selectionMode="single" rendered="#{pessoaBean.tipoPessoaPesquisa == 2}">
+								selection="#{pessoaBean.pessoaJuridicaSelecionada}" selectionMode="single" rendered="#{pessoaBean.tipoPessoaPesquisa == 2}">
 						<p:ajax event="rowSelect" listener="#{pessoaBean}" update=":cadastroPessoas" />
 					<p:column>
 						<f:facet name="header">
