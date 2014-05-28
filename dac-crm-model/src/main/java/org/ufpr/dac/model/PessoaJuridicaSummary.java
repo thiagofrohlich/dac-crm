@@ -5,7 +5,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @XmlRootElement
-@JsonIgnoreProperties(ignoreUnknown=true)
 public class PessoaJuridicaSummary extends PessoaSummary {
 
 	private static final long serialVersionUID = 1L;
@@ -13,7 +12,7 @@ public class PessoaJuridicaSummary extends PessoaSummary {
 	private Long id;
 	private Boolean ativo;
 	private String cnpj;
-	private String email;
+	private String email="";
 	public Boolean getAtivo() {
 		return ativo;
 	}

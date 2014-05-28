@@ -2,10 +2,12 @@ package org.ufpr.dac.domain;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
@@ -29,7 +31,6 @@ public class Endereco implements Domain, Serializable {
 
 	@NotNull(message="org.ufpr.dac.cepMustNotBeNull")
 	@NotEmpty(message="org.ufpr.dac.cepMustNotBeNull")
-	@Size(min=9, max=9, message="org.ufpr.dac.cepMustHave9Digits")
 	private String cep;
 
 	@NotNull(message="org.ufpr.dac.cidadeMustNotBeNull")
@@ -53,9 +54,9 @@ public class Endereco implements Domain, Serializable {
 	@NotNull(message="org.ufpr.dac.paisMustNotBeNull")
 	@NotEmpty(message="org.ufpr.dac.paisMustNotBeNull")
 	private String pais;
-
-	@OneToOne
-	private Pessoa pessoa;
+	
+	@Column(name="pessoa_id")
+	private Long pessoaId;
 
 	public Endereco() {
 	}
@@ -124,12 +125,15 @@ public class Endereco implements Domain, Serializable {
 		this.pais = pais;
 	}
 
-	public Pessoa getPessoa() {
-		return this.pessoa;
+	public Long getPessoaId() {
+		return pessoaId;
 	}
 
-	public void setPessoa(Pessoa pessoa) {
-		this.pessoa = pessoa;
+	public void setPessoaId(Long pessoaId) {
+		this.pessoaId = pessoaId;
 	}
+
+	
+	
 
 }

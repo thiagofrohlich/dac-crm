@@ -12,8 +12,7 @@
 			<h:form id="relatorio">
 				<div style="margin:auto; width: 900px;">
 					<div style="clear:both;" class="center">
-						<h:outputText value="#{msg.relatorios}" 
-										style="font-size:13px; "/>
+						<h:outputText value="#{msg.relatorios}" styleClass="title"/>
 						
 					</div>
 					<p:outputPanel style="clear:both;" styleClass="center" id="formulario">
@@ -35,9 +34,10 @@
 									<h:outputText value="#{msg.data}: " />
 								</td>
 								<td>
-									<p:calendar locale="pt" showButtonPanel="false" navigator="true" value="#{relatorioBean.dataini}" pattern="dd/MM/yyyy"/>
+									<p:calendar locale="pt" showButtonPanel="false" navigator="true" value="#{relatorioBean.dataini}" pattern="dd/MM/yyyy" styleClass="inputDate"/>
 									<h:outputText value="#{msg.a}:" style="padding-left:5px;" />
-									<p:calendar locale="pt" showButtonPanel="false" navigator="true" value="#{relatorioBean.datafim}" style="padding-left:5px;" pattern="dd/MM/yyyy"/>
+									<p:calendar locale="pt" showButtonPanel="false" navigator="true" value="#{relatorioBean.datafim}" style="padding-left:5px;"
+												pattern="dd/MM/yyyy" styleClass="inputDate"/>
 								</td>
 							</tr>
 							<tr>
@@ -45,14 +45,14 @@
 									<h:outputText value="#{msg.pessoa}: " />
 								</td>
 								<td>
-									<h:inputText value="#{relatorioBean.pessoaFisica.cpf}" rendered="#{relatorioBean.tipoPesquisa == 1}" >
-										<p:ajax event="valueChange" listener="#{relatorioBean.buscaCliente()}" update=":relatorio:formulario" />
-									</h:inputText>
-									<h:inputText value="#{relatorioBean.pessoaJuridica.cnpj}" rendered="#{relatorioBean.tipoPesquisa == 2}" >
+									<p:inputMask mask="99.999.999/9999-99" value="#{relatorioBean.pessoaJuridica.cnpj}" rendered="#{relatorioBean.tipoPesquisa == 1}" styleClass="cnpj" >
 										<p:ajax event="valueChange" listener="#{relatorioBean.buscaFornecedor()}" update=":relatorio:formulario" />
-									</h:inputText>
-									<h:inputText value="#{relatorioBean.pessoaFisica.nome}" disabled="true" rendered="#{relatorioBean.tipoPesquisa == 1}"/>
-									<h:inputText value="#{relatorioBean.pessoaJuridica.nome}" disabled="true" rendered="#{relatorioBean.tipoPesquisa == 2}"/>
+									</p:inputMask>
+									<p:inputMask mask="999.999.999-99" value="#{relatorioBean.pessoaFisica.cpf}" rendered="#{relatorioBean.tipoPesquisa == 2}" styleClass="cpf">
+										<p:ajax event="valueChange" listener="#{relatorioBean.buscaCliente()}" update=":relatorio:formulario" />
+									</p:inputMask>
+									<h:outputText value="#{relatorioBean.pessoaJuridica.nome}" rendered="#{relatorioBean.tipoPesquisa == 1}" />
+									<h:outputText value="#{relatorioBean.pessoaFisica.nome}"  rendered="#{relatorioBean.tipoPesquisa == 2}" />
 									<p:commandButton icon="ui-icon-search" style="margin-left: 10px;" onclick="pessoamodal.show()"/>
 								</td>
 							</tr>
@@ -61,10 +61,10 @@
 									<h:outputText value="#{msg.produto}: " />
 								</td>
 								<td>
-									<h:inputText value="#{relatorioBean.produto.id}" >
-									<!-- ajax tag -->
+									<h:inputText value="#{relatorioBean.produto.id}" styleClass="cod">
+										<p:ajax event="valueChange" listener="#{relatorioBean.buscaProduto()}" update=":relatorio:formulario" />
 									</h:inputText>
-									<h:inputText value="#{relatorioBean.produto.descricao}" disabled="true"/>
+									<h:outputText value="#{relatorioBean.produto.descricao}" />
 									<p:commandButton icon="ui-icon-search" style="margin-left: 10px;" onclick="prodmodal.show()"/>
 								</td>
 							</tr>
@@ -75,60 +75,6 @@
 							</tr>
 						</table>
 					</p:outputPanel>
-					
-						<p:dataTable id="tableCompra" paginator="true" rows="10" paginatorPosition="bottom" rendered="true" value="#{relatorioBean.lstOperacao}" var="lst">
-							<f:facet name="header" >
-								<p:toolbar style="border:none;">
-									<p:toolbarGroup align="center">
-										<h:outputText value="#{msg.compras}" rendered="#{relatorioBean.tipoPesquisa == 1}"/>
-										<h:outputText value="#{msg.vendas}" rendered="#{relatorioBean.tipoPesquisa == 2}"/>
-									</p:toolbarGroup>
-								</p:toolbar>
-							</f:facet>
-							
-							<p:column>
-								<f:facet name="header">
-									<h:outputText value="#{msg.data}" />
-								</f:facet>
-								<h:outputText value="#{lst.dataOperacao}" />
-							</p:column>
-
-							<p:column>
-								<f:facet name="header">
-									<h:outputText value="#{msg.codigo}" />
-								</f:facet>
-								<h:outputText value="#{lst.id}" />
-							</p:column>
-
-							<p:column rendered="#{relatorioBean.tipoPesquisa == 1}">
-								<f:facet name="header">
-									<h:outputText value="#{msg.cnpj}" />
-								</f:facet>
-								<h:outputText value="#{lst.notaFiscal.pessoa.cnpj}" />
-							</p:column>
-
-							<p:column rendered="#{relatorioBean.tipoPesquisa == 2}">
-								<f:facet name="header">
-									<h:outputText value="#{msg.cpf}" />
-								</f:facet>
-								<h:outputText value="#{lst.notaFiscal.pessoa.cpf}" />
-							</p:column>
-
-							<p:column>
-								<f:facet name="header">
-									<h:outputText value="#{msg.fornecedor}" />
-								</f:facet>
-								<h:outputText value="#{lst.notaFiscal.pessoa.nome}" />
-							</p:column>
-							
-							<p:column>
-								<f:facet name="header">
-									<h:outputText value="#{msg.valor}" />
-								</f:facet>
-								<h:outputText value="#{lst.valorTotal}" />
-							</p:column>
-														
-						</p:dataTable>
 						
 					</div>
 				<p:dialog widgetVar="pessoamodal" closable="true" id="pessoaDialog">

@@ -35,7 +35,7 @@ public class OperacaoTransformer extends AbstractTransformer {
 				ProdutoNf nf = new ProdutoNf();
 				nf.setId(new ProdutoNfPK());
 				nf.getId().setProdutoId(pnf.getProdutoId());
-				nf.getId().setNotaFiscal(opDomain.getNotaFiscal());
+				nf.getId().setNotaFiscal(opDomain.getNotaFiscal().getId());
 				nf.setQuantidade(pnf.getQuantidade());
 				opDomain.getNotaFiscal().getProdutosNf().add(nf);
 			}
@@ -46,6 +46,15 @@ public class OperacaoTransformer extends AbstractTransformer {
 			OperacaoSummary op = (OperacaoSummary) objectTo;
 			op.setTipoOperacao(TipoOperacao.valueOf(opDomain.getTipoOperacao()));
 			transformNotaFiscalPessoa(opDomain, op);
+			op.getNotaFiscal().setProdutosNf(new ArrayList<ProdutoNfSummary>());
+			for(ProdutoNf pnf : opDomain.getNotaFiscal().getProdutosNf()){
+				ProdutoNfSummary pNfSummary = new ProdutoNfSummary();
+				pNfSummary.setNfId(pnf.getId().getNotaFiscal());
+				pNfSummary.setProdutoId(pnf.getId().getProdutoId());
+				pNfSummary.setQuantidade(pnf.getQuantidade());
+				op.getNotaFiscal().getProdutosNf().add(pNfSummary);
+			}
+			
 		}
 		
 		

@@ -11,39 +11,30 @@
 		<ui:define name="style">
 			<style type="text/css">
 				.dsc{width: 200px;}
-				.cod{width: 110px;}
 			</style>
 		</ui:define>
 		<ui:define name="centro">
 			<h:form id="compras">
 				<div style="margin:auto; width: 900px;">
 					<div style="clear:both;" class="center">
-						<h:outputText value="#{msg.compras}" 
-										style="font-size:13px; "/>
+						<h:outputText value="#{msg.compras}" styleClass="title"/>
 						
 					</div>
 					<p:panel style="float:left; min-width:755px;" styleClass="center noborder">
 						<div class="center" style="padding-top: 15px;">
 							<p:outputPanel id="panelTopo" style="float:left">
 								<table class="noborder">
-									<tr>
-										<td class="label">
-											<h:outputText value="#{msg.pedCompraNum}: " />
-										</td>
-										<td>
-											<h:inputText value="#{comprasBean.operacao.id}" disabled="true"/>
-										</td>
-									</tr>
+									
 									<tr>
 										<td class="label">
 											<h:outputText value="#{msg.fornecedor}: " />
 										</td>
 										<td>
-											<h:inputText value="#{comprasBean.fornecedor.cnpj}" styleClass="cod">
+											<p:inputMask mask="99.999.999/9999-99" value="#{comprasBean.fornecedor.cnpj}" styleClass="cnpj">
 												<p:ajax event="valueChange" listener="#{comprasBean.buscaFornecedor()}" update=":compras:panelTopo" />
-											</h:inputText>
-											<h:inputText value="#{comprasBean.fornecedor.nome}" disabled="true" />
-											<p:commandButton icon="ui-icon-search" onclick="pessoaDialog.show()"/>
+											</p:inputMask>
+											<h:outputText value="#{comprasBean.fornecedor.nome}" />
+											<p:commandButton icon="ui-icon-search" onclick="pessoaDialog.show()" styleClass="marginLeft"/>
 										</td>
 									</tr>
 								</table>
@@ -56,10 +47,10 @@
 									style="float:left;clear:both; min-width:755px;">
 							<div style="float: left;">
 								<h:outputText value="#{msg.codigo}: " />								
-								<h:inputText value="#{comprasBean.produto.id}"  >
+								<h:inputText value="#{comprasBean.produto.id}"  styleClass="cod">
 									<p:ajax event="valueChange" listener="#{comprasBean.buscaProduto()}" update=":compras:panelProduto :compras:panelTable"/>
 								</h:inputText>
-								<p:commandButton icon="ui-icon-search" onclick="prodDialog.show()"/>
+								<p:commandButton icon="ui-icon-search" onclick="prodDialog.show()" styleClass="marginLeft"/>
 								<h:outputText value="#{msg.descricao}: " style="margin-left:20px;"/>
 								<h:outputText value="#{comprasBean.produto.descricao}" />
 							</div>
@@ -72,13 +63,13 @@
 										<h:outputText value="#{msg.qtdEstoque}: " />
 									</td>
 									<td>
-										<h:inputText value="#{comprasBean.produto.estoque}" disabled="true"/>
+										<h:outputText value="#{comprasBean.produto.estoque}" />
 									</td>
 									<td class="label">
 										<h:outputText value="#{msg.precoCompra}: " />
 									</td>
 									<td>
-										<h:inputText value="#{comprasBean.produto.valorCompra}"  disabled="true"/>
+										<h:outputText value="#{comprasBean.produto.valorCompra}"  />
 									</td>
 								</tr>
 								<tr>
@@ -86,13 +77,10 @@
 										<h:outputText value="#{msg.quantidade}: " />
 									</td>
 									<td>
-										<h:inputText value="#{comprasBean.produto.qtd}"  />
+										<h:inputText value="#{comprasBean.produto.qtd}" styleClass="cod" />
 									</td>
 									<td class="label">
 										<p:commandButton value="#{msg.lancar}" action="#{comprasBean.lancar()}" update=":compras"/>
-									</td>
-									<td>
-										<p:commandButton value="#{msg.cancelar}"  />
 									</td>
 								</tr>
 							</table>

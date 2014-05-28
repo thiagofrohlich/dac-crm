@@ -89,4 +89,12 @@ public class Operacao implements Domain, Serializable {
 		this.notaFiscal = notaFiscal;
 	}
 
+	public Date getDataOperacao() {
+		return dataOperacao;
+	}
+
+	public void setDataOperacao(Date dataOperacao) {
+		this.dataOperacao = dataOperacao;
+	}
+
 }

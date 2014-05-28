@@ -12,7 +12,7 @@ public class PessoaFisicaSummary extends PessoaSummary {
 	private Long id;
 	private String cpf;
 	private Date dataNascimento;
-	private String email;
+	private String email="";
 	
 	public String getCpf() {
 		return cpf;

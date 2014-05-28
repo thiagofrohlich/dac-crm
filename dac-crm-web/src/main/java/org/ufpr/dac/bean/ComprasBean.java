@@ -2,15 +2,26 @@ package org.ufpr.dac.bean;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 
 import org.ufpr.dac.model.OperacaoSummary;
 import org.ufpr.dac.model.PessoaJuridicaSummary;
@@ -108,9 +119,16 @@ public class ComprasBean implements Serializable{
 			operacao.setValorTotal(subTotal.doubleValue());
 			operacao.setDataOperacao(Calendar.getInstance().getTime());
 			try{
-				operacaoService.create(operacao);
+				operacao = operacaoService.create(operacao);
 				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "INFO", rb.getString("salvaCompra")));
+				SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmmss");  
+				String id = format.format(new Date());
+				Map<String, Object> map = montaMapa();
+				JasperReport pathRxml = JasperCompileManager.compileReport("D:/repo/dac/dac-crm/dac-crm-web/relatorios/dacre.jrxml");
+				JasperPrint printReport = JasperFillManager.fillReport(pathRxml, map, new JRBeanCollectionDataSource(lstProdutos));
+				JasperExportManager.exportReportToPdfFile(printReport,"D:/repo/dac/dac-crm/dac-crm-services/relatorios/relatorio"+id+".pdf");
 			}catch(Exception e){
+				e.printStackTrace();
 				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "INFO", rb.getString("erroCompra")));
 			}
 		}
@@ -124,6 +142,20 @@ public class ComprasBean implements Serializable{
 			fornecedor = (new PessoaJuridicaSummary());
 			fornecedor.setNome(rb.getString("naoEncontrado"));
 		}
+	}
+	
+	public Map<String, Object> montaMapa(){
+		Map<String, Object> map = new HashMap<>();
+		map.put("nome", operacao.getNotaFiscal().getPessoa().getNome());
+		map.put("numero", operacao.getNotaFiscal().getId());
+		map.put("doc", fornecedor.getCnpj());
+		map.put("endereco", fornecedor.getEndereco().getEndereco());
+		map.put("cidade", fornecedor.getEndereco().getCidade());
+		map.put("complemento", fornecedor.getEndereco().getComplemento());
+		map.put("cep", fornecedor.getEndereco().getCep());
+		map.put("uf", fornecedor.getEndereco().getEstado());
+		map.put("vlrTotal", operacao.getValorTotal());
+		return map;
 	}
 	
 	public void buscaProduto(){

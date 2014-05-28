@@ -12,7 +12,7 @@
 		<ui:define name="style">
 			<style type="text/css">
 				.dsc{width: 200px;}
-				.cod{width: 115px;}
+				
 			</style>
 		</ui:define>
 	
@@ -20,7 +20,7 @@
 			<h:form id="cadastroProduto">
 				<div style="clear:both;" class="center">
 				<p:messages showDetail="true" autoUpdate="true"  />
-					<h:outputText value="#{msg.cadastro} #{msg.de} #{msg.produtos}" style="font-size:13px; "/>
+					<h:outputText value="#{msg.cadastro} #{msg.de} #{msg.produtos}" styleClass="title"/>
 					<p:commandButton icon="ui-icon-search" style="margin-left: 10px;" onclick="prodmodal.show()" type="button"/>
 				</div>
 				<p:outputPanel styleClass="center" style="padding-top: 15px;" id="formulario">
@@ -38,7 +38,7 @@
 								<h:outputText value="#{msg.quantidade}: " />
 							</td>
 							<td>
-								<h:inputText value="#{produtoBean.produto.estoque}" styleClass="dsc"/>
+								<h:inputText value="#{produtoBean.produto.estoque}" styleClass="cod"/>
 							</td>
 						</tr>
 						<tr>
@@ -47,12 +47,12 @@
 							</td>
 							<td>
 								<p:outputPanel id="cnpj">
-									<p:inputMask  value="#{produtoBean.produto.fornecedor.cnpj}" styleClass="cod" mask="99.999.999/9999-99">
+									<p:inputMask  value="#{produtoBean.produto.fornecedor.cnpj}" styleClass="cnpj" mask="99.999.999/9999-99">
 										<stella:validateCNPJ formatted="true" />
 										<p:ajax event="valueChange" listener="#{produtoBean.buscaFornecedor()}" update=":cadastroProduto:cnpj" />
 									</p:inputMask>
-									<h:inputText value="#{produtoBean.produto.fornecedor.nome}" disabled="true" />
-									<p:commandButton icon="ui-icon-search" onclick="pessoamodal.show()" type="button"/>
+									<h:outputText value="#{produtoBean.produto.fornecedor.nome}" disabled="true" />
+									<p:commandButton icon="ui-icon-search" onclick="pessoamodal.show()" type="button" styleClass="marginLeft"/>
 								</p:outputPanel>
 							</td>
 						</tr>
@@ -61,7 +61,7 @@
 								<h:outputText value="#{msg.valorCompra}: " />
 							</td>
 							<td>
-								<h:inputText value="#{produtoBean.produto.valorCompra}" styleClass="dsc"/>	
+								<h:inputText value="#{produtoBean.produto.valorCompra}" styleClass="cod"/>	
 							</td>
 						</tr>
 						<tr>
@@ -69,7 +69,7 @@
 								<h:outputText value="#{msg.valorVenda}: " />
 							</td>
 							<td>
-								<h:inputText value="#{produtoBean.produto.valorVenda}" styleClass="dsc"/>	
+								<h:inputText value="#{produtoBean.produto.valorVenda}" styleClass="cod"/>	
 							</td>
 						</tr>
 						<tr>

@@ -33,7 +33,6 @@ public class NotaFiscal implements Domain, Serializable {
 
 	@OneToMany(mappedBy="id.notaFiscal", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 	@NotNull(message="org.ufpr.dac.produtosNfCannotBeNull")
-//	@NotEmpty(message="org.ufpr.dac.produtosNfCannotBeNull")
 	private List<ProdutoNf> produtosNf;
 
 	public NotaFiscal() {
@@ -73,7 +72,7 @@ public class NotaFiscal implements Domain, Serializable {
 
 	public ProdutoNf addProdutoNf(ProdutoNf produtoNf) {
 		getProdutosNf().add(produtoNf);
-		produtoNf.getId().setNotaFiscal(this);
+		produtoNf.getId().setNotaFiscal(this.id);
 
 		return produtoNf;
 	}

@@ -1,17 +1,33 @@
 package org.ufpr.dac.wrapper;
 
+import java.io.Serializable;
 import java.util.List;
+
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAnyElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlSeeAlso;
 
 import org.springframework.data.domain.Page;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+@XmlRootElement
+@XmlAccessorType (XmlAccessType.FIELD)
+@XmlSeeAlso({OperacaoWrapper.class, PessoaWrapper.class, ProdutoWrapper.class, UsuarioWrapper.class})
 
-public abstract class Wrapper<T> {
+public abstract class Wrapper<T> implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Long returnedQuantity;
 	private Long foundQuantity;
 	private Long currentPage;
 	private Long totalPages;
+	@XmlAnyElement
+	@XmlElementWrapper
 	private List<T> list;
 	
 	public Wrapper(){}
@@ -21,6 +37,9 @@ public abstract class Wrapper<T> {
 		foundQuantity = page.getTotalElements();
 		currentPage = (long) page.getNumber();
 		totalPages = (long) page.getTotalPages();
+	}
+	public Wrapper(List<T> lista){
+		this.list = lista; 
 	}
 	
 	public Long getReturnedQuantity() {

@@ -51,10 +51,9 @@ public class PessoaDomainBuilder {
 		Pessoa pessoa = asPessoa();
 		PessoaFisica pf = new PessoaFisica();
 		pf.setCpf(cpf);
-		pf.setDataNascimento(dataNascimento);
 		pf.setEmail(email);
 		pf.setId(id);
-		pf.setPessoa(pessoa);
+		pf.setPessoa(pessoa.getRootId());
 		
 		pessoa.setPessoaFisica(pf);
 		return persist(pessoa);
@@ -66,7 +65,7 @@ public class PessoaDomainBuilder {
 		pj.setAtivo(ativo);
 		pj.setCnpj(cnpj);
 		pj.setId(id);
-		pj.setPessoa(pessoa);
+		pj.setPessoa(pessoa.getRootId());
 		
 		pessoa.setPessoaJuridica(pj);
 		return persist(pessoa);

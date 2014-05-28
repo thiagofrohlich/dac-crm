@@ -1,16 +1,30 @@
 package org.ufpr.dac.bean;
 
+import java.io.File;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.ResponseBuilder;
+
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 
 import org.ufpr.dac.model.OperacaoSummary;
 import org.ufpr.dac.model.PessoaFisicaSummary;
@@ -104,19 +118,34 @@ public class VendasBean implements Serializable{
 		return ret;
 	}
 	
-	public void salva(){
+	public Response salva(){
 		if(validaVenda()){
 			operacao.setTipoOperacao(TipoOperacao.VENDA);
 			operacao.getNotaFiscal().setPessoa(cliente);
 			operacao.setValorTotal(subTotal.doubleValue());
 			operacao.setDataOperacao(Calendar.getInstance().getTime());
 			try{
-				operacaoService.create(operacao);
+				operacao = operacaoService.create(operacao);
 				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "INFO", rb.getString("salvaCompra")));
+				SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmmss");  
+				String id = format.format(new Date());
+				Map<String, Object> map = montaMapa();
+				
+				JasperReport pathRxml = JasperCompileManager.compileReport("D:/repo/dac/dac-crm/dac-crm-web/relatorios/vendas.jrxml");
+				JasperPrint printReport = JasperFillManager.fillReport(pathRxml, map, new JRBeanCollectionDataSource(lstProdutos));
+				JasperExportManager.exportReportToPdfFile(printReport,"D:/repo/dac/dac-crm/dac-crm-services/relatorios/relatorio"+id+".pdf");
+				File file = new File("D:/repo/dac/dac-crm/dac-crm-services/relatorios/relatorio"+id+".pdf");
+				 
+				ResponseBuilder response = Response.ok((Object) file);
+				response.header("Content-Disposition",
+						"attachment; filename=new-android-book.pdf");
+				return response.build();
 			}catch(Exception e){
 				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "INFO", rb.getString("erroCompra")));
+				return null;
 			}
 		}
+		return null;
 	}
 	
 	public void buscaCliente(){
@@ -127,6 +156,20 @@ public class VendasBean implements Serializable{
 			cliente = (new PessoaFisicaSummary());
 			cliente.setNome(rb.getString("naoEncontrado"));
 		}
+	}
+	
+	public Map<String, Object> montaMapa(){
+		Map<String, Object> map = new HashMap<>();
+		map.put("nome", operacao.getNotaFiscal().getPessoa().getNome());
+		map.put("numero", operacao.getNotaFiscal().getId());
+		map.put("doc", cliente.getCpf());
+		map.put("endereco", cliente.getEndereco().getEndereco());
+		map.put("cidade", cliente.getEndereco().getCidade());
+		map.put("complemento", cliente.getEndereco().getComplemento());
+		map.put("cep", cliente.getEndereco().getCep());
+		map.put("uf", cliente.getEndereco().getEstado());
+		map.put("vlrTotal", operacao.getValorTotal());
+		return map;
 	}
 	
 	public void buscaProduto(){

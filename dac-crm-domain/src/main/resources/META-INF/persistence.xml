@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
-	<persistence-unit name="dac-crm-domain">
+	<persistence-unit name="dac-crm-domain" >
 		<class>org.ufpr.dac.domain.Endereco</class>
 		<class>org.ufpr.dac.domain.NotaFiscal</class>
 		<class>org.ufpr.dac.domain.Operacao</class>

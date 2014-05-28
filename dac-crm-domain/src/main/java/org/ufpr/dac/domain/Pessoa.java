@@ -10,6 +10,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -17,6 +18,8 @@ import javax.persistence.SequenceGenerator;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.validator.constraints.NotEmpty;
 
 
@@ -41,17 +44,19 @@ public class Pessoa implements Domain, Serializable {
 	
 	
 	private String telefone;
-
-	@OneToOne(mappedBy="pessoa", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	
+	@JoinColumn(name="id", referencedColumnName="pessoa_id")
+	@OneToOne( cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 	private Endereco endereco;
 
-	@OneToMany(mappedBy="pessoa")
-	private List<NotaFiscal> notaFiscals;
-
-	@OneToOne(mappedBy="pessoa", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	/*@OneToMany(mappedBy="pessoa" )
+	private List<NotaFiscal> notaFiscals;*/
+	@JoinColumn(name="id", referencedColumnName="pessoa_id")
+	@OneToOne( cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 	private PessoaFisica pessoaFisica;
 
-	@OneToOne(mappedBy="pessoa", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	@JoinColumn(name="id", referencedColumnName="pessoa_id")
+	@OneToOne( cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 	private PessoaJuridica pessoaJuridica;
 
 	@OneToOne(mappedBy="pessoaUsuario")
@@ -76,7 +81,7 @@ public class Pessoa implements Domain, Serializable {
 		this.nome = nome;
 	}
 
-	public List<NotaFiscal> getNotaFiscals() {
+	/*public List<NotaFiscal> getNotaFiscals() {
 		return this.notaFiscals;
 	}
 
@@ -97,7 +102,7 @@ public class Pessoa implements Domain, Serializable {
 
 		return notaFiscal;
 	}
-
+*/
 	public Endereco getEndereco() {
 		return endereco;
 	}

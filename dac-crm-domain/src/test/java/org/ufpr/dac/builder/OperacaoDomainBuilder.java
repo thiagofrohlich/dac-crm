@@ -82,7 +82,7 @@ public class OperacaoDomainBuilder {
 	private ProdutoNf makeDefaultProdutoNf(Long nfId) {
 		ProdutoNf produtoNf = new ProdutoNf();
 		produtoNf.setId(new ProdutoNfPK());
-		produtoNf.getId().setNfId(nfId);
+		produtoNf.getId().setNotaFiscal(nfId);
 		produtoNf.getId().setProdutoId(new Date().getTime());
 		return produtoNf;
 	}

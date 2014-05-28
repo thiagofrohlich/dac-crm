@@ -16,9 +16,9 @@ public class ProdutoNfPK implements Domain, Serializable {
 	@Column(name="produto_id", insertable=false, updatable=false)
 	private Long produtoId;
 
-	@ManyToOne
-	@JoinColumn(name="nf_id",referencedColumnName="id")
-	private NotaFiscal notaFiscal;
+	@JoinColumn(name="nf_id" , referencedColumnName="id", table="NotaFiscal")
+	@Column(name="nf_id")
+	private Long notaFiscal;
 
 	public ProdutoNfPK() {
 	}
@@ -28,10 +28,10 @@ public class ProdutoNfPK implements Domain, Serializable {
 	public void setProdutoId(Long produtoId) {
 		this.produtoId = produtoId;
 	}
-	public NotaFiscal getNotaFiscal() {
+	public Long getNotaFiscal() {
 		return notaFiscal;
 	}
-	public void setNotaFiscal(NotaFiscal notaFiscal) {
+	public void setNotaFiscal(Long notaFiscal) {
 		this.notaFiscal = notaFiscal;
 	}
 	@Override

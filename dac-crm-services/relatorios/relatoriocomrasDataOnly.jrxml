@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="relatoriocomrasDataOnly" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d38a4cbf-408f-4061-93ee-5badfd620583">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="ireport.callouts" value="##Sat May 17 18:43:55 BRT 2014"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#FFBFBF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="dataset1" uuid="a6f692e3-2bee-455a-be5e-f1f33e46ebe9">
+		<parameter name="dataini" class="java.util.Date">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<parameter name="datafim" class="java.util.Date">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<queryString>
+			<![CDATA[Select o.id, o.valor_total, o.data_operacao, pj.cnpj, p.nome from operacao o
+inner join nota_fiscal nf on o.nf_id = nf.id
+inner join pessoa_juridica pj on pj.id = nf.pessoa_id
+inner join pessoa p on p.id = pj.pessoa_id
+where o.data_operacao between $P{dataini} and $P{datafim}
+order by o.data_operacao asc]]>
+		</queryString>
+		<field name="id" class="java.lang.Integer"/>
+		<field name="valor_total" class="java.lang.Double"/>
+		<field name="data_operacao" class="java.sql.Date"/>
+		<field name="cnpj" class="java.lang.String"/>
+		<field name="nome" class="java.lang.String"/>
+	</subDataset>
+	<parameter name="dataini" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="datafim" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="titulo" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[Select o.id, o.valor_total, o.data_operacao, pj.cnpj, p.nome from operacao o
+inner join nota_fiscal nf on o.nf_id = nf.id
+inner join pessoa_juridica pj on pj.id = nf.pessoa_id
+inner join pessoa p on p.id = pj.pessoa_id
+where o.data_operacao between $P{dataini} and $P{datafim}
+order by o.data_operacao asc]]>
+	</queryString>
+	<field name="id" class="java.lang.Long"/>
+	<field name="valor_total" class="java.lang.Double"/>
+	<field name="data_operacao" class="java.sql.Date"/>
+	<field name="cnpj" class="java.lang.String"/>
+	<field name="nome" class="java.lang.String"/>
+	<title>
+		<band height="54" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="11" width="84" height="20" uuid="827be3a5-a056-4ecb-aa31-03e627d23699"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[Relatório de:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="84" y="11" width="100" height="20" uuid="87b94d84-1e93-425d-b2b2-b1488a44bbf2"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{titulo}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="27">
+			<staticText>
+				<reportElement x="0" y="7" width="100" height="20" uuid="23f6d53d-c7ce-454b-bc6d-e6c4af5eb643"/>
+				<text><![CDATA[data operacao]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="100" y="7" width="68" height="20" uuid="54d35ae5-298f-4f87-9e42-c6087b55778c"/>
+				<text><![CDATA[código]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="455" y="7" width="100" height="20" uuid="ac009d9c-1029-436c-9318-d85b36e1aa6c"/>
+				<text><![CDATA[valor total]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="281" y="7" width="174" height="20" uuid="8e82ccdd-c7c8-4ced-936f-a97b959cb7aa"/>
+				<text><![CDATA[Nome]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="168" y="7" width="113" height="20" uuid="d8d1e2c7-46c1-46c1-838c-c3adf8a897b9"/>
+				<text><![CDATA[CNPJ]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="25" splitType="Stretch">
+			<elementGroup/>
+			<textField>
+				<reportElement x="0" y="0" width="100" height="20" uuid="657a0541-42d3-4551-b028-62168330e011"/>
+				<textFieldExpression><![CDATA[$F{data_operacao}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="100" y="0" width="68" height="20" uuid="23b732e1-ec0b-4920-a3ea-02d438adc573"/>
+				<textFieldExpression><![CDATA[$F{id}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="168" y="0" width="113" height="20" uuid="aa733262-7a6c-4bc1-a2f7-26683eb92626"/>
+				<textFieldExpression><![CDATA[$F{cnpj}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="281" y="0" width="174" height="20" uuid="cef01abc-923d-4655-afc2-1e4157103335"/>
+				<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="455" y="0" width="100" height="20" uuid="27b7edf1-aae9-46b3-9873-a3708f5ae595"/>
+				<textFieldExpression><![CDATA[$F{valor_total}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="26">
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="0" y="0" width="100" height="20" uuid="7c85dc25-00ac-4da0-8401-9a5e47beca92"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="222" y="0" width="100" height="20" uuid="581d0b51-6323-4273-9fe8-e5787e54d406"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="HH.mm">
+				<reportElement x="455" y="0" width="100" height="20" uuid="1096a38c-34bd-45d9-9829-4b90f6bec0ef"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

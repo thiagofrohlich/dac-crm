@@ -12,32 +12,24 @@
 			<h:form id="vendas">
 				<div style="margin:auto; width: 900px;">
 					<div style="clear:both;" class="center">
-						<h:outputText value="#{msg.vendas}" 
-										style="font-size:13px; "/>
+						<h:outputText value="#{msg.vendas}" styleClass="title"/>
 						
 					</div>
 					<p:panel style="float:left; " styleClass="center noborder">
 						<div class="center" style="padding-top: 15px;">
 							<p:outputPanel style="float:left" id="panelCliente">
 								<table class="noborder">
-									<tr>
-										<td class="label">
-											<h:outputText value="#{msg.pedVendaNum}: " />
-										</td>
-										<td>
-											<h:inputText value="#{vendasBean.operacao.id}" disabled="true"/>
-										</td>
-									</tr>
+									
 									<tr>
 										<td class="label">
 											<h:outputText value="#{msg.cliente}: " />
 										</td>
 										<td>
-											<h:inputText value="#{vendasBean.cliente.cpf}" >
+											<p:inputMask mask="999.999.999-99" value="#{vendasBean.cliente.cpf}" styleClass="cpf">
 												<p:ajax event="valueChange" listener="#{vendasBean.buscaCliente()}" update=":vendas:panelCliente" />
-											</h:inputText>
-											<h:inputText value="#{vendasBean.cliente.nome}" disabled="true" />
-											<p:commandButton icon="ui-icon-search" onclick="pessoaDialog.show()"/>
+											</p:inputMask>
+											<h:outputText value="#{vendasBean.cliente.nome}" />
+											<p:commandButton icon="ui-icon-search" onclick="pessoaDialog.show()" styleClass="marginLeft"/>
 										</td>
 									</tr>
 								</table>
@@ -49,10 +41,10 @@
 									style="float:left;clear:both; min-width:755px;" id="fieldSetProd">
 							<div style="float: left;">
 								
-								<h:inputText value="#{vendasBean.produto.id}"  >
+								<h:inputText value="#{vendasBean.produto.id}"  styleClass="cod">
 									<p:ajax event="valueChange" listener="#{vendasBean.buscaProduto()}" update=":vendas:fieldSetProd :vendas:fieldSetTable"/>
 								</h:inputText>
-								<p:commandButton icon="ui-icon-search" onclick="prodDialog.show()"/>
+								<p:commandButton icon="ui-icon-search" onclick="prodDialog.show()" styleClass="marginLeft"/>
 								<h:outputText value="#{msg.descricao}: " style="margin-left:20px;"/>
 								<h:outputText value="#{vendasBean.produto.descricao}" />
 							</div>
@@ -65,13 +57,13 @@
 										<h:outputText value="#{msg.qtdEstoque}: " />
 									</td>
 									<td>
-										<h:inputText value="#{vendasBean.produto.estoque}" disabled="true"/>
+										<h:outputText value="#{vendasBean.produto.estoque}" />
 									</td>
 									<td class="label">
 										<h:outputText value="#{msg.precoVenda}: " />
 									</td>
 									<td>
-										<h:inputText value="#{vendasBean.produto.valorVenda}"  disabled="true"/>
+										<h:outputText value="#{vendasBean.produto.valorVenda}"  />
 									</td>
 								</tr>
 								<tr>
@@ -79,14 +71,12 @@
 										<h:outputText value="#{msg.quantidade}: " />
 									</td>
 									<td>
-										<h:inputText value="#{vendasBean.produto.qtd}"  />
+										<h:inputText value="#{vendasBean.produto.qtd}"  styleClass="cod"/>
 									</td>
 									<td class="label">
 										<p:commandButton value="#{msg.lancar}" action="#{vendasBean.lancar()}" update=":vendas" />
 									</td>
-									<td>
-										<p:commandButton value="#{msg.cancelar}"  />
-									</td>
+									
 								</tr>
 							</table>
 							<p:dataTable value="#{vendasBean.lstProdutos}" var="lstProd" rows="10" paginator="true" id="tableProd" 

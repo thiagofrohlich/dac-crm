@@ -11,7 +11,7 @@ public abstract class PessoaSummary implements Summary {
 	
 	protected Long rootId;
 	protected String nome;
-	protected String telefone;
+	protected String telefone="";
 	protected EnderecoSummary endereco = new EnderecoSummary();
 	
 	

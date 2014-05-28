@@ -1,7 +1,6 @@
 package org.ufpr.dac.bean;
 
 import java.io.Serializable;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -10,6 +9,8 @@ import java.util.ResourceBundle;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletResponse;
 
 import org.ufpr.dac.model.OperacaoSummary;
 import org.ufpr.dac.model.PessoaFisicaSummary;
@@ -74,8 +75,26 @@ public class RelatorioBean implements Serializable{
 		String fim = "";
 		ini = f.format(dataini);
 		fim = f.format(datafim);
-		if(tipoPesquisa == 1) lstOperacao = operacaoService.getCompras(ini, fim, pessoaJuridica.getCnpj(), produto.getId()).getList();
-		else lstOperacao = operacaoService.getVendas(dataini, datafim, pessoaFisica.getCpf(), produto.getId()).getList();
+		byte[] bt = null;
+	
+		if(tipoPesquisa == 1) bt = operacaoService.getCompras(ini, fim, pessoaJuridica.getCnpj(), produto.getId());
+		else bt = operacaoService.getVendas(dataini, datafim, pessoaFisica.getCpf(), produto.getId());
+		try{
+			FacesContext context = FacesContext.getCurrentInstance();  
+			HttpServletResponse response = (HttpServletResponse) context.getExternalContext().getResponse();  
+			response.reset();  
+			response.setContentType("application/pdf");  
+			response.setHeader("Content-Disposition", "attachment; filename=Relatorio.pdf");  
+			response.setHeader("Cache-Control", "no-cache");  
+			response.getOutputStream().write(bt);  
+			response.getOutputStream().flush();  
+			response.getOutputStream().close();  
+			context.responseComplete();  
+			dataini = null;
+			datafim = null;
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 	}
 	
 	public void confirmaCampos(){
