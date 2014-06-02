@@ -13,27 +13,18 @@ public class ProdutoNfPK implements Domain, Serializable {
 	//default serial version id, required for serializable classes.
 	private static final long serialVersionUID = 1L;
 
-	@Column(name="produto_id", insertable=false, updatable=false)
+	
+	@Column(name="produto_id")
 	private Long produtoId;
 
-	@JoinColumn(name="nf_id" , referencedColumnName="id", table="NotaFiscal")
+	@JoinColumn(name="nf_id" , referencedColumnName="id")
 	@Column(name="nf_id")
 	private Long notaFiscal;
 
 	public ProdutoNfPK() {
 	}
-	public Long getProdutoId() {
-		return this.produtoId;
-	}
-	public void setProdutoId(Long produtoId) {
-		this.produtoId = produtoId;
-	}
-	public Long getNotaFiscal() {
-		return notaFiscal;
-	}
-	public void setNotaFiscal(Long notaFiscal) {
-		this.notaFiscal = notaFiscal;
-	}
+	
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -64,6 +55,22 @@ public class ProdutoNfPK implements Domain, Serializable {
 		} else if (!produtoId.equals(other.produtoId))
 			return false;
 		return true;
+	}
+	public void setNotaFiscal(Long notaFiscal) {
+		this.notaFiscal = notaFiscal;
+	}
+	public Long getNotaFiscal() {
+		return notaFiscal;
+	}
+
+
+	public Long getProdutoId() {
+		return produtoId;
+	}
+
+
+	public void setProdutoId(Long produtoId) {
+		this.produtoId = produtoId;
 	}
 	
 }

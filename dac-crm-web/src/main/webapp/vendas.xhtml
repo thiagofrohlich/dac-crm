@@ -29,7 +29,7 @@
 												<p:ajax event="valueChange" listener="#{vendasBean.buscaCliente()}" update=":vendas:panelCliente" />
 											</p:inputMask>
 											<h:outputText value="#{vendasBean.cliente.nome}" />
-											<p:commandButton icon="ui-icon-search" onclick="pessoaDialog.show()" styleClass="marginLeft"/>
+											<p:commandButton icon="ui-icon-search" onclick="pessoamodal.show()" styleClass="marginLeft" type="button"/>
 										</td>
 									</tr>
 								</table>
@@ -129,13 +129,13 @@
 							</p:column>
 							<p:column style="text-align: left;">
 								<h:inputText value="#{pessoaBean.nome}" />
-								<p:commandButton value="#{msg.pesquisar}" />
+								<p:commandButton value="#{msg.pesquisar}" action="#{pessoaBean.pesquisaPessoaFisica()}" update=":vendas:pfTable"/>
 							</p:column>
 						</p:row>
 					</p:panelGrid>
 					<p:dataTable value="#{pessoaBean.lstPessoaFisica}" var="lstPessoa" rows="10" paginator="true" paginatorPosition="bottom" rowKey="#{lstPessoa.rootId}"
-									selection="#{pessoaBean.pessoaFisicaSelecionada}" selectionMode="single">
-							<p:ajax event="rowSelect" listener="#{pessoaBean}" update="@form" />
+									selection="#{vendasBean.clienteSelecionado}" selectionMode="single" id="pfTable">
+							<p:ajax event="rowSelect" listener="#{vendasBean.onSelectPessoa()}" update="@form" />
 						<p:column>
 							<f:facet name="header">
 								<h:outputText value="#{msg.nome}" />
@@ -161,13 +161,13 @@
 							</p:column>
 							<p:column style="text-align: left;">
 								<h:inputText value="#{produtoBean.produto.descricao}" />
-								<p:commandButton value="#{msg.pesquisar}" />
+								<p:commandButton value="#{msg.pesquisar}" action="#{produtoBean.pesquisaProduto()}" update=":vendas:prodTable"/>
 							</p:column>
 						</p:row>
 					</p:panelGrid>
 					<p:dataTable value="#{produtoBean.lstProd}" var="lstProd" rows="10" paginator="true" paginatorPosition="bottom" rowKey="#{lstProd.id}"
-									selection="#{produtoBean.prodDialog}" selectionMode="single">
-							<p:ajax event="rowSelect" listener="#{produtoBean}" update="@form" />
+									selection="#{vendasBean.prodSelecionado}" selectionMode="single" id="prodTable">
+							<p:ajax event="rowSelect" listener="#{vendasBean.onSelectProd()}" update="@form" />
 						<p:column style="text-align: left;">
 							<f:facet name="header">
 								<h:outputText value="#{msg.nome}" />

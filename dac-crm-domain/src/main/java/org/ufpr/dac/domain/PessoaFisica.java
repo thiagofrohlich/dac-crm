@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -35,10 +36,9 @@ public class PessoaFisica implements Domain, Serializable {
 
 	
 	private String email;
-	
-	@JoinColumn(name="pessoa_id", referencedColumnName="rootId", table="Pessoa")
-	@Column(name="pessoa_id")
-	private Long pessoa;
+	@OneToOne
+	@JoinColumn(name="pessoa_id", referencedColumnName="id")
+	private Pessoa pessoa;
 
 	public PessoaFisica() {
 	}
@@ -69,11 +69,7 @@ public class PessoaFisica implements Domain, Serializable {
 		this.email = email;
 	}
 
-	public Long getPessoa() {
-		return this.pessoa;
-	}
-
-	public void setPessoa(Long pessoa) {
+	public void setPessoa(Pessoa pessoa) {
 		this.pessoa = pessoa;
 	}
 

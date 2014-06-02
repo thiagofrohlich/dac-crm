@@ -5,10 +5,7 @@ import java.util.Date;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 @XmlRootElement
-@JsonIgnoreProperties(ignoreUnknown=true)
 public class OperacaoSummary implements Summary, Serializable{
 
 	private static final long serialVersionUID = 1L;

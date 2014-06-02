@@ -31,7 +31,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.ufpr.dac.domain.Operacao;
+import org.ufpr.dac.domain.ProdutoNf;
+import org.ufpr.dac.domain.ProdutoNfPK;
 import org.ufpr.dac.model.OperacaoSummary;
+import org.ufpr.dac.model.ProdutoNfSummary;
 import org.ufpr.dac.model.RelatorioSummary;
 import org.ufpr.dac.repository.OperacaoRepository;
 import org.ufpr.dac.wrapper.OperacaoWrapper;
@@ -173,6 +176,12 @@ public class OperacaoController {
 	public OperacaoSummary create(@RequestBody OperacaoSummary operacao) throws IllegalArgumentException, IllegalAccessException, InstantiationException, InvocationTargetException {
 		return saveOrUpdate(operacao);
 	}
+	
+	@ResponseBody
+	@RequestMapping(value="/long", method=RequestMethod.POST)
+	public Long createReturningLong(@RequestBody OperacaoSummary operacao) throws IllegalArgumentException, IllegalAccessException, InstantiationException, InvocationTargetException {
+		return saveOrUpdate(operacao).getNotaFiscal().getId();
+	}
 
 	@ResponseBody
 	@RequestMapping(method=RequestMethod.PUT)
@@ -192,9 +201,19 @@ public class OperacaoController {
 		operacaoTransformer.transform(operacao, op);
 		
 		op = operacaoRepository.save(op);
+		op.getNotaFiscal().setProdutosNf(new ArrayList<ProdutoNf>());
+		for(ProdutoNfSummary pnf : operacao.getNotaFiscal().getProdutosNf()){
+			ProdutoNf nf = new ProdutoNf();
+			nf.setId(new ProdutoNfPK());
+			nf.getId().setProdutoId(pnf.getProdutoId());
+			nf.getId().setNotaFiscal(op.getNotaFiscal().getId());
+			nf.setQuantidade(pnf.getQuantidade());
+			op.getNotaFiscal().getProdutosNf().add(nf);
+		}
+		op = operacaoRepository.save(op);
 		
 		OperacaoSummary summary = instantiateOperacaoSummary();
-//		operacaoTransformer.transform(op, summary);
+		operacaoTransformer.transform(op, summary);
 		return summary;
 	}
 

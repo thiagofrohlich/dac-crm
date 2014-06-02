@@ -30,15 +30,8 @@ public class OperacaoTransformer extends AbstractTransformer {
 			OperacaoSummary op = (OperacaoSummary) objectFrom;
 			Operacao opDomain = (Operacao) objectTo;
 			opDomain.setTipoOperacao(op.getTipoOperacao().getKey());
-			opDomain.getNotaFiscal().setProdutosNf(new ArrayList<ProdutoNf>());
-			for(ProdutoNfSummary pnf : op.getNotaFiscal().getProdutosNf()){
-				ProdutoNf nf = new ProdutoNf();
-				nf.setId(new ProdutoNfPK());
-				nf.getId().setProdutoId(pnf.getProdutoId());
-				nf.getId().setNotaFiscal(opDomain.getNotaFiscal().getId());
-				nf.setQuantidade(pnf.getQuantidade());
-				opDomain.getNotaFiscal().getProdutosNf().add(nf);
-			}
+			opDomain.getNotaFiscal().setProdutosNf(null);
+			
 		}
 		
 		if(isDomain(objectFrom)) {

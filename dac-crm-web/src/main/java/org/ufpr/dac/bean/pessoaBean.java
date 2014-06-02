@@ -13,7 +13,6 @@ import javax.faces.context.FacesContext;
 import org.ufpr.dac.model.EnderecoSummary;
 import org.ufpr.dac.model.PessoaFisicaSummary;
 import org.ufpr.dac.model.PessoaJuridicaSummary;
-import org.ufpr.dac.model.ProdutoSummary;
 import org.ufpr.dac.service.PessoaServiceHandler;
 
 import br.com.caelum.stella.bean.validation.CNPJ;
@@ -155,22 +154,26 @@ public class pessoaBean implements Serializable{
 		
 	}
 	
-	public void pesquisaProduto(){
+	public void pesquisaPessoa(){
 		if(tipoPessoaPesquisa == 1){
-			lstPessoaFisica = (List<PessoaFisicaSummary>) pessoaService.getByNome(nome);
+			lstPessoaFisica = pessoaService.getByNome(nome).getLstPessoaFisica();
 		}else{
-			lstPessoaJuridica = (List<PessoaJuridicaSummary>) pessoaService.getByNome(nome);
+			lstPessoaJuridica =  pessoaService.getByNome(nome).getLstPessoaJuridica();
 		}
 	}
 	
-	public void selecionaProduto(){
+	public void pesquisaPessoaFisica(){
+		lstPessoaFisica = pessoaService.getByNome(nome).getLstPessoaFisica();
+	}
+	public void pesquisaPessoaJuridica(){
+		lstPessoaJuridica =  pessoaService.getByNome(nome).getLstPessoaJuridica();
+	}
+	
+	public void selecionaPessoa(){
 		pessoaFisica = pessoaFisicaSelecionada;
 		pessoaJuridica = pessoaJuridicaSelecionada;
 		apaga = true;
 	}
-	
-	
-	
 	
 	
 	public Integer getTipoPessoa() {

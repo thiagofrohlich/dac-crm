@@ -1,5 +1,8 @@
 package org.ufpr.dac.wrapper;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSeeAlso;
 
@@ -27,5 +30,25 @@ public class PessoaWrapper extends Wrapper<PessoaSummary> {
 	public PessoaWrapper() {
 		super();
 	}
+	
+	private List<PessoaFisicaSummary> lstPessoaFisica = new ArrayList<>();
+	private List<PessoaJuridicaSummary> lstPessoaJuridica = new ArrayList<>();
+
+	public List<PessoaFisicaSummary> getLstPessoaFisica() {
+		return lstPessoaFisica;
+	}
+
+	public void setLstPessoaFisica(List<PessoaFisicaSummary> lstPessoaFisica) {
+		this.lstPessoaFisica = lstPessoaFisica;
+	}
+
+	public List<PessoaJuridicaSummary> getLstPessoaJuridica() {
+		return lstPessoaJuridica;
+	}
+
+	public void setLstPessoaJuridica(List<PessoaJuridicaSummary> lstPessoaJuridica) {
+		this.lstPessoaJuridica = lstPessoaJuridica;
+	}
+	
 	
 }

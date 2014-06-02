@@ -10,6 +10,7 @@ import org.ufpr.dac.domain.NotaFiscal;
 import org.ufpr.dac.domain.Operacao;
 import org.ufpr.dac.domain.Pessoa;
 import org.ufpr.dac.domain.PessoaFisica;
+import org.ufpr.dac.domain.Produto;
 import org.ufpr.dac.domain.ProdutoNf;
 import org.ufpr.dac.domain.ProdutoNfPK;
 import org.ufpr.dac.repository.OperacaoRepository;
@@ -82,7 +83,7 @@ public class OperacaoDomainBuilder {
 	private ProdutoNf makeDefaultProdutoNf(Long nfId) {
 		ProdutoNf produtoNf = new ProdutoNf();
 		produtoNf.setId(new ProdutoNfPK());
-		produtoNf.getId().setNotaFiscal(nfId);
+		produtoNf.getId().setNotaFiscal(new Date().getTime());
 		produtoNf.getId().setProdutoId(new Date().getTime());
 		return produtoNf;
 	}

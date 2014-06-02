@@ -2,7 +2,6 @@ package org.ufpr.dac.domain;
 
 import java.io.Serializable;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,7 +10,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -55,8 +53,9 @@ public class Endereco implements Domain, Serializable {
 	@NotEmpty(message="org.ufpr.dac.paisMustNotBeNull")
 	private String pais;
 	
-	@Column(name="pessoa_id")
-	private Long pessoaId;
+	@OneToOne
+	@JoinColumn(name="pessoa_id", referencedColumnName="id")
+	private Pessoa pessoa;
 
 	public Endereco() {
 	}
@@ -125,13 +124,15 @@ public class Endereco implements Domain, Serializable {
 		this.pais = pais;
 	}
 
-	public Long getPessoaId() {
-		return pessoaId;
+
+	public Pessoa getPessoa() {
+		return pessoa;
 	}
 
-	public void setPessoaId(Long pessoaId) {
-		this.pessoaId = pessoaId;
+	public void setPessoa(Pessoa pessoa) {
+		this.pessoa = pessoa;
 	}
+
 
 	
 	

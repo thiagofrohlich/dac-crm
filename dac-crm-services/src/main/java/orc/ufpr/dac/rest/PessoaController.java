@@ -64,7 +64,11 @@ public class PessoaController {
 		for(Pessoa pessoa : result) {
 			PessoaSummary p = instantiatePessoaSummary(pessoa);
 			pessoaTransformer.transform(pessoa, p);
-			wrapper.getList().add(p);
+			if(p instanceof PessoaFisicaSummary){
+				wrapper.getLstPessoaFisica().add((PessoaFisicaSummary) p);
+			}else{
+				wrapper.getLstPessoaJuridica().add((PessoaJuridicaSummary) p);
+			}
 		}
 		
 		return wrapper;
@@ -135,7 +139,13 @@ public class PessoaController {
 		pessoaTransformer.transform(pessoa, p);
 		
 		p = pessoaRepository.save(p);
-
+		if(p.getPessoaFisica() != null){
+			p.getPessoaFisica().setPessoa(p);
+		}else{
+			p.getPessoaJuridica().setPessoa(p);
+		}
+		p.getEndereco().setPessoa(p);
+		p=pessoaRepository.save(p);
 		PessoaSummary summary = instantiatePessoaSummary(p);
 		pessoaTransformer.transform(p, summary);
 		return summary;

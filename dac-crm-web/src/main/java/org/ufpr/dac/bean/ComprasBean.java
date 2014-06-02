@@ -1,5 +1,7 @@
 package org.ufpr.dac.bean;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
@@ -15,6 +17,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletResponse;
 
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperExportManager;
@@ -54,7 +57,9 @@ public class ComprasBean implements Serializable{
 	private BigDecimal acrescimos = new BigDecimal(0);
 	private BigDecimal descontos = new BigDecimal(0);
 	private Integer pagto;
+	private PessoaJuridicaSummary fornecedorSelecionado = new PessoaJuridicaSummary();
 	private ResourceBundle rb = ResourceBundle.getBundle("messages");
+	private ProdutoSummary prodSelecionado = new ProdutoSummary();
 
 
 	public void lancar(){
@@ -124,12 +129,28 @@ public class ComprasBean implements Serializable{
 				SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmmss");  
 				String id = format.format(new Date());
 				Map<String, Object> map = montaMapa();
-				JasperReport pathRxml = JasperCompileManager.compileReport("D:/repo/dac/dac-crm/dac-crm-web/relatorios/dacre.jrxml");
+				
+				JasperReport pathRxml = JasperCompileManager.compileReport("D:/repo/dac/dac-crm/dac-crm-web/relatorios/compra.jrxml");
 				JasperPrint printReport = JasperFillManager.fillReport(pathRxml, map, new JRBeanCollectionDataSource(lstProdutos));
 				JasperExportManager.exportReportToPdfFile(printReport,"D:/repo/dac/dac-crm/dac-crm-services/relatorios/relatorio"+id+".pdf");
+				File file = new File("D:/repo/dac/dac-crm/dac-crm-services/relatorios/relatorio"+id+".pdf");
+				FacesContext context = FacesContext.getCurrentInstance();  
+				HttpServletResponse response = (HttpServletResponse) context.getExternalContext().getResponse();  
+				response.reset();  
+				response.setContentType("application/pdf");
+				response.setHeader("Content-Disposition", "attachment; filename=Relatorio.pdf");  
+				response.setHeader("Cache-Control", "no-cache"); 
+				FileInputStream fis = new FileInputStream(file);  
+		        byte[] data = new byte[fis.available()];  
+		        fis.read(data);  
+		        fis.close();
+				response.getOutputStream().write(data);  
+				response.getOutputStream().flush();  
+				response.getOutputStream().close();  
+				context.responseComplete();  
 			}catch(Exception e){
 				e.printStackTrace();
-				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "INFO", rb.getString("erroCompra")));
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "INFO", rb.getString("erroSalvaCompra")));
 			}
 		}
 	}
@@ -156,6 +177,14 @@ public class ComprasBean implements Serializable{
 		map.put("uf", fornecedor.getEndereco().getEstado());
 		map.put("vlrTotal", operacao.getValorTotal());
 		return map;
+	}
+	
+	public void SelecionaFornecedor(){
+		fornecedor = fornecedorSelecionado;
+	}
+	
+	public void selecionaProduto(){
+		produto = prodSelecionado;
 	}
 	
 	public void buscaProduto(){
@@ -247,6 +276,22 @@ public class ComprasBean implements Serializable{
 
 	public void setFornecedor(PessoaJuridicaSummary fornecedor) {
 		this.fornecedor = fornecedor;
+	}
+
+	public PessoaJuridicaSummary getFornecedorSelecionado() {
+		return fornecedorSelecionado;
+	}
+
+	public void setFornecedorSelecionado(PessoaJuridicaSummary fornecedorSelecionado) {
+		this.fornecedorSelecionado = fornecedorSelecionado;
+	}
+
+	public ProdutoSummary getProdSelecionado() {
+		return prodSelecionado;
+	}
+
+	public void setProdSelecionado(ProdutoSummary prodSelecionado) {
+		this.prodSelecionado = prodSelecionado;
 	}
 	
 }

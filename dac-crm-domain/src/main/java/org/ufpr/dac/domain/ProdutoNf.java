@@ -33,10 +33,10 @@ public class ProdutoNf implements Domain, Serializable {
 	@JoinColumn(name="nf_id", insertable=false, updatable=false)
 	private NotaFiscal notaFiscal;*/
 
-	//bi-directional many-to-one association to Produto
+/*	//bi-directional many-to-one association to Produto
 	@ManyToOne
 	@JoinColumn(insertable=false, updatable=false)
-	private Produto produto;
+	private Produto produto;*/
 
 	public ProdutoNf() {
 	}
@@ -65,12 +65,12 @@ public class ProdutoNf implements Domain, Serializable {
 		this.notaFiscal = notaFiscal;
 	}*/
 
-	public Produto getProduto() {
+	/*public Produto getProduto() {
 		return this.produto;
 	}
 
 	public void setProduto(Produto produto) {
 		this.produto = produto;
-	}
+	}*/
 
 }

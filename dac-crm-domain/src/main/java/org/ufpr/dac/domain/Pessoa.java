@@ -45,18 +45,14 @@ public class Pessoa implements Domain, Serializable {
 	
 	private String telefone;
 	
-	@JoinColumn(name="id", referencedColumnName="pessoa_id")
-	@OneToOne( cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	@OneToOne(mappedBy="pessoa", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
 	private Endereco endereco;
 
-	/*@OneToMany(mappedBy="pessoa" )
-	private List<NotaFiscal> notaFiscals;*/
-	@JoinColumn(name="id", referencedColumnName="pessoa_id")
-	@OneToOne( cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	@OneToMany(mappedBy="pessoa", fetch=FetchType.LAZY)
+	private List<NotaFiscal> notaFiscals;
+	@OneToOne(mappedBy="pessoa", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
 	private PessoaFisica pessoaFisica;
-
-	@JoinColumn(name="id", referencedColumnName="pessoa_id")
-	@OneToOne( cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	@OneToOne(mappedBy="pessoa", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
 	private PessoaJuridica pessoaJuridica;
 
 	@OneToOne(mappedBy="pessoaUsuario")
@@ -141,6 +137,14 @@ public class Pessoa implements Domain, Serializable {
 
 	public void setTelefone(String telefone) {
 		this.telefone = telefone;
+	}
+
+	public List<NotaFiscal> getNotaFiscals() {
+		return notaFiscals;
+	}
+
+	public void setNotaFiscals(List<NotaFiscal> notaFiscals) {
+		this.notaFiscals = notaFiscals;
 	}
 
 }

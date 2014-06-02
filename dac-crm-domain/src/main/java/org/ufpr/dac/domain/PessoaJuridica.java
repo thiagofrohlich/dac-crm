@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -34,10 +35,9 @@ public class PessoaJuridica implements Domain, Serializable {
 	@NotNull(message="org.ufpr.dac.cnpjCannotBeNull")
 	@NotEmpty(message="org.ufpr.dac.cnpjCannotBeNull")
 	private String cnpj;
-
-	@JoinColumn(name="pessoa_id", referencedColumnName="id", table="Pessoa")
-	@Column(name="pessoa_id")
-	private Long pessoa;
+	@OneToOne
+	@JoinColumn(name="pessoa_id", referencedColumnName="id")
+	private Pessoa pessoa;
 
 	public PessoaJuridica() {
 	}
@@ -66,11 +66,8 @@ public class PessoaJuridica implements Domain, Serializable {
 		this.cnpj = cnpj;
 	}
 
-	public Long getPessoa() {
-		return this.pessoa;
-	}
 
-	public void setPessoa(Long pessoa) {
+	public void setPessoa(Pessoa pessoa) {
 		this.pessoa = pessoa;
 	}
 
