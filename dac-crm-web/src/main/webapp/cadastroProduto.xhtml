@@ -121,13 +121,13 @@
 							</p:column>
 							<p:column style="text-align: left;">
 								<h:inputText value="#{pessoaBean.nome}" />
-								<p:commandButton value="#{msg.pesquisar}" />
+								<p:commandButton value="#{msg.pesquisar}" action="#{pessoaBean.pesquisaPessoaJuridica()}" update=":cadastroProduto:pjTable"/>
 							</p:column>
 						</p:row>
 					</p:panelGrid>
-					<p:dataTable value="#{pessoaBean.lstPessoaJuridica}" var="lstPessoa" rows="10" paginator="true" paginatorPosition="bottom" rowKey="#{lstPessoa.rootId}"
-									selection="#{pessoaBean.pessoaJuridicaSelecionada}" selectionMode="single">
-							<p:ajax event="rowSelect"  update="@form" />
+					<p:dataTable value="#{pessoaBean.lstPessoaJuridica}" var="lstPessoa" rows="10" paginator="true" paginatorPosition="bottom" rowKey="#{lstPessoa.rootId}" id="pjTable"
+									selection="#{produtoBean.pessoaDialog}" selectionMode="single">
+							<p:ajax event="rowSelect" listener="#{produtoBean.selecionaPessoa()}" update="@form" />
 						<p:column>
 							<f:facet name="header">
 								<h:outputText value="#{msg.nome}" />

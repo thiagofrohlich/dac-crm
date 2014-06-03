@@ -32,7 +32,8 @@ public class ProdutoBean implements Serializable{
 	private List<ProdutoSummary> lstProd = new ArrayList<>();
 	private ResourceBundle rb = ResourceBundle.getBundle("messages");
 	private String descricao;
-	private boolean apaga = false;;
+	private boolean apaga = false;
+	private PessoaJuridicaSummary pessoaDialog = new PessoaJuridicaSummary();
 	public boolean validaCadastro(){
 		boolean ret = true;
 		if(produto.getDescricao() == null || produto.getDescricao().equals("")){
@@ -97,6 +98,10 @@ public class ProdutoBean implements Serializable{
 		prodDialog = new ProdutoSummary();
 		apaga = true;
 	}
+	
+	public void selecionaPessoa(){
+		produto.setFornecedor(pessoaDialog);
+	}
 
 	public ProdutoSummary getProduto() {
 		if(produto == null) produto = new ProdutoSummary();
@@ -137,6 +142,14 @@ public class ProdutoBean implements Serializable{
 
 	public void setApaga(boolean apaga) {
 		this.apaga = apaga;
+	}
+
+	public PessoaJuridicaSummary getPessoaDialog() {
+		return pessoaDialog;
+	}
+
+	public void setPessoaDialog(PessoaJuridicaSummary pessoaDialog) {
+		this.pessoaDialog = pessoaDialog;
 	}
 	
 }
