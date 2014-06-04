@@ -2,8 +2,6 @@ package org.ufpr.dac.model;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 @XmlRootElement
 public class PessoaJuridicaSummary extends PessoaSummary {
 

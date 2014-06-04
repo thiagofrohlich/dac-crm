@@ -177,9 +177,8 @@ public class VendasBean implements Serializable{
 		map.put("nome", operacao.getNotaFiscal().getPessoa().getNome());
 		map.put("numero", operacao.getNotaFiscal().getId());
 		map.put("doc", cliente.getCpf());
-		map.put("endereco", cliente.getEndereco().getEndereco());
+		map.put("endereco", cliente.getEndereco().getEndereco()+" "+cliente.getEndereco().getNumero()+" "+ cliente.getEndereco().getComplemento()!=null?cliente.getEndereco().getComplemento():"");
 		map.put("cidade", cliente.getEndereco().getCidade());
-		map.put("complemento", cliente.getEndereco().getComplemento());
 		map.put("cep", cliente.getEndereco().getCep());
 		map.put("uf", cliente.getEndereco().getEstado());
 		map.put("vlrTotal", operacao.getValorTotal());

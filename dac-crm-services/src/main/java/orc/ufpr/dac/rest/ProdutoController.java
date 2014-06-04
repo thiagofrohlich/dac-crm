@@ -64,7 +64,6 @@ public class ProdutoController {
 			produtoTransformer.transform(produto, p);
 			wrapper.getList().add(p);
 		}
-		
 		return wrapper;
 	}
 

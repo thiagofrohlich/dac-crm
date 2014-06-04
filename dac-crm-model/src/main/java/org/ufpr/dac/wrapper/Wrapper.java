@@ -15,7 +15,6 @@ import org.springframework.data.domain.Page;
 @XmlRootElement
 @XmlAccessorType (XmlAccessType.FIELD)
 @XmlSeeAlso({OperacaoWrapper.class, PessoaWrapper.class, ProdutoWrapper.class, UsuarioWrapper.class})
-
 public abstract class Wrapper<T> implements Serializable {
 	
 	/**
@@ -26,7 +25,6 @@ public abstract class Wrapper<T> implements Serializable {
 	private Long foundQuantity;
 	private Long currentPage;
 	private Long totalPages;
-	@XmlAnyElement
 	@XmlElementWrapper
 	private List<T> list;
 	

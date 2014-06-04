@@ -1,8 +1,5 @@
 package org.ufpr.dac.service;
 
-import java.util.List;
-
-import org.ufpr.dac.model.PessoaJuridicaSummary;
 import org.ufpr.dac.model.ProdutoSummary;
 import org.ufpr.dac.wrapper.ProdutoWrapper;
 

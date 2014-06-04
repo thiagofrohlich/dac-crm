@@ -68,7 +68,7 @@ public class ComprasBean implements Serializable{
 		produtoNf.setQuantidade(produto.getQtd());
 		operacao.getNotaFiscal().getProdutosNf().add(produtoNf);
 		lstProdutos.add(produto);
-		BigDecimal valor = new BigDecimal(produto.getValorVenda()*produto.getQtd());
+		BigDecimal valor = new BigDecimal(produto.getValorCompra()*produto.getQtd());
 		valor = valor.setScale(2, BigDecimal.ROUND_HALF_UP);
 		produto = new ProdutoSummary();
 		subTotal = subTotal.add(valor);
@@ -80,7 +80,7 @@ public class ComprasBean implements Serializable{
 		produtoNf.setProdutoId(prod.getId());
 		produtoNf.setQuantidade(prod.getQtd());
 		operacao.getNotaFiscal().getProdutosNf().remove(produtoNf);
-		BigDecimal valor = new BigDecimal(prod.getValorVenda()*prod.getQtd());
+		BigDecimal valor = new BigDecimal(prod.getValorCompra()*prod.getQtd());
 		valor = valor.setScale(2, BigDecimal.ROUND_HALF_UP);
 		subTotal =  subTotal.subtract(valor);
 	}
@@ -124,7 +124,7 @@ public class ComprasBean implements Serializable{
 			operacao.setValorTotal(subTotal.doubleValue());
 			operacao.setDataOperacao(Calendar.getInstance().getTime());
 			try{
-				operacao = operacaoService.create(operacao);
+				operacao.setId(operacaoService.createReturn(operacao));
 				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "INFO", rb.getString("salvaCompra")));
 				SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmmss");  
 				String id = format.format(new Date());
@@ -170,9 +170,8 @@ public class ComprasBean implements Serializable{
 		map.put("nome", operacao.getNotaFiscal().getPessoa().getNome());
 		map.put("numero", operacao.getNotaFiscal().getId());
 		map.put("doc", fornecedor.getCnpj());
-		map.put("endereco", fornecedor.getEndereco().getEndereco());
+		map.put("endereco", fornecedor.getEndereco().getEndereco()+" "+fornecedor.getEndereco().getNumero()+" "+ fornecedor.getEndereco().getComplemento()!=null?fornecedor.getEndereco().getComplemento():"");
 		map.put("cidade", fornecedor.getEndereco().getCidade());
-		map.put("complemento", fornecedor.getEndereco().getComplemento());
 		map.put("cep", fornecedor.getEndereco().getCep());
 		map.put("uf", fornecedor.getEndereco().getEstado());
 		map.put("vlrTotal", operacao.getValorTotal());

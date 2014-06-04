@@ -44,7 +44,7 @@
 								<h:inputText value="#{vendasBean.produto.id}"  styleClass="cod">
 									<p:ajax event="valueChange" listener="#{vendasBean.buscaProduto()}" update=":vendas:fieldSetProd :vendas:fieldSetTable"/>
 								</h:inputText>
-								<p:commandButton icon="ui-icon-search" onclick="prodDialog.show()" styleClass="marginLeft"/>
+								<p:commandButton icon="ui-icon-search" onclick="prodmodal.show()" styleClass="marginLeft"/>
 								<h:outputText value="#{msg.descricao}: " style="margin-left:20px;"/>
 								<h:outputText value="#{vendasBean.produto.descricao}" />
 							</div>
@@ -160,7 +160,7 @@
 								<h:outputText value="#{msg.produto}" />
 							</p:column>
 							<p:column style="text-align: left;">
-								<h:inputText value="#{produtoBean.produto.descricao}" />
+								<h:inputText value="#{produtoBean.descricao}" />
 								<p:commandButton value="#{msg.pesquisar}" action="#{produtoBean.pesquisaProduto()}" update=":vendas:prodTable"/>
 							</p:column>
 						</p:row>
