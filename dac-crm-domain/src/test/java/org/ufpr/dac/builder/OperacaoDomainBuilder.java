@@ -74,7 +74,7 @@ public class OperacaoDomainBuilder {
 	}
 
 	private List<ProdutoNf> makeDefaultProdutosNf(Long nfId) {
-		List<ProdutoNf> produtosNf = new ArrayList<>();
+		List<ProdutoNf> produtosNf = new ArrayList<ProdutoNf>();
 		produtosNf.add(makeDefaultProdutoNf(nfId));
 		return produtosNf;
 	}

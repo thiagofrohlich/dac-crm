@@ -5,8 +5,8 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.ufpr.dac.model.PessoaFisicaSummary;
 import org.ufpr.dac.model.PessoaSummary;
+import org.ufpr.dac.wrapper.PessoaWrapper;
 
-@Ignore
 public class PessoaServiceHandlerComponentTest {
 	
 	private PessoaServiceHandler pessoaServiceHandler;
@@ -18,12 +18,14 @@ public class PessoaServiceHandlerComponentTest {
 	
 	@Test
 	public void shouldCallGetOne() {
-		pessoaServiceHandler.getOne(1l);
+		PessoaSummary ps = pessoaServiceHandler.getOne(32l);
+		System.out.println(ps);
 	}
 
 	@Test
 	public void shouldCallGetAll() {
-		pessoaServiceHandler.getAll(0);
+		PessoaWrapper wrapper = pessoaServiceHandler.getAll(0);
+		System.out.println(wrapper);
 	}
 
 	@Test
