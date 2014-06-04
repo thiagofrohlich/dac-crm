@@ -2,10 +2,13 @@ package org.ufpr.dac.domain;
 
 import java.io.Serializable;
 
-import javax.persistence.*;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-
-import org.hibernate.validator.constraints.NotEmpty;
 
 
 /**
@@ -22,18 +25,18 @@ public class ProdutoNf implements Domain, Serializable {
 	private ProdutoNfPK id;
 
 	@NotNull(message="org.ufpr.dac.quantidadeProdutoNfCannotBeNull")
-	@NotEmpty(message="org.ufpr.dac.quantidadeProdutoNfCannotBeNull")
+//	@NotEmpty(message="org.ufpr.dac.quantidadeProdutoNfCannotBeNull")
 	private Long quantidade;
 
-	//bi-directional many-to-one association to NotaFiscal
+	/*//bi-directional many-to-one association to NotaFiscal
 	@ManyToOne
 	@JoinColumn(name="nf_id", insertable=false, updatable=false)
-	private NotaFiscal notaFiscal;
+	private NotaFiscal notaFiscal;*/
 
-	//bi-directional many-to-one association to Produto
+/*	//bi-directional many-to-one association to Produto
 	@ManyToOne
 	@JoinColumn(insertable=false, updatable=false)
-	private Produto produto;
+	private Produto produto;*/
 
 	public ProdutoNf() {
 	}
@@ -54,20 +57,20 @@ public class ProdutoNf implements Domain, Serializable {
 		this.quantidade = quantidade;
 	}
 
-	public NotaFiscal getNotaFiscal() {
+	/*public NotaFiscal getNotaFiscal() {
 		return this.notaFiscal;
 	}
 
 	public void setNotaFiscal(NotaFiscal notaFiscal) {
 		this.notaFiscal = notaFiscal;
-	}
+	}*/
 
-	public Produto getProduto() {
+	/*public Produto getProduto() {
 		return this.produto;
 	}
 
 	public void setProduto(Produto produto) {
 		this.produto = produto;
-	}
+	}*/
 
 }

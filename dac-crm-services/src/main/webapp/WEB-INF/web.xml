@@ -23,9 +23,20 @@
 		<param-name>contextConfigLocation</param-name>
 		<param-value>WEB-INF/spring.xml</param-value>
 	</context-param>
+	
+	<context-param>
+	  <param-name>reportDirectory</param-name>
+	  <param-value>D:/repo/dac/dac-crm/dac-crm-services/relatorios/</param-value>
+	</context-param>
 
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
+	<context-param>
+		<param-name>resteasy.scan</param-name>
+		<param-value>true</param-value>
+	</context-param>
+
+	
 	
 </web-app>

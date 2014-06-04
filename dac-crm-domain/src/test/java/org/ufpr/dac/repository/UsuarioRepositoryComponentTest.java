@@ -79,7 +79,7 @@ public class UsuarioRepositoryComponentTest extends AbstractTransactionalJUnit4S
 	public void shouldFindAllUsuarios() {
 //		Given
 		newBuilder().withId(new Date().getTime()).withPessoa(validPessoa).persisted().asUsuario();
-		newBuilder().withId(new Date().getTime()).withPessoa(validPessoa).persisted().asUsuario();
+//		newBuilder().withId(new Date().getTime()).withPessoa(validPessoa).persisted().asUsuario();
 		
 //		When
 		List<Usuario> result = usuarioRepository.findAll();

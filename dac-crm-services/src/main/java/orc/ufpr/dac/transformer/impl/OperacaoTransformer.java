@@ -1,14 +1,18 @@
 package orc.ufpr.dac.transformer.impl;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 
 import org.springframework.stereotype.Component;
 import org.ufpr.dac.domain.Operacao;
 import org.ufpr.dac.domain.Pessoa;
+import org.ufpr.dac.domain.ProdutoNf;
+import org.ufpr.dac.domain.ProdutoNfPK;
 import org.ufpr.dac.model.OperacaoSummary;
 import org.ufpr.dac.model.PessoaFisicaSummary;
 import org.ufpr.dac.model.PessoaJuridicaSummary;
 import org.ufpr.dac.model.PessoaSummary;
+import org.ufpr.dac.model.ProdutoNfSummary;
 import org.ufpr.dac.model.TipoOperacao;
 
 @Component
@@ -26,6 +30,8 @@ public class OperacaoTransformer extends AbstractTransformer {
 			OperacaoSummary op = (OperacaoSummary) objectFrom;
 			Operacao opDomain = (Operacao) objectTo;
 			opDomain.setTipoOperacao(op.getTipoOperacao().getKey());
+			opDomain.getNotaFiscal().setProdutosNf(null);
+			
 		}
 		
 		if(isDomain(objectFrom)) {
@@ -33,7 +39,17 @@ public class OperacaoTransformer extends AbstractTransformer {
 			OperacaoSummary op = (OperacaoSummary) objectTo;
 			op.setTipoOperacao(TipoOperacao.valueOf(opDomain.getTipoOperacao()));
 			transformNotaFiscalPessoa(opDomain, op);
+			op.getNotaFiscal().setProdutosNf(new ArrayList<ProdutoNfSummary>());
+			for(ProdutoNf pnf : opDomain.getNotaFiscal().getProdutosNf()){
+				ProdutoNfSummary pNfSummary = new ProdutoNfSummary();
+				pNfSummary.setNfId(pnf.getId().getNotaFiscal());
+				pNfSummary.setProdutoId(pnf.getId().getProdutoId());
+				pNfSummary.setQuantidade(pnf.getQuantidade());
+				op.getNotaFiscal().getProdutosNf().add(pNfSummary);
+			}
+			
 		}
+		
 		
 	}
 

@@ -34,4 +34,12 @@ public class PessoaServiceHandler extends AbstractServiceHandler<PessoaSummary, 
 		return  (PessoaJuridicaSummary) getRestTemplate().getForObject(getPath()+"cnpj/{cnpj}", PessoaJuridicaSummary.class, cnpj);
 	}
 	
+	public PessoaFisicaSummary getByCPF(String cpf) {
+		return  (PessoaFisicaSummary) getRestTemplate().getForObject(getPath()+"cpf/{cpf}", PessoaFisicaSummary.class, cpf);
+	}
+	
+	public PessoaWrapper getByNome(String nome) {
+		return   getRestTemplate().getForObject(getPath()+"nome/{nome}", PessoaWrapper.class, nome);
+	}
+	
 }

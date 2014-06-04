@@ -36,6 +36,11 @@ public class Produto implements Domain, Serializable {
 	@NotNull(message="org.ufpr.dac.valorCompraCannotBeNull")
 //	@NotEmpty(message="org.ufpr.dac.valorCompraCannotBeNull")
 	private double valorCompra;
+	
+	@Column(name="estoque")
+	@NotNull(message="org.ufpr.dac.valorCompraCannotBeNull")
+//	@NotEmpty(message="org.ufpr.dac.valorCompraCannotBeNull")
+	private double estoque;
 
 	@Column(name="valor_venda")
 	@NotNull(message="org.ufpr.dac.valorVendaCannotBeNull")
@@ -90,6 +95,14 @@ public class Produto implements Domain, Serializable {
 
 	public void setFornecedor(PessoaJuridica pessoaJuridica) {
 		this.fornecedor = pessoaJuridica;
+	}
+
+	public double getEstoque() {
+		return estoque;
+	}
+
+	public void setEstoque(double estoque) {
+		this.estoque = estoque;
 	}
 
 }

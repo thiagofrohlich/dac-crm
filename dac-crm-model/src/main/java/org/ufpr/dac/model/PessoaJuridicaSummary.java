@@ -10,7 +10,7 @@ public class PessoaJuridicaSummary extends PessoaSummary {
 	private Long id;
 	private Boolean ativo;
 	private String cnpj;
-	private String email;
+	private String email="";
 	public Boolean getAtivo() {
 		return ativo;
 	}

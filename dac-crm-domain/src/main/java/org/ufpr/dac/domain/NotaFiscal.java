@@ -28,12 +28,9 @@ public class NotaFiscal implements Domain, Serializable {
 
 	@ManyToOne
 	@NotNull(message="org.ufpr.dac.pessoaNfCannotBeNull")
-	@NotEmpty(message="org.ufpr.dac.pessoaNfCannotBeNull")
 	private Pessoa pessoa;
 
-	@OneToMany(mappedBy="notaFiscal", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
-	@NotNull(message="org.ufpr.dac.produtosNfCannotBeNull")
-	@NotEmpty(message="org.ufpr.dac.produtosNfCannotBeNull")
+	@OneToMany(mappedBy="id.notaFiscal", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
 	private List<ProdutoNf> produtosNf;
 
 	public NotaFiscal() {
@@ -73,14 +70,14 @@ public class NotaFiscal implements Domain, Serializable {
 
 	public ProdutoNf addProdutoNf(ProdutoNf produtoNf) {
 		getProdutosNf().add(produtoNf);
-		produtoNf.setNotaFiscal(this);
+		produtoNf.getId().setNotaFiscal(id);
 
 		return produtoNf;
 	}
 
 	public ProdutoNf removeProdutoNf(ProdutoNf produtoNf) {
 		getProdutosNf().remove(produtoNf);
-		produtoNf.setNotaFiscal(null);
+		produtoNf.getId().setNotaFiscal(null);
 
 		return produtoNf;
 	}

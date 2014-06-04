@@ -51,7 +51,6 @@ public class PessoaDomainBuilder {
 		Pessoa pessoa = asPessoa();
 		PessoaFisica pf = new PessoaFisica();
 		pf.setCpf(cpf);
-		pf.setDataNascimento(dataNascimento);
 		pf.setEmail(email);
 		pf.setId(id);
 		pf.setPessoa(pessoa);

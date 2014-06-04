@@ -11,95 +11,65 @@
 		<ui:define name="style">
 			<style type="text/css">
 				.dsc{width: 200px;}
-				.cod{width: 45px;}
 			</style>
 		</ui:define>
 		<ui:define name="centro">
 			<h:form id="compras">
 				<div style="margin:auto; width: 900px;">
 					<div style="clear:both;" class="center">
-						<h:outputText value="#{msg.compras}" 
-										style="font-size:13px; "/>
+						<h:outputText value="#{msg.compras}" styleClass="title"/>
 						
 					</div>
 					<p:panel style="float:left; min-width:755px;" styleClass="center noborder">
 						<div class="center" style="padding-top: 15px;">
-							<div style="float:left">
+							<p:outputPanel id="panelTopo" style="float:left">
 								<table class="noborder">
-									<tr>
-										<td class="label">
-											<h:outputText value="#{msg.pedCompraNum}: " />
-										</td>
-										<td>
-											<h:inputText value="#{comprasBean.operacao.id}" disabled="true"/>
-										</td>
-									</tr>
+									
 									<tr>
 										<td class="label">
 											<h:outputText value="#{msg.fornecedor}: " />
 										</td>
 										<td>
-											<h:inputText value="#{comprasBean.fornecedor.cnpj}" styleClass="cod"/>
-											<h:inputText value="#{comprasBean.fornecedor.nome}" disabled="true" />
-											<p:commandButton icon="ui-icon-search" onclick="pessoaDialog.show()"/>
+											<p:inputMask mask="99.999.999/9999-99" value="#{comprasBean.fornecedor.cnpj}" styleClass="cnpj">
+												<p:ajax event="valueChange" listener="#{comprasBean.buscaFornecedor()}" update=":compras:panelTopo" />
+											</p:inputMask>
+											<h:outputText value="#{comprasBean.fornecedor.nome}" />
+											<p:commandButton icon="ui-icon-search" onclick="pessoamodal.show()" styleClass="marginLeft" type="button"/>
 										</td>
 									</tr>
 								</table>
-							</div>
-							<div style="float:left; margin-left: 15px;">
-								<p:panel style="width:300px" styleClass="noborder">					
-									<table style="margin-right: auto;">
-										<tr>
-											<td>
-												<h:outputText value="#{msg.fornecedor}: " />
-											</td>
-											<td>
-												<h:outputText value="#{comprasBean.fornecedor.nome}" />
-											</td>
-										</tr>
-										<tr>
-											<td>
-												<h:outputText value="#{msg.codigo}: " />
-											</td>
-											<td>
-												<h:outputText value="#{comprasBean.fornecedor.rootId}" />
-											</td>
-										</tr>
-									</table>
-								</p:panel>
-							</div>
+							</p:outputPanel>
+							
 						</div>
 					</p:panel>
 					
-						<p:fieldset legend="#{msg.busca} #{msg.de} #{msg.produtos}" styleClass="titulo"
+						<p:fieldset legend="#{msg.busca} #{msg.de} #{msg.produtos}" styleClass="titulo" id="panelProduto"
 									style="float:left;clear:both; min-width:755px;">
 							<div style="float: left;">
-								<h:selectOneRadio value="#{comprasBean.tipoPesquisa}" layout="lineDirection" style="margin-right:auto;">
-									<f:selectItem itemLabel="#{msg.codigo}" itemValue="1"/>
-									<f:selectItem itemLabel="#{msg.descricao}" itemValue="2"/>
-								</h:selectOneRadio>
-								<h:inputText value="#{comprasBean.produto.id}" rendered="#{comprasBean.tipoPesquisa == 1}" />
-								<h:inputText value="#{comprasBean.produto.descricao}" rendered="#{comprasBean.tipoPesquisa == 2}" />
-								<p:commandButton icon="ui-icon-search" onclick="prodDialog.show()"/>
+								<h:outputText value="#{msg.codigo}: " />								
+								<h:inputText value="#{comprasBean.produto.id}"  styleClass="cod">
+									<p:ajax event="valueChange" listener="#{comprasBean.buscaProduto()}" update=":compras:panelProduto :compras:panelTable"/>
+								</h:inputText>
+								<p:commandButton icon="ui-icon-search" onclick="prodmodal.show()" type="button" styleClass="marginLeft"/>
 								<h:outputText value="#{msg.descricao}: " style="margin-left:20px;"/>
 								<h:outputText value="#{comprasBean.produto.descricao}" />
 							</div>
 						</p:fieldset>
 						<p:fieldset legend="#{msg.detItem}" styleClass="titulo"
-									style="float:left;clear:both; min-width:755px;" >
+									style="float:left;clear:both; min-width:755px;" id="panelTable">
 							<table style="margin-right:auto;">
 								<tr>
 									<td class="label">
 										<h:outputText value="#{msg.qtdEstoque}: " />
 									</td>
 									<td>
-										<h:inputText value="#{comprasBean.produto.qtdEstoque}" disabled="true"/>
+										<h:outputText value="#{comprasBean.produto.estoque}" />
 									</td>
 									<td class="label">
 										<h:outputText value="#{msg.precoCompra}: " />
 									</td>
 									<td>
-										<h:inputText value="#{comprasBean.produto.valorCompra}"  disabled="true"/>
+										<h:outputText value="#{comprasBean.produto.valorCompra}"  />
 									</td>
 								</tr>
 								<tr>
@@ -107,19 +77,16 @@
 										<h:outputText value="#{msg.quantidade}: " />
 									</td>
 									<td>
-										<h:inputText value="#{comprasBean.produto.qtd}"  disabled="true"/>
+										<h:inputText value="#{comprasBean.produto.qtd}" styleClass="cod" />
 									</td>
 									<td class="label">
-										<p:commandButton value="#{msg.lancar}" action="#{comprasBean.lancar()}" />
-									</td>
-									<td>
-										<p:commandButton value="#{msg.cancelar}"  />
+										<p:commandButton value="#{msg.lancar}" action="#{comprasBean.lancar()}" update=":compras"/>
 									</td>
 								</tr>
 							</table>
 							<p:dataTable  value="#{comprasBean.lstProdutos}" var="lstProd" rows="10" paginator="true" paginatorPosition="bottom" style="margin-top:20px;">
 								<p:column>
-									<p:commandButton icon="ui-icon-trash" action="#{comprasBean.apagarProd(lstProd)}"/>
+									<p:commandButton icon="ui-icon-trash" action="#{comprasBean.apagarProd(lstProd)}" update=":compras:panelTable"/>
 									
 								</p:column>
 								<p:column>
@@ -155,47 +122,8 @@
 									</p:toolbar>
 								</f:facet>
 							</p:dataTable>						
-						</p:fieldset>
-						<p:fieldset legend="#{msg.pagamento}" styleClass="titulo"
-									style="float:left;clear:both; min-width:755px;" >
-							<table style="margin-right: auto;">
-								<tr>
-									<td class="label">
-										<h:outputText value="#{msg.acrescimos}: " />
-									</td>
-									<td>
-										<h:inputText value="#{comprasBean.acrescimos}" />
-									</td>
-									<td>
-										<h:outputText value="#{msg.vlrTotal}: " style="margin-left:10px;" />
-										<h:outputText value="#{comprasBean.operacao.valorTotal}" />
-									</td>
-								</tr>
-								<tr>
-									<td class="label">
-										<h:outputText value="#{msg.descontos}: " />
-									</td>
-									<td>
-										<h:inputText value="#{comprasBean.descontos}" />
-									</td>
-									<td >
-										<h:outputText value="#{msg.pagamento}: " style="margin-left:10px;"/>
-										<h:selectOneListbox value="#{comprasBean.pagto}" size="1">
-											<f:selectItem itemLabel="#{msg.aVista}" itemValue="1"/>
-											<f:selectItem itemLabel="2x" itemValue="2"/>
-											<f:selectItem itemLabel="3x" itemValue="3"/>
-										</h:selectOneListbox>
-									</td>
-								</tr>
-								<tr>
-									<td>
-										<p:commandButton value="#{msg.finalizarPedido}" />
-									</td>
-									<td>
-										<p:commandButton value="#{msg.cancelar}" />
-									</td>
-								</tr>
-							</table>
+							<p:commandButton value="#{msg.finalizarPedido}" action="#{comprasBean.salva()}" ajax="false"/>
+							<p:commandButton value="#{msg.cancelar}" />
 						</p:fieldset>
 				</div>
 				<p:dialog widgetVar="pessoamodal" closable="true" id="pessoaDialog">
@@ -205,14 +133,14 @@
 								<h:outputText value="#{msg.pessoa}" />
 							</p:column>
 							<p:column style="text-align: left;">
-								<h:inputText value="#{pessoaBean.pessoa.nome}" />
-								<p:commandButton value="#{msg.pesquisar}" />
+								<h:inputText value="#{pessoaBean.nome}" />
+								<p:commandButton value="#{msg.pesquisar}" action="#{pessoaBean.pesquisaPessoaJuridica()}" update=":compras:pjTable" />
 							</p:column>
 						</p:row>
 					</p:panelGrid>
-					<p:dataTable value="#{pessoaBean.lstPessoa}" var="lstPessoa" rows="10" paginator="true" paginatorPosition="bottom" rowKey="#{lstPessoa.rootId}"
-									selection="#{pessoaBean.pessoa}" selectionMode="single">
-							<p:ajax event="rowSelect" listener="#{pessoaBean}" update="@form" />
+					<p:dataTable value="#{pessoaBean.lstPessoaJuridica}" var="lstPessoa" rows="10" paginator="true" paginatorPosition="bottom" rowKey="#{lstPessoa.rootId}"
+									selection="#{comprasBean.fornecedorSelecionado}" selectionMode="single" id="pjTable">
+							<p:ajax event="rowSelect" listener="#{comprasBean.SelecionaFornecedor()}" update="@form" />
 						<p:column>
 							<f:facet name="header">
 								<h:outputText value="#{msg.nome}" />
@@ -224,7 +152,6 @@
 							<f:facet name="header">
 								<h:outputText value="#{msg.doc}" />
 							</f:facet>
-							<h:outputText value="#{lstPessoa.cpf}" rendered="#{lstPessoa.pessoaFisica}" />
 							<h:outputText value="#{lstPessoa.cnpj}" rendered="#{lstPessoa.pessoaJuridica}" />
 						</p:column>
 						
@@ -238,14 +165,14 @@
 								<h:outputText value="#{msg.produto}" />
 							</p:column>
 							<p:column style="text-align: left;">
-								<h:inputText value="#{produtoBean.produto.descricao}" />
-								<p:commandButton value="#{msg.pesquisar}" />
+								<h:inputText value="#{produtoBean.descricao}" />
+								<p:commandButton value="#{msg.pesquisar}" action="#{produtoBean.pesquisaProduto()}" update=":compras:prodTable"/>
 							</p:column>
 						</p:row>
 					</p:panelGrid>
 					<p:dataTable value="#{produtoBean.lstProd}" var="lstProd" rows="10" paginator="true" paginatorPosition="bottom" rowKey="#{lstProd.id}"
-									selection="#{produtoBean.prodDialog}" selectionMode="single">
-							<p:ajax event="rowSelect" listener="#{produtoBean}" update="@form" />
+									selection="#{comprasBean.prodSelecionado}" selectionMode="single" id="prodTable">
+							<p:ajax event="rowSelect"  update="@form" listener="#{comprasBean.selecionaProduto()}"/>
 						<p:column style="text-align: left;">
 							<f:facet name="header">
 								<h:outputText value="#{msg.nome}" />

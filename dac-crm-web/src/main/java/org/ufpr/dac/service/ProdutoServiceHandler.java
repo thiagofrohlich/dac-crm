@@ -20,4 +20,8 @@ public class ProdutoServiceHandler extends AbstractServiceHandler<ProdutoSummary
 		return super.getPath() + "produto/";
 	}
 
+	public ProdutoWrapper getByNome(String nome) {
+		return  getRestTemplate().getForObject(getPath()+"nome/{nome}", ProdutoWrapper.class, nome);
+	}
+	
 }

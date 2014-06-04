@@ -150,7 +150,6 @@ public class PessoaRepositoryComponentTest extends AbstractTransactionalJUnit4Sp
 		assertNotNull(result);
 		assertNotNull(result.getId());
 		assertEquals(expected.getCpf(), result.getCpf());
-		assertEquals(expected.getDataNascimento(), result.getDataNascimento());
 		assertEquals(expected.getEmail(), result.getEmail());
 	}
 	

@@ -10,6 +10,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -17,6 +18,8 @@ import javax.persistence.SequenceGenerator;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.validator.constraints.NotEmpty;
 
 
@@ -39,19 +42,17 @@ public class Pessoa implements Domain, Serializable {
 	@NotEmpty(message="org.ufpr.dac.nomePessoaCannotBeNull")
 	private String nome;
 	
-	@Max(value = 15, message="org.ufpr.dac.telephoneMustHave15DigitsMax")
+	
 	private String telefone;
-
-	@OneToOne(mappedBy="pessoa", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	
+	@OneToOne(mappedBy="pessoa", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
 	private Endereco endereco;
 
-	@OneToMany(mappedBy="pessoa")
+	@OneToMany(mappedBy="pessoa", fetch=FetchType.LAZY)
 	private List<NotaFiscal> notaFiscals;
-
-	@OneToOne(mappedBy="pessoa", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	@OneToOne(mappedBy="pessoa", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
 	private PessoaFisica pessoaFisica;
-
-	@OneToOne(mappedBy="pessoa", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	@OneToOne(mappedBy="pessoa", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
 	private PessoaJuridica pessoaJuridica;
 
 	@OneToOne(mappedBy="pessoaUsuario")
@@ -76,7 +77,7 @@ public class Pessoa implements Domain, Serializable {
 		this.nome = nome;
 	}
 
-	public List<NotaFiscal> getNotaFiscals() {
+	/*public List<NotaFiscal> getNotaFiscals() {
 		return this.notaFiscals;
 	}
 
@@ -97,7 +98,7 @@ public class Pessoa implements Domain, Serializable {
 
 		return notaFiscal;
 	}
-
+*/
 	public Endereco getEndereco() {
 		return endereco;
 	}
@@ -136,6 +137,14 @@ public class Pessoa implements Domain, Serializable {
 
 	public void setTelefone(String telefone) {
 		this.telefone = telefone;
+	}
+
+	public List<NotaFiscal> getNotaFiscals() {
+		return notaFiscals;
+	}
+
+	public void setNotaFiscals(List<NotaFiscal> notaFiscals) {
+		this.notaFiscals = notaFiscals;
 	}
 
 }

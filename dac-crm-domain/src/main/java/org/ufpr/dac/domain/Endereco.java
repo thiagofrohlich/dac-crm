@@ -6,10 +6,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -29,7 +29,6 @@ public class Endereco implements Domain, Serializable {
 
 	@NotNull(message="org.ufpr.dac.cepMustNotBeNull")
 	@NotEmpty(message="org.ufpr.dac.cepMustNotBeNull")
-	@Size(min=9, max=9, message="org.ufpr.dac.cepMustHave9Digits")
 	private String cep;
 
 	@NotNull(message="org.ufpr.dac.cidadeMustNotBeNull")
@@ -53,8 +52,9 @@ public class Endereco implements Domain, Serializable {
 	@NotNull(message="org.ufpr.dac.paisMustNotBeNull")
 	@NotEmpty(message="org.ufpr.dac.paisMustNotBeNull")
 	private String pais;
-
+	
 	@OneToOne
+	@JoinColumn(name="pessoa_id", referencedColumnName="id")
 	private Pessoa pessoa;
 
 	public Endereco() {
@@ -124,12 +124,17 @@ public class Endereco implements Domain, Serializable {
 		this.pais = pais;
 	}
 
+
 	public Pessoa getPessoa() {
-		return this.pessoa;
+		return pessoa;
 	}
 
 	public void setPessoa(Pessoa pessoa) {
 		this.pessoa = pessoa;
 	}
+
+
+	
+	
 
 }

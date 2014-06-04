@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="relatorioOperacoes" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d38a4cbf-408f-4061-93ee-5badfd620583">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="dataset1" uuid="a6f692e3-2bee-455a-be5e-f1f33e46ebe9">
+		<parameter name="dataini" class="java.util.Date">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<parameter name="datafim" class="java.util.Date">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<parameter name="cpf" class="java.lang.String">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<queryString>
+			<![CDATA[Select o.id, o.valor_total, o.data_operacao, pf.cpf, p.nome from operacao o
+inner join nota_fiscal nf on o.nf_id = nf.id
+inner join pessoa_fisica pf on pf.id = nf.pessoa_id
+inner join pessoa p on p.id = pf.pessoa_id
+where o.data_operacao between $P{dataini} and $P{datafim} and pf.cpf = $P{cpf}
+order by o.data_operacao asc]]>
+		</queryString>
+		<field name="id" class="java.lang.Integer"/>
+		<field name="valor_total" class="java.lang.Double"/>
+		<field name="data_operacao" class="java.sql.Date"/>
+		<field name="cpf" class="java.lang.String"/>
+		<field name="nome" class="java.lang.String"/>
+	</subDataset>
+	<parameter name="dataini" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="datafim" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="cpf" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[Select o.id, o.valor_total, o.data_operacao, pf.cpf, p.nome from operacao o
+inner join nota_fiscal nf on o.nf_id = nf.id
+inner join pessoa_fisica pf on pf.id = nf.pessoa_id
+inner join pessoa p on p.id = pf.pessoa_id
+where o.data_operacao between $P{dataini} and $P{datafim} and pf.cpf = $P{cpf}
+order by o.data_operacao asc]]>
+	</queryString>
+	<field name="id" class="java.lang.Integer"/>
+	<field name="valor_total" class="java.lang.Double"/>
+	<field name="data_operacao" class="java.sql.Date"/>
+	<field name="cpf" class="java.lang.String"/>
+	<field name="nome" class="java.lang.String"/>
+	<title>
+		<band height="47" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="142" height="20" uuid="827be3a5-a056-4ecb-aa31-03e627d23699"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[Relatório de Vendas]]></text>
+			</staticText>
+		</band>
+	</title>
+	<detail>
+		<band height="125" splitType="Stretch">
+			<componentElement>
+				<reportElement key="table" style="table" x="0" y="0" width="555" height="125" uuid="889abb17-db4e-4ba3-a135-e84cd3e0b0a7"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="dataset1" uuid="a0857991-dc08-4b66-a79f-33f496781a4a">
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="90" uuid="4c830877-3d40-4930-95f8-b2f79d9dc367">
+						<jr:columnHeader style="table_CH" height="30">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="81b17130-783f-4846-84a0-06f8e7696460"/>
+								<text><![CDATA[data operacao]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="20">
+							<textField>
+								<reportElement x="0" y="0" width="90" height="20" uuid="3d2981cd-7fae-4ba6-a1d9-a47471747d68"/>
+								<textFieldExpression><![CDATA[$F{data_operacao}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="3b2e41e0-42fe-45bc-9c1a-526e1b957c91">
+						<jr:columnHeader style="table_CH" height="30">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="c7670eb0-585c-45dd-8725-30289e465e77"/>
+								<text><![CDATA[id]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="20">
+							<textField>
+								<reportElement x="0" y="0" width="90" height="20" uuid="09b4aab1-08f9-4cec-9bef-c9b080cf0424"/>
+								<textFieldExpression><![CDATA[$F{id}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="9d6dd535-3a9d-4c0a-bf2d-8e54cfc25643">
+						<jr:columnHeader style="table_CH" height="30">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="3825c519-36d9-41ef-be6d-e6b8f981d5ed"/>
+								<text><![CDATA[cpf]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="20">
+							<textField>
+								<reportElement x="0" y="0" width="90" height="20" uuid="c6393e47-dc30-4ef3-8521-c4d307bd56d8"/>
+								<textFieldExpression><![CDATA[$F{cpf}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="e06b721b-1d73-49a4-86e0-895caa8d8354">
+						<jr:columnHeader style="table_CH" height="30">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="bfed3e00-9cf0-478b-aee7-6213514da9fe"/>
+								<text><![CDATA[nome]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="20">
+							<textField>
+								<reportElement x="0" y="0" width="90" height="20" uuid="cd47df78-a788-4425-b73f-a6568f5f70b1"/>
+								<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="e49ab807-d82b-4c97-869d-6be07deaab37">
+						<jr:columnHeader style="table_CH" height="30">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="be32d237-8f77-4229-938a-263837944733"/>
+								<text><![CDATA[valor total]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD" height="20">
+							<textField>
+								<reportElement x="0" y="0" width="90" height="20" uuid="d2433f69-85af-47f3-a505-82b6b43dc7f2"/>
+								<textFieldExpression><![CDATA[$F{valor_total}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="50">
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="0" y="0" width="100" height="20" uuid="390b933f-0e93-4fe8-be05-e3ce322b74dd"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField pattern="HH.mm">
+				<reportElement x="455" y="0" width="100" height="20" uuid="b89b7d46-a421-4e67-aea5-33c6a13866f6"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="226" y="0" width="100" height="20" uuid="5cb5622a-6c04-451b-a42a-4ee255734880"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

@@ -2,13 +2,18 @@ package org.ufpr.dac.domain;
 
 import java.io.Serializable;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotEmpty;
-
-import java.util.Date;
 
 
 /**
@@ -27,16 +32,12 @@ public class PessoaFisica implements Domain, Serializable {
 
 	@NotNull(message="org.ufpr.dac.cpfCannotBeNull")
 	@NotEmpty(message="org.ufpr.dac.cpfCannotBeNull")
-	@Size(min=14, max=14, message="org.ufpr.dac.cpfMustHave14Digits")
 	private String cpf;
 
-	@Temporal(TemporalType.DATE)
-	@Column(name="data_nascimento")
-	private Date dataNascimento;
-
+	
 	private String email;
-
 	@OneToOne
+	@JoinColumn(name="pessoa_id", referencedColumnName="id")
 	private Pessoa pessoa;
 
 	public PessoaFisica() {
@@ -58,13 +59,7 @@ public class PessoaFisica implements Domain, Serializable {
 		this.cpf = cpf;
 	}
 
-	public Date getDataNascimento() {
-		return this.dataNascimento;
-	}
-
-	public void setDataNascimento(Date dataNascimento) {
-		this.dataNascimento = dataNascimento;
-	}
+	
 
 	public String getEmail() {
 		return this.email;
@@ -72,10 +67,6 @@ public class PessoaFisica implements Domain, Serializable {
 
 	public void setEmail(String email) {
 		this.email = email;
-	}
-
-	public Pessoa getPessoa() {
-		return this.pessoa;
 	}
 
 	public void setPessoa(Pessoa pessoa) {

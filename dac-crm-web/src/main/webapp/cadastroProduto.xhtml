@@ -5,13 +5,14 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:p="http://primefaces.org/ui"
+	 xmlns:stella="http://stella.caelum.com.br/faces2"> 
 	
 	<ui:composition template="/template.xhtml">
 		<ui:define name="style">
 			<style type="text/css">
 				.dsc{width: 200px;}
-				.cod{width: 45px;}
+				
 			</style>
 		</ui:define>
 	
@@ -19,10 +20,10 @@
 			<h:form id="cadastroProduto">
 				<div style="clear:both;" class="center">
 				<p:messages showDetail="true" autoUpdate="true"  />
-					<h:outputText value="#{msg.cadastro} #{msg.de} #{msg.produtos}" style="font-size:13px; "/>
-					<p:commandButton icon="ui-icon-search" style="margin-left: 10px;" onclick="prodDialog.show()"/>
+					<h:outputText value="#{msg.cadastro} #{msg.de} #{msg.produtos}" styleClass="title"/>
+					<p:commandButton icon="ui-icon-search" style="margin-left: 10px;" onclick="prodmodal.show()" type="button"/>
 				</div>
-				<div class="center" style="padding-top: 15px;">
+				<p:outputPanel styleClass="center" style="padding-top: 15px;" id="formulario">
 					<table border="0">
 						<tr>
 							<td class="label">
@@ -37,7 +38,7 @@
 								<h:outputText value="#{msg.quantidade}: " />
 							</td>
 							<td>
-								<h:inputText value="#{produtoBean.produto.qtdEstoque}" styleClass="dsc"/>
+								<h:inputText value="#{produtoBean.produto.estoque}" styleClass="cod"/>
 							</td>
 						</tr>
 						<tr>
@@ -45,9 +46,14 @@
 								<h:outputText value="#{msg.fornecedor}: " />
 							</td>
 							<td>
-								<h:inputText value="#{produtoBean.produto.fornecedor.cnpj}" styleClass="cod"/>
-								<h:inputText value="#{produtoBean.produto.fornecedor.nome}" disabled="true" />
-								<p:commandButton icon="ui-icon-search" onclick="pessoaDialog.show()"/>
+								<p:outputPanel id="cnpj">
+									<p:inputMask  value="#{produtoBean.produto.fornecedor.cnpj}" styleClass="cnpj" mask="99.999.999/9999-99">
+										<stella:validateCNPJ formatted="true" />
+										<p:ajax event="valueChange" listener="#{produtoBean.buscaFornecedor()}" update=":cadastroProduto:cnpj" />
+									</p:inputMask>
+									<h:outputText value="#{produtoBean.produto.fornecedor.nome}" disabled="true" />
+									<p:commandButton icon="ui-icon-search" onclick="pessoamodal.show()" type="button" styleClass="marginLeft"/>
+								</p:outputPanel>
 							</td>
 						</tr>
 						<tr>
@@ -55,7 +61,7 @@
 								<h:outputText value="#{msg.valorCompra}: " />
 							</td>
 							<td>
-								<h:inputText value="#{produtoBean.produto.valorCompra}" styleClass="dsc"/>	
+								<h:inputText value="#{produtoBean.produto.valorCompra}" styleClass="cod"/>	
 							</td>
 						</tr>
 						<tr>
@@ -63,34 +69,35 @@
 								<h:outputText value="#{msg.valorVenda}: " />
 							</td>
 							<td>
-								<h:inputText value="#{produtoBean.produto.valorVenda}" styleClass="dsc"/>	
+								<h:inputText value="#{produtoBean.produto.valorVenda}" styleClass="cod"/>	
 							</td>
 						</tr>
 						<tr>
 							<td class="label">
-								<p:commandButton value="#{msg.cancelar}" />
+								<p:commandButton value="#{msg.cancelar}"  />
+								<p:commandButton value="#{msg.apagar}" action="#{produtoBean.apagar()}" update=":cadastroProduto:formulario" rendered="#{produtoBean.apaga}"/>
 							</td>
 							<td>
-								<p:commandButton value="#{msg.salvar}"  action="#{produtoBean.salvar()}"/>	
+								<p:commandButton value="#{msg.salvar}"  action="#{produtoBean.salvar()}" update=":cadastroProduto:formulario"/>	
 							</td>
 						</tr>
 					</table>
-				</div>
+				</p:outputPanel>
 			<p:dialog widgetVar="prodmodal" closable="true" id="prodDialog">
-				<p:panelGrid style="border: 0 !important">
+				<p:panelGrid styleClass="noborder">
 					<p:row>
 						<p:column style="text-align: right;">
 							<h:outputText value="#{msg.produto}" />
 						</p:column>
 						<p:column style="text-align: left;">
-							<h:inputText value="#{produtoBean.prodDialog.descricao}" />
-							<p:commandButton value="#{msg.pesquisar}" />
+							<h:inputText value="#{produtoBean.descricao}" />
+							<p:commandButton value="#{msg.pesquisar}" action="#{produtoBean.pesquisaProduto()}" update=":cadastroProduto:prodTable" />
 						</p:column>
 					</p:row>
 				</p:panelGrid>
-				<p:dataTable value="#{produtoBean.lstProd}" var="lstProd" rows="10" paginator="true" paginatorPosition="bottom" rowKey="#{lstProd.id}"
-								selection="#{produtoBean.prodDialog}" selectionMode="single">
-						<p:ajax event="rowSelect" listener="#{produtoBean}" update="@form" />
+				<p:dataTable value="#{produtoBean.lstProd}" var="lstProd" rows="10" paginator="true" paginatorPosition="bottom" rowKey="#{lstProd.id}" 
+								selection="#{produtoBean.prodDialog}" selectionMode="single" id="prodTable">
+						<p:ajax event="rowSelect" listener="#{produtoBean.selecionaProduto()}" update="@form" />
 					<p:column style="text-align: left;">
 						<f:facet name="header">
 							<h:outputText value="#{msg.nome}" />
@@ -100,27 +107,27 @@
 					
 					<p:column style="text-align: right;">
 						<f:facet name="header">
-							<h:outputText value="#{msg.doc}" />
+							<h:outputText value="#{msg.codigo}" />
 						</f:facet>
 						<h:outputText value="#{lstProd.id}"  />
 					</p:column>
 				</p:dataTable>
 			</p:dialog>	
 			<p:dialog widgetVar="pessoamodal" closable="true" id="pessoaDialog">
-					<p:panelGrid style="border: 0 !important">
+					<p:panelGrid styleClass="noborder">
 						<p:row>
 							<p:column style="text-align: right;">
 								<h:outputText value="#{msg.pessoa}" />
 							</p:column>
 							<p:column style="text-align: left;">
-								<h:inputText value="#{pessoaBean.pessoaJuridicaSelecionada.nome}" />
-								<p:commandButton value="#{msg.pesquisar}" />
+								<h:inputText value="#{pessoaBean.nome}" />
+								<p:commandButton value="#{msg.pesquisar}" action="#{pessoaBean.pesquisaPessoaJuridica()}" update=":cadastroProduto:pjTable"/>
 							</p:column>
 						</p:row>
 					</p:panelGrid>
-					<p:dataTable value="#{pessoaBean.lstPessoaJuridica}" var="lstPessoa" rows="10" paginator="true" paginatorPosition="bottom" rowKey="#{lstPessoa.rootId}"
-									selection="#{pessoaBean.pessoaJuridicaSelecionada}" selectionMode="single">
-							<p:ajax event="rowSelect"  update="@form" />
+					<p:dataTable value="#{pessoaBean.lstPessoaJuridica}" var="lstPessoa" rows="10" paginator="true" paginatorPosition="bottom" rowKey="#{lstPessoa.rootId}" id="pjTable"
+									selection="#{produtoBean.pessoaDialog}" selectionMode="single">
+							<p:ajax event="rowSelect" listener="#{produtoBean.selecionaPessoa()}" update="@form" />
 						<p:column>
 							<f:facet name="header">
 								<h:outputText value="#{msg.nome}" />
