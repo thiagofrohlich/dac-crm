@@ -36,8 +36,8 @@ public class PessoaFisica implements Domain, Serializable {
 
 	private String email;
 
-	@Column(name="pessoa_id")
-	private Long pessoa;
+	@OneToOne
+	private Pessoa pessoa;
 
 	public PessoaFisica() {
 	}
@@ -74,11 +74,11 @@ public class PessoaFisica implements Domain, Serializable {
 		this.email = email;
 	}
 
-	public Long getPessoa() {
+	public Pessoa getPessoa() {
 		return this.pessoa;
 	}
 
-	public void setPessoa(Long pessoa) {
+	public void setPessoa(Pessoa pessoa) {
 		this.pessoa = pessoa;
 	}
 

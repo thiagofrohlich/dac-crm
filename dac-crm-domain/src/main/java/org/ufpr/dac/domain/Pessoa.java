@@ -10,7 +10,6 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -49,12 +48,10 @@ public class Pessoa implements Domain, Serializable {
 	@OneToMany(mappedBy="pessoa")
 	private List<NotaFiscal> notaFiscals;
 
-	@JoinColumn(name="id", referencedColumnName="pessoa_id")
-	@OneToOne(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	@OneToOne(mappedBy="pessoa", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 	private PessoaFisica pessoaFisica;
 
-	@JoinColumn(name="id", referencedColumnName="pessoa_id")
-	@OneToOne(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	@OneToOne(mappedBy="pessoa", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 	private PessoaJuridica pessoaJuridica;
 
 	@OneToOne(mappedBy="pessoaUsuario")

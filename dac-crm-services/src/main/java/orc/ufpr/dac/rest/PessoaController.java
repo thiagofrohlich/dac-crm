@@ -40,14 +40,13 @@ public class PessoaController {
 	@RequestMapping(value="/page/{page}", method=RequestMethod.GET)
 	public PessoaWrapper getAll(@PathVariable Integer page) throws IllegalArgumentException, IllegalAccessException, InstantiationException, InvocationTargetException {
 		Pageable pageRequest = new PageRequest(page, PageSize.DEFAULT);
-		Page<Pessoa> result = pessoaRepository.findAllExceptUsuario(pageRequest);
+		Page<Pessoa> result = pessoaRepository.findAll(pageRequest);
 		PessoaWrapper wrapper = new PessoaWrapper(result);
 		wrapper.setList(new ArrayList<PessoaSummary>(PageSize.DEFAULT));
 		
 		for(Pessoa pessoa : result) {
-			Pessoa pe = pessoaRepository.findOne(pessoa.getRootId());
-			PessoaSummary p = instantiatePessoaSummary(pe);
-			pessoaTransformer.transform(pe, p);
+			PessoaSummary p = instantiatePessoaSummary(pessoa);
+			pessoaTransformer.transform(pessoa, p);
 			wrapper.getList().add(p);
 		}
 		
