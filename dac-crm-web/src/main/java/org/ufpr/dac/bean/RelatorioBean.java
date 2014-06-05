@@ -42,6 +42,9 @@ public class RelatorioBean implements Serializable{
 	private ProdutoSummary produto = new ProdutoSummary();
 	private List<OperacaoSummary> lstOperacao = new ArrayList<>();
 	private String doc;
+	private PessoaFisicaSummary pfSelecionado = new PessoaFisicaSummary();
+	private PessoaJuridicaSummary pjSelecionado = new PessoaJuridicaSummary();
+	private ProdutoSummary prodSelecionado = new ProdutoSummary();
 	
 	
 	
@@ -78,7 +81,7 @@ public class RelatorioBean implements Serializable{
 		byte[] bt = null;
 	
 		if(tipoPesquisa == 1) bt = operacaoService.getCompras(ini, fim, pessoaJuridica.getCnpj(), produto.getId());
-		else bt = operacaoService.getVendas(dataini, datafim, pessoaFisica.getCpf(), produto.getId());
+		else bt = operacaoService.getVendas(ini, fim, pessoaFisica.getCpf(), produto.getId());
 		try{
 			FacesContext context = FacesContext.getCurrentInstance();  
 			HttpServletResponse response = (HttpServletResponse) context.getExternalContext().getResponse();  
@@ -99,14 +102,22 @@ public class RelatorioBean implements Serializable{
 	
 	public void confirmaCampos(){
 		if(tipoPesquisa == 1){
-			if(pessoaJuridica == null || pessoaJuridica.getCnpj() == null){
+			if(pessoaJuridica == null || pessoaJuridica.getCnpj() == null|| pessoaJuridica.getCnpj().equals("")){
 				pessoaJuridica = new PessoaJuridicaSummary();
 				pessoaJuridica.setCnpj("VAZIO");
+			}else{
+				CNPJFormatter formatter = new CNPJFormatter();
+				String cnpj = formatter.unformat(pessoaJuridica.getCnpj());
+				pessoaJuridica.setCnpj(cnpj);
 			}
 		}else{
-			if(pessoaFisica == null || pessoaFisica.getCpf() == null){
+			if(pessoaFisica == null || pessoaFisica.getCpf() == null || pessoaFisica.getCpf().equals("")){
 				pessoaFisica = new PessoaFisicaSummary();
 				pessoaFisica.setCpf("VAZIO");
+			}else{
+				CPFFormatter formatter = new CPFFormatter();
+				String cpf = formatter.unformat(pessoaFisica.getCpf());
+				pessoaFisica.setCpf(cpf);
 			}
 		}
 	
@@ -115,6 +126,18 @@ public class RelatorioBean implements Serializable{
 			produto.setId((long) 0);
 		}
 		pesquisar();
+	}
+	
+	public void onSelectProd(){
+		produto = prodSelecionado;
+	}
+	 
+	public void onSelectPessoaFisica(){
+		pessoaFisica = pfSelecionado;
+	}
+	
+	public void onSelectPessoaJuridica(){
+		pessoaJuridica = pjSelecionado;
 	}
 	
 	public void buscaProduto(){
@@ -185,5 +208,35 @@ public class RelatorioBean implements Serializable{
 
 	public void setPessoaFisica(PessoaFisicaSummary pessoaFisica) {
 		this.pessoaFisica = pessoaFisica;
+	}
+
+
+	public PessoaFisicaSummary getPfSelecionado() {
+		return pfSelecionado;
+	}
+
+
+	public void setPfSelecionado(PessoaFisicaSummary pfSelecionado) {
+		this.pfSelecionado = pfSelecionado;
+	}
+
+
+	public PessoaJuridicaSummary getPjSelecionado() {
+		return pjSelecionado;
+	}
+
+
+	public void setPjSelecionado(PessoaJuridicaSummary pjSelecionado) {
+		this.pjSelecionado = pjSelecionado;
+	}
+
+
+	public ProdutoSummary getProdSelecionado() {
+		return prodSelecionado;
+	}
+
+
+	public void setProdSelecionado(ProdutoSummary prodSelecionado) {
+		this.prodSelecionado = prodSelecionado;
 	}
 }

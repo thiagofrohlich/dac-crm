@@ -53,7 +53,8 @@
 									</p:inputMask>
 									<h:outputText value="#{relatorioBean.pessoaJuridica.nome}" rendered="#{relatorioBean.tipoPesquisa == 1}" />
 									<h:outputText value="#{relatorioBean.pessoaFisica.nome}"  rendered="#{relatorioBean.tipoPesquisa == 2}" />
-									<p:commandButton icon="ui-icon-search" style="margin-left: 10px;" onclick="pessoamodal.show()"/>
+									<p:commandButton icon="ui-icon-search" style="margin-left: 10px;" onclick="pessoaJmodal.show()" type="button" rendered="#{relatorioBean.tipoPesquisa == 1}"/>
+									<p:commandButton icon="ui-icon-search" style="margin-left: 10px;" onclick="pessoaFmodal.show()" type="button" rendered="#{relatorioBean.tipoPesquisa == 2}"/>
 								</td>
 							</tr>
 							<tr>
@@ -65,7 +66,7 @@
 										<p:ajax event="valueChange" listener="#{relatorioBean.buscaProduto()}" update=":relatorio:formulario" />
 									</h:inputText>
 									<h:outputText value="#{relatorioBean.produto.descricao}" />
-									<p:commandButton icon="ui-icon-search" style="margin-left: 10px;" onclick="prodmodal.show()"/>
+									<p:commandButton icon="ui-icon-search" style="margin-left: 10px;" onclick="prodmodal.show()" type="button"/>
 								</td>
 							</tr>
 							<tr>
@@ -77,32 +78,21 @@
 					</p:outputPanel>
 						
 					</div>
-				<p:dialog widgetVar="pessoamodal" closable="true" id="pessoaDialog">
+				<p:dialog widgetVar="pessoaFmodal" closable="true" id="pessoafDialog">
 					<p:panelGrid style="border: 0 !important">
 						<p:row>
 							<p:column style="text-align: right;">
 								<h:outputText value="#{msg.pessoa}" />
 							</p:column>
 							<p:column style="text-align: left;">
-								<h:selectOneRadio value="#{pessoaBean.tipoPessoaPesquisa}" layout="lineDirection">
-									<f:selectItem itemLabel="#{msg.fisica}" itemValue="1"/>
-									<f:selectItem itemLabel="#{msg.juridica}" itemValue="2"/>
-								</h:selectOneRadio>
-							</p:column>
-						</p:row>
-						<p:row>
-							<p:column style="text-align: right;">
-								<h:outputText value="#{msg.nome}" />
-							</p:column>
-							<p:column style="text-align: left;">
 								<h:inputText value="#{pessoaBean.nome}" />
-								<p:commandButton value="#{msg.pesquisar}" />
+								<p:commandButton value="#{msg.pesquisar}" action="#{pessoaBean.pesquisaPessoaFisica()}" update=":relatorio:pfTable" process=":relatorio:pessoafDialog"/>
 							</p:column>
 						</p:row>
 					</p:panelGrid>
 					<p:dataTable value="#{pessoaBean.lstPessoaFisica}" var="lstPessoa" rows="10" paginator="true" paginatorPosition="bottom" rowKey="#{lstPessoa.rootId}"
-									selection="#{pessoaBean.pessoaFisicaSelecionada}" selectionMode="single" rendered="#{pessoaBean.tipoPessoaPesquisa == 1}">
-							<p:ajax event="rowSelect"  update="@form" />
+									selection="#{relatorioBean.pfSelecionado}" selectionMode="single" id="pfTable">
+							<p:ajax event="rowSelect" listener="#{relatorioBean.onSelectPessoaFisica()}" update="@form" process="@form"/>
 						<p:column>
 							<f:facet name="header">
 								<h:outputText value="#{msg.nome}" />
@@ -117,11 +107,23 @@
 							<h:outputText value="#{lstPessoa.cpf}"  />
 						</p:column>
 						
-						
 					</p:dataTable>
+				</p:dialog>
+				<p:dialog widgetVar="pessoaJmodal" closable="true" id="pessoajDialog">
+					<p:panelGrid style="border: 0 !important">
+						<p:row>
+							<p:column style="text-align: right;">
+								<h:outputText value="#{msg.pessoa}" />
+							</p:column>
+							<p:column style="text-align: left;">
+								<h:inputText value="#{pessoaBean.nome}" />
+								<p:commandButton value="#{msg.pesquisar}" action="#{pessoaBean.pesquisaPessoaJuridica()}" update=":relatorio:pjTable" process=":relatorio:pessoajDialog"/>
+							</p:column>
+						</p:row>
+					</p:panelGrid>
 					<p:dataTable value="#{pessoaBean.lstPessoaJuridica}" var="lstPessoa" rows="10" paginator="true" paginatorPosition="bottom" rowKey="#{lstPessoa.rootId}"
-									selection="#{pessoaBean.pessoaJuridicaSelecionada}" selectionMode="single" rendered="#{pessoaBean.tipoPessoaPesquisa == 2}">
-							<p:ajax event="rowSelect"  update="@form" />
+									selection="#{relatorioBean.pjSelecionado}" selectionMode="single" id="pjTable">
+							<p:ajax event="rowSelect" listener="#{relatorioBean.onSelectPessoaJuridica()}" update="@form" process="@form"/>
 						<p:column>
 							<f:facet name="header">
 								<h:outputText value="#{msg.nome}" />
@@ -139,21 +141,21 @@
 						
 					</p:dataTable>
 				</p:dialog>	 
-				<p:dialog widgetVar="prodmodal" closable="true" id="prodDialog">
+				<p:dialog widgetVar="prodmodal" closable="true" id="prodDialogRelatorio">
 					<p:panelGrid style="border: 0 !important">
 						<p:row>
 							<p:column style="text-align: right;">
 								<h:outputText value="#{msg.produto}" />
 							</p:column>
 							<p:column style="text-align: left;">
-								<h:inputText value="#{produtoBean.produto.descricao}" />
-								<p:commandButton value="#{msg.pesquisar}" />
+								<h:inputText value="#{produtoBean.descricao}" />
+								<p:commandButton value="#{msg.pesquisar}" action="#{produtoBean.pesquisaProduto()}" update=":relatorio:prodTable" process=":relatorio:prodDialogRelatorio"/>
 							</p:column>
 						</p:row>
 					</p:panelGrid>
-					<p:dataTable value="#{produtoBean.lstProd}" var="lstProd" rows="10" paginator="true" paginatorPosition="bottom" rowKey="#{lstProd.id}"
-									selection="#{produtoBean.prodDialog}" selectionMode="single">
-							<p:ajax event="rowSelect" listener="#{produtoBean}" update="@form" />
+					<p:dataTable value="#{produtoBean.lstProd}" var="lstProd" rows="10" paginator="true" paginatorPosition="bottom" rowKey="#{lstProd.id}" id="prodTable"
+									selection="#{relatorioBean.prodSelecionado}" selectionMode="single">
+							<p:ajax event="rowSelect" listener="#{relatorioBean.onSelectProd()}" update="@form" />
 						<p:column style="text-align: left;">
 							<f:facet name="header">
 								<h:outputText value="#{msg.nome}" />

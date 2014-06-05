@@ -13,6 +13,7 @@ public class RelatorioSummary implements Summary {
 	private Date data_operacao;
 	private String cpf;
 	private String cnpj;
+	private String doc;
 	private String nome;
 	private Double valor_total;
 	public Long getId() {
@@ -51,6 +52,12 @@ public class RelatorioSummary implements Summary {
 	}
 	public void setCnpj(String cnpj) {
 		this.cnpj = cnpj;
+	}
+	public String getDoc() {
+		return doc;
+	}
+	public void setDoc(String doc) {
+		this.doc = doc;
 	}
 
 }

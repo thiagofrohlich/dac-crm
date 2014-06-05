@@ -19,7 +19,6 @@
 	<parameter name="cidade" class="java.lang.String"/>
 	<parameter name="uf" class="java.lang.String"/>
 	<parameter name="vlrTotal" class="java.lang.Double"/>
-	<parameter name="complemento" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[select 1 from dual]]>
 	</queryString>
@@ -86,12 +85,8 @@
 				<textFieldExpression><![CDATA[$P{numero}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="58" y="40" width="240" height="20" uuid="6adc2228-50cc-405a-ab95-1442ebe8dc4c"/>
+				<reportElement x="58" y="40" width="370" height="20" uuid="6adc2228-50cc-405a-ab95-1442ebe8dc4c"/>
 				<textFieldExpression><![CDATA[$P{endereco}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="298" y="40" width="130" height="20" uuid="87dd93df-20f8-4ba5-bbad-58b3d531bd31"/>
-				<textFieldExpression><![CDATA[$P{complemento}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="459" y="40" width="94" height="20" uuid="584f27f7-31b5-4e44-a681-15e05fc6e907"/>

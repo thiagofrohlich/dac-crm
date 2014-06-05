@@ -91,7 +91,7 @@ public class OperacaoController {
 		for(Operacao op : result){
 			RelatorioSummary relatorio = new RelatorioSummary();
 			relatorio.setData_operacao(op.getDataOperacao());
-			relatorio.setCnpj(op.getNotaFiscal().getPessoa().getPessoaJuridica().getCnpj());
+			relatorio.setDoc(op.getNotaFiscal().getPessoa().getPessoaJuridica().getCnpj());
 			relatorio.setId(op.getId());
 			relatorio.setNome(op.getNotaFiscal().getPessoa().getNome());
 			relatorio.setValor_total(op.getValorTotal());
@@ -99,6 +99,7 @@ public class OperacaoController {
 		}
 		Map<String, Object> map = new HashMap<>();
 		map.put("titulo", "COMPRAS");
+		map.put("doc", "CNPJ");
 		format = new SimpleDateFormat("yyyyMMddHHmmss");  
 		String id = format.format(new Date());
 		try{
@@ -125,15 +126,15 @@ public class OperacaoController {
 		SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");  
 		Date ini = new Date(format.parse(dateini).getTime()); 
 		Date fim = new Date(format.parse(datafim).getTime());
-		if(cpf.equals("") && produtoId == 0) result = operacaoRepository.buscaVendaRelatorio(ini, fim);
-		else if(cpf.equals("") && produtoId != 0)result = operacaoRepository.buscaVendaRelatorio(ini, fim, produtoId);
-		else if(!cpf.equals("") && produtoId == 0)result = operacaoRepository.buscaVendaRelatorio(ini, fim, cpf);
-		else if(!cpf.equals("") && produtoId != 0)result = operacaoRepository.buscaVendaRelatorio(ini, fim, cpf, produtoId);
+		if(cpf.equals("VAZIO") && produtoId == 0) result = operacaoRepository.buscaVendaRelatorio(ini, fim);
+		else if(cpf.equals("VAZIO") && produtoId != 0)result = operacaoRepository.buscaVendaRelatorio(ini, fim, produtoId);
+		else if(!cpf.equals("VAZIO") && produtoId == 0)result = operacaoRepository.buscaVendaRelatorio(ini, fim, cpf);
+		else if(!cpf.equals("VAZIO") && produtoId != 0)result = operacaoRepository.buscaVendaRelatorio(ini, fim, cpf, produtoId);
 		List<RelatorioSummary> lstFields = new ArrayList<>();
 		for(Operacao op : result){
 			RelatorioSummary relatorio = new RelatorioSummary();
 			relatorio.setData_operacao(op.getDataOperacao());
-			relatorio.setCnpj(op.getNotaFiscal().getPessoa().getPessoaJuridica().getCnpj());
+			relatorio.setDoc(op.getNotaFiscal().getPessoa().getPessoaFisica().getCpf());
 			relatorio.setId(op.getId());
 			relatorio.setNome(op.getNotaFiscal().getPessoa().getNome());
 			relatorio.setValor_total(op.getValorTotal());
@@ -141,6 +142,7 @@ public class OperacaoController {
 		}
 		Map<String, Object> map = new HashMap<>();
 		map.put("titulo", "VENDAS");
+		map.put("doc", "CPF");
 		format = new SimpleDateFormat("yyyyMMddHHmmss");  
 		String id = format.format(new Date());
 		try{
@@ -222,3 +224,4 @@ public class OperacaoController {
 	}
 
 }
+

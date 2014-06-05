@@ -32,7 +32,8 @@ public class OperacaoServiceHandler extends AbstractServiceHandler<OperacaoSumma
 		return getRestTemplate().getForObject(getPath()+"compras/{dateini}/fim/{datafim}/doc/{cnpj}/produto/{produtoId}", byte[].class, dateini, datafim, cnpj, produtoId);
 	}
 	
-	public byte[] getVendas(Date dateini, Date datafim, String cpf, Long produtoId) {
+	public byte[] getVendas(String dateini, String datafim, String cpf, Long produtoId) {
+		System.out.println(getPath()+"vendas/"+dateini+"/fim/"+datafim+"/doc/"+cpf+"/produto/"+produtoId);
 		return   getRestTemplate().getForObject(getPath()+"vendas/{dateini}/fim/{datafim}/doc/{cpf}/produto/{produtoId}", byte[].class, dateini, datafim, cpf, produtoId);
 	}
 	

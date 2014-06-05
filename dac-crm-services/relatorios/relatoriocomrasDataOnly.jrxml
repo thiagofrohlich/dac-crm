@@ -92,6 +92,7 @@ order by o.data_operacao asc]]>
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<parameter name="titulo" class="java.lang.String"/>
+	<parameter name="doc" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[Select o.id, o.valor_total, o.data_operacao, pj.cnpj, p.nome from operacao o
 inner join nota_fiscal nf on o.nf_id = nf.id
@@ -103,7 +104,7 @@ order by o.data_operacao asc]]>
 	<field name="id" class="java.lang.Long"/>
 	<field name="valor_total" class="java.lang.Double"/>
 	<field name="data_operacao" class="java.sql.Date"/>
-	<field name="cnpj" class="java.lang.String"/>
+	<field name="doc" class="java.lang.String"/>
 	<field name="nome" class="java.lang.String"/>
 	<title>
 		<band height="54" splitType="Stretch">
@@ -141,10 +142,10 @@ order by o.data_operacao asc]]>
 				<reportElement x="281" y="7" width="174" height="20" uuid="8e82ccdd-c7c8-4ced-936f-a97b959cb7aa"/>
 				<text><![CDATA[Nome]]></text>
 			</staticText>
-			<staticText>
-				<reportElement x="168" y="7" width="113" height="20" uuid="d8d1e2c7-46c1-46c1-838c-c3adf8a897b9"/>
-				<text><![CDATA[CNPJ]]></text>
-			</staticText>
+			<textField>
+				<reportElement x="168" y="7" width="113" height="20" uuid="81b6cc6f-d520-41af-abac-8b3b69d5ffb0"/>
+				<textFieldExpression><![CDATA[$P{doc}]]></textFieldExpression>
+			</textField>
 		</band>
 	</columnHeader>
 	<detail>
@@ -160,7 +161,7 @@ order by o.data_operacao asc]]>
 			</textField>
 			<textField>
 				<reportElement x="168" y="0" width="113" height="20" uuid="aa733262-7a6c-4bc1-a2f7-26683eb92626"/>
-				<textFieldExpression><![CDATA[$F{cnpj}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{doc}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="281" y="0" width="174" height="20" uuid="cef01abc-923d-4655-afc2-1e4157103335"/>
