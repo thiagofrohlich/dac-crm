@@ -17,6 +17,7 @@
         <intercept-url pattern="/vendas**" access="hasRole('VENDAS')" />
         <intercept-url pattern="/relatorio**" access="hasRole('GERENTE_OPERACAO')" />
         <!-- <logout logout-url="/logout" /> -->
+        <logout logout-success-url="/login.jsf" delete-cookies="JSESSIONID"/>
         <form-login default-target-url="/welcome.jsf"
         always-use-default-target="true"
 		username-parameter="username"

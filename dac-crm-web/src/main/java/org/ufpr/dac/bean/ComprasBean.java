@@ -126,9 +126,10 @@ public class ComprasBean implements Serializable{
 			operacao.setDataOperacao(Calendar.getInstance().getTime());
 			try{
 				operacao.setId(operacaoService.createReturn(operacao));
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "INFO", rb.getString("salvaCompra")));
+				Map<String, Object> map = montaMapa();
 				SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmmss");  
 				String id = format.format(new Date());
-				Map<String, Object> map = montaMapa();
 				
 				JasperReport pathRxml = JasperCompileManager.compileReport(app.getString("notaCompra")+"compra.jrxml");
 				JasperPrint printReport = JasperFillManager.fillReport(pathRxml, map, new JRBeanCollectionDataSource(lstProdutos));
@@ -138,7 +139,7 @@ public class ComprasBean implements Serializable{
 				HttpServletResponse response = (HttpServletResponse) context.getExternalContext().getResponse();  
 				response.reset();  
 				response.setContentType("application/pdf");
-				response.setHeader("Content-Disposition", "attachment; filename=Relatorio.pdf");  
+				response.setHeader("Content-Disposition", "attachment; filename=comprovante_de_compra.pdf");  
 				response.setHeader("Cache-Control", "no-cache"); 
 				FileInputStream fis = new FileInputStream(file);  
 		        byte[] data = new byte[fis.available()];  
@@ -148,7 +149,6 @@ public class ComprasBean implements Serializable{
 				response.getOutputStream().flush();  
 				response.getOutputStream().close();  
 				context.responseComplete();
-				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "INFO", rb.getString("salvaCompra")));
 				limpaTela();
 			}catch(Exception e){
 				e.printStackTrace();

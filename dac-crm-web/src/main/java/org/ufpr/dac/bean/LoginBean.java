@@ -19,6 +19,7 @@ public class LoginBean implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private UsuarioSummary user = new UsuarioSummary();
 	
+	
 	public UsuarioSummary getUser() {
 		return user;
 	}

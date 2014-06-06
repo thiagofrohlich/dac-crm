@@ -135,16 +135,15 @@ public class VendasBean implements Serializable{
 				SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmmss");  
 				String id = format.format(new Date());
 				Map<String, Object> map = montaMapa();
-				
 				JasperReport pathRxml = JasperCompileManager.compileReport(app.getString("notaVenda")+"venda.jrxml");
 				JasperPrint printReport = JasperFillManager.fillReport(pathRxml, map, new JRBeanCollectionDataSource(lstProdutos));
 				JasperExportManager.exportReportToPdfFile(printReport,app.getString("notaVenda")+id+".pdf");
 				File file = new File(app.getString("notaVenda")+id+".pdf");
 				FacesContext context = FacesContext.getCurrentInstance();  
 				HttpServletResponse response = (HttpServletResponse) context.getExternalContext().getResponse();  
-				response.reset();  
+				response.reset();
 				response.setContentType("application/pdf");
-				response.setHeader("Content-Disposition", "attachment; filename=Relatorio.pdf");  
+				response.setHeader("Content-Disposition", "attachment; filename=comprovante_de_venda.pdf");  
 				response.setHeader("Cache-Control", "no-cache"); 
 				FileInputStream fis = new FileInputStream(file);  
 		        byte[] data = new byte[fis.available()];  
@@ -154,7 +153,7 @@ public class VendasBean implements Serializable{
 				response.getOutputStream().flush();  
 				response.getOutputStream().close();  
 				context.responseComplete();  
-				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "INFO", rb.getString("salvaVenda")));
+				context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "INFO", rb.getString("salvaVenda")));
 				limpaTela();
 			}catch(Exception e){
 				e.printStackTrace();
