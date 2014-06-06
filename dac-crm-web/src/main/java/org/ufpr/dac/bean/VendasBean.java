@@ -66,7 +66,7 @@ public class VendasBean implements Serializable{
 
 
 	public void lancar(){
-		if(produto.getQtd() < produto.getEstoque()){
+		if(produto.getQtd() <= produto.getEstoque()){
 			ProdutoNfSummary produtoNf = new ProdutoNfSummary();
 			produtoNf.setProdutoId(produto.getId());
 			produtoNf.setQuantidade(produto.getQtd());

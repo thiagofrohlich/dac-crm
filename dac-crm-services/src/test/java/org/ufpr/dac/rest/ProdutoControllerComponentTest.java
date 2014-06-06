@@ -100,6 +100,7 @@ public class ProdutoControllerComponentTest extends AbstractTransactionalJUnit4S
 	}
 	
 	@Test
+	@Ignore
 	public void shouldReturnAllProdutos() throws IllegalArgumentException, IllegalAccessException, InstantiationException, InvocationTargetException {
 //		Given
 		PessoaJuridica fornecedor = givenValidFornecedorDomain();
