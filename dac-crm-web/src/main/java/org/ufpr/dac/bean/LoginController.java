@@ -19,9 +19,11 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.web.WebAttributes;
+import org.springframework.stereotype.Component;
 
 @ManagedBean(name="loginController")
 @RequestScoped
+@Component
 public class LoginController implements PhaseListener {
 
 	private static final long serialVersionUID = 1L;
@@ -41,6 +43,20 @@ public class LoginController implements PhaseListener {
 
         RequestDispatcher dispatcher = ((ServletRequest) context.getRequest())
                 .getRequestDispatcher("/j_spring_security_check");
+
+        dispatcher.forward((ServletRequest) context.getRequest(),
+                (ServletResponse) context.getResponse());
+
+        FacesContext.getCurrentInstance().responseComplete();
+
+        return null;
+    }
+    
+    public String doLogout() throws ServletException, IOException {
+        ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
+        
+        RequestDispatcher dispatcher = ((ServletRequest) context.getRequest())
+                .getRequestDispatcher("/j_spring_security_logout");
 
         dispatcher.forward((ServletRequest) context.getRequest(),
                 (ServletResponse) context.getResponse());

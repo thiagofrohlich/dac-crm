@@ -69,7 +69,7 @@
 				<text><![CDATA[Operação: Venda]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="395" y="0" width="43" height="20" uuid="cc2c0a19-6c27-4bff-8660-171b981beaf1"/>
+				<reportElement mode="Transparent" x="395" y="0" width="43" height="20" uuid="cc2c0a19-6c27-4bff-8660-171b981beaf1"/>
 				<textElement textAlignment="Right"/>
 				<text><![CDATA[número:]]></text>
 			</staticText>
