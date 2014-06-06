@@ -66,6 +66,7 @@ public class ProdutoBean implements Serializable{
 				produtoService.create(produto);
 				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "INFO", rb.getString("salvaProd")));
 				apaga = false;
+				limpaTela();
 			}catch(Exception e){
 				e.printStackTrace();
 				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERRO", rb.getString("erroSalvarProd")));
@@ -73,6 +74,14 @@ public class ProdutoBean implements Serializable{
 		}
 	}
 	
+	public void limpaTela() {
+		produto = new ProdutoSummary();
+		prodDialog = new ProdutoSummary();
+		pessoaDialog = new PessoaJuridicaSummary();
+		descricao = "";
+		
+	}
+
 	public void buscaFornecedor(){
 		CNPJFormatter formatter = new CNPJFormatter();
 		String cnpj = formatter.unformat(produto.getFornecedor().getCnpj());

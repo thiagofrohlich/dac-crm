@@ -126,16 +126,16 @@
 								<h:outputText value="#{msg.telefone}: " />
 							</td>
 							<td>
-								<h:inputText value="#{pessoaBean.pessoaFisica.telefone}" rendered="#{pessoaBean.tipoPessoa == 1}"/>	
-								<h:inputText value="#{pessoaBean.pessoaJuridica.telefone}" rendered="#{pessoaBean.tipoPessoa == 2}"/>
+								<p:inputMask mask="(99) 9999-9999" value="#{pessoaBean.pessoaFisica.telefone}" rendered="#{pessoaBean.tipoPessoa == 1}"/>	
+								<p:inputMask mask="(99) 9999-9999" value="#{pessoaBean.pessoaJuridica.telefone}" rendered="#{pessoaBean.tipoPessoa == 2}"/>
 							</td>
 						</tr>
 						<tr>
 							<td class="label">
-								<p:commandButton value="#{msg.cancelar}" />
+								<p:commandButton value="#{msg.cancelar}" action="#{pessoaBean.limpaTela()}" ajax="false" />
 							</td>
 							<td >
-								<p:commandButton value="#{msg.salvar}" action="#{pessoaBean.salva()}" />	
+								<p:commandButton value="#{msg.salvar}" action="#{pessoaBean.salva()}" ajax="false"/>	
 							</td>
 						</tr>
 					</table>

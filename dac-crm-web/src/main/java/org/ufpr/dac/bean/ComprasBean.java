@@ -59,6 +59,7 @@ public class ComprasBean implements Serializable{
 	private Integer pagto;
 	private PessoaJuridicaSummary fornecedorSelecionado = new PessoaJuridicaSummary();
 	private ResourceBundle rb = ResourceBundle.getBundle("messages");
+	private ResourceBundle app = ResourceBundle.getBundle("app");
 	private ProdutoSummary prodSelecionado = new ProdutoSummary();
 
 
@@ -125,15 +126,14 @@ public class ComprasBean implements Serializable{
 			operacao.setDataOperacao(Calendar.getInstance().getTime());
 			try{
 				operacao.setId(operacaoService.createReturn(operacao));
-				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "INFO", rb.getString("salvaCompra")));
 				SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmmss");  
 				String id = format.format(new Date());
 				Map<String, Object> map = montaMapa();
 				
-				JasperReport pathRxml = JasperCompileManager.compileReport("D:/repo/dac/dac-crm/dac-crm-web/relatorios/compra.jrxml");
+				JasperReport pathRxml = JasperCompileManager.compileReport(app.getString("notaCompra")+"compra.jrxml");
 				JasperPrint printReport = JasperFillManager.fillReport(pathRxml, map, new JRBeanCollectionDataSource(lstProdutos));
-				JasperExportManager.exportReportToPdfFile(printReport,"D:/repo/dac/dac-crm/dac-crm-services/relatorios/relatorio"+id+".pdf");
-				File file = new File("D:/repo/dac/dac-crm/dac-crm-services/relatorios/relatorio"+id+".pdf");
+				JasperExportManager.exportReportToPdfFile(printReport,app.getString("notaVenda")+id+".pdf");
+				File file = new File(app.getString("notaVenda")+id+".pdf");
 				FacesContext context = FacesContext.getCurrentInstance();  
 				HttpServletResponse response = (HttpServletResponse) context.getExternalContext().getResponse();  
 				response.reset();  
@@ -147,14 +147,26 @@ public class ComprasBean implements Serializable{
 				response.getOutputStream().write(data);  
 				response.getOutputStream().flush();  
 				response.getOutputStream().close();  
-				context.responseComplete();  
+				context.responseComplete();
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "INFO", rb.getString("salvaCompra")));
+				limpaTela();
 			}catch(Exception e){
 				e.printStackTrace();
-				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "INFO", rb.getString("erroSalvaCompra")));
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERRO", rb.getString("erroSalvaCompra")));
 			}
 		}
 	}
 	
+	public void limpaTela() {
+		operacao = new OperacaoSummary();
+		produto = new ProdutoSummary();
+		prodSelecionado = new ProdutoSummary();
+		fornecedor = new PessoaJuridicaSummary();
+		fornecedorSelecionado = new PessoaJuridicaSummary();
+		lstProdutos.clear();
+		subTotal = new BigDecimal(0);
+	}
+
 	public void buscaFornecedor(){
 		CNPJFormatter formatter = new CNPJFormatter();
 		String cnpj = formatter.unformat(fornecedor.getCnpj());

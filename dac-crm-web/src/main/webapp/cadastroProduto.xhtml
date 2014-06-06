@@ -74,7 +74,7 @@
 						</tr>
 						<tr>
 							<td class="label">
-								<p:commandButton value="#{msg.cancelar}"  />
+								<p:commandButton value="#{msg.cancelar}" action="#{produtoBean.limpaTela()}" ajax="false" />
 								<p:commandButton value="#{msg.apagar}" action="#{produtoBean.apagar()}" update=":cadastroProduto:formulario" rendered="#{produtoBean.apaga}"/>
 							</td>
 							<td>
