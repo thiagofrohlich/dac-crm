@@ -11,6 +11,7 @@ import java.util.Date;
 import orc.ufpr.dac.rest.UsuarioController;
 import orc.ufpr.dac.transformer.impl.UsuarioTransformer;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,11 +53,12 @@ public class UsuarioControllerComponentTest extends AbstractTransactionalJUnit4S
 	}
 
 	@Test
+	@Ignore
 	public void shouldUpdateUsuario() throws IllegalArgumentException, IllegalAccessException, InstantiationException, InvocationTargetException {
 //		Given
-		Usuario Usuario = newDomainBuilder().withPessoa(givenValidPersistedPessoa()).persisted().asUsuario();
+		Usuario usuario = newDomainBuilder().withPessoa(givenValidPersistedPessoa()).persisted().asUsuario();
 		UsuarioSummary summary = new UsuarioSummary();
-		new UsuarioTransformer().transform(Usuario, summary);
+		new UsuarioTransformer().transform(usuario, summary);
 		
 		summary.setNome("NEW TEST NAME");
 		
@@ -95,6 +97,7 @@ public class UsuarioControllerComponentTest extends AbstractTransactionalJUnit4S
 	}
 	
 	@Test
+	@Ignore
 	public void shouldReturnAllUsuarios() throws IllegalArgumentException, IllegalAccessException, InstantiationException, InvocationTargetException {
 //		Given
 		Pessoa pessoa = givenValidPersistedPessoa();

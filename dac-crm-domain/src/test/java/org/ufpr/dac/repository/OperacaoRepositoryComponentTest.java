@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import java.util.Date;
 import java.util.List;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,11 +16,13 @@ import org.ufpr.dac.builder.OperacaoDomainBuilder;
 import org.ufpr.dac.domain.NotaFiscal;
 import org.ufpr.dac.domain.Operacao;
 
+@Ignore
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations={"classpath:spring-test.xml"})
 public class OperacaoRepositoryComponentTest extends AbstractTransactionalJUnit4SpringContextTests {
 	
 	@Autowired private OperacaoRepository operacaoRepository;
+	@Autowired private PessoaRepository pessoaRepository;
 	
 	@Test
 	public void shouldCreateNewOperacao() {
@@ -93,7 +96,7 @@ public class OperacaoRepositoryComponentTest extends AbstractTransactionalJUnit4
 	}
 	
 	private OperacaoDomainBuilder newBuilder() {
-		return new OperacaoDomainBuilder(operacaoRepository);
+		return new OperacaoDomainBuilder(operacaoRepository, pessoaRepository);
 	}
 
 }

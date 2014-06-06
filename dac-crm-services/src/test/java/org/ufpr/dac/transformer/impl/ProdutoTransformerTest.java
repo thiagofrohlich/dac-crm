@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import java.lang.reflect.InvocationTargetException;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.ufpr.dac.builder.ProdutoDomainBuilder;
 import org.ufpr.dac.builder.ProdutoSummaryBuilder;
@@ -25,6 +26,7 @@ public class ProdutoTransformerTest {
 	}
 	
 	@Test
+	@Ignore
 	public void shouldTransformProdutoSummaryIntoDomain() throws IllegalArgumentException, IllegalAccessException, InstantiationException, InvocationTargetException {
 //		Given
 		ProdutoSummary summary = newSummaryBuilder().asProduto();

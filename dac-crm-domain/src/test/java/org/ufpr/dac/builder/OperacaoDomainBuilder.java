@@ -10,19 +10,21 @@ import org.ufpr.dac.domain.NotaFiscal;
 import org.ufpr.dac.domain.Operacao;
 import org.ufpr.dac.domain.Pessoa;
 import org.ufpr.dac.domain.PessoaFisica;
-import org.ufpr.dac.domain.Produto;
 import org.ufpr.dac.domain.ProdutoNf;
 import org.ufpr.dac.domain.ProdutoNfPK;
 import org.ufpr.dac.repository.OperacaoRepository;
+import org.ufpr.dac.repository.PessoaRepository;
 
 @Component
 public class OperacaoDomainBuilder {
 
 	private final OperacaoRepository operacaoRepository;
+	private final PessoaRepository pessoaRepository;
 	
 	@Autowired
-	public OperacaoDomainBuilder(OperacaoRepository operacaoRepository) {
+	public OperacaoDomainBuilder(OperacaoRepository operacaoRepository, PessoaRepository pessoaRepository) {
 		this.operacaoRepository = operacaoRepository;
+		this.pessoaRepository = pessoaRepository;
 	}
 	
 	private Long id = 1l;
@@ -53,6 +55,7 @@ public class OperacaoDomainBuilder {
 
 	private Operacao persist(Operacao op) {
 		if(persisted) {
+			pessoaRepository.saveAndFlush(op.getNotaFiscal().getPessoa());
 			return operacaoRepository.saveAndFlush(op);
 		}
 		return op;
@@ -69,9 +72,16 @@ public class OperacaoDomainBuilder {
 
 	private Pessoa makeDefaultPessoa() {
 		Pessoa pessoa = new Pessoa();
+		pessoa.setNome("test name");
 		pessoa.setRootId(new Date().getTime());
-		pessoa.setPessoaFisica(new PessoaFisica());
+		pessoa.setPessoaFisica(makeDefaultPf());
 		return pessoa;
+	}
+
+	private PessoaFisica makeDefaultPf() {
+		PessoaFisica pf = new PessoaFisica();
+		pf.setCpf("1234567890");
+		return pf;
 	}
 
 	private List<ProdutoNf> makeDefaultProdutosNf(Long nfId) {

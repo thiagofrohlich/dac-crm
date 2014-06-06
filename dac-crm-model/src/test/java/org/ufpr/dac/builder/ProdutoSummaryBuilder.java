@@ -11,6 +11,7 @@ public class ProdutoSummaryBuilder {
 	private String descricao = "TEST";
 	private double valorCompra = 9.99;
 	private double valorVenda = 9.99;
+	private double valorEstoque = 1d;
 	private PessoaJuridicaSummary fornecedor;
 	
 	public ProdutoSummary asProduto() {
@@ -20,6 +21,7 @@ public class ProdutoSummaryBuilder {
 		produto.setId(id);
 		produto.setValorCompra(valorCompra);
 		produto.setValorVenda(valorVenda);
+		produto.setEstoque(valorEstoque);
 		return produto;
 	}
 	

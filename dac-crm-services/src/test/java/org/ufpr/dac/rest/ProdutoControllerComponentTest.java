@@ -10,6 +10,7 @@ import java.util.Date;
 import orc.ufpr.dac.rest.ProdutoController;
 import orc.ufpr.dac.transformer.impl.ProdutoTransformer;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +40,7 @@ public class ProdutoControllerComponentTest extends AbstractTransactionalJUnit4S
 	private PessoaRepository pessoaRepository;
 	
 	@Test
+	@Ignore
 	public void shouldCreateProdutoGivenValidProdutoSummary() throws IllegalArgumentException, IllegalAccessException, InstantiationException, InvocationTargetException {
 //		Given
 		ProdutoSummary summary = newSummaryBuilder().asProduto();

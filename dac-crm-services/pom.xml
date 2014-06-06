@@ -182,7 +182,7 @@
 			<version>${org.springframework.version}</version>
 			<scope>test</scope>
 		</dependency>
-	<!-- 	
+	 	
         <dependency>
         	<groupId>org.ufpr.dac</groupId>
         	<artifactId>dac-crm-domain</artifactId>
@@ -190,14 +190,14 @@
         	<type>test-jar</type>
         	<scope>test</scope>
         </dependency>
-         -->
-       <!--  <dependency>
+       
+       <dependency>
         	<groupId>org.ufpr.dac</groupId>
         	<artifactId>dac-crm-model</artifactId>
         	<version>${dac-crm.version}</version>
         	<type>test-jar</type>
         	<scope>test</scope>
-        </dependency> -->
+        </dependency>
         
          <dependency>
 		  <groupId>net.sf.jasperreports</groupId>
