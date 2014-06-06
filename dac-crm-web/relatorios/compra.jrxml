@@ -24,7 +24,7 @@
 	</queryString>
 	<field name="id" class="java.lang.Long"/>
 	<field name="descricao" class="java.lang.String"/>
-	<field name="qtd" class="java.lang.Long"/>
+	<field name="qtd" class="java.lang.Double"/>
 	<field name="valorCompra" class="java.lang.Double"/>
 	<title>
 		<band height="28" splitType="Stretch">

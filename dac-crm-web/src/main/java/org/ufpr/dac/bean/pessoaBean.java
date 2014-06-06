@@ -54,6 +54,7 @@ public class pessoaBean implements Serializable{
 					pessoaService.create(pessoaFisica);
 					FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "INFO", rb.getString("salvaPessoa")));
 					apaga = false;
+					limpaTela();
 				}catch(Exception e){
 					e.printStackTrace();
 					FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERRO", rb.getString("erroPessoa")));
@@ -67,6 +68,7 @@ public class pessoaBean implements Serializable{
 					pessoaService.create(pessoaJuridica);
 					FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "INFO", rb.getString("salvaPessoa")));
 					apaga = false;
+					limpaTela();
 				}catch(Exception e){
 					e.printStackTrace();
 					FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERRO", rb.getString("erroPessoa")));
@@ -76,6 +78,18 @@ public class pessoaBean implements Serializable{
 	}
 	
 	
+	public void limpaTela() {
+		pessoaFisica = new PessoaFisicaSummary();
+		cpf = "";
+		cnpj = "";
+		pessoaFisicaSelecionada = new PessoaFisicaSummary();
+		pessoaJuridica = new PessoaJuridicaSummary();
+		pessoaJuridicaSelecionada = new PessoaJuridicaSummary();
+		nome = "";
+		
+	}
+
+
 	public boolean validaPessoaFisica(){
 		boolean ret = true;
 		if(pessoaFisica.getNome() == null || pessoaFisica.getNome().equals("")){

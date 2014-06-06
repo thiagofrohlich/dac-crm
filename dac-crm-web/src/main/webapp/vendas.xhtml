@@ -11,6 +11,7 @@
 		<ui:define name="centro">
 			<h:form id="vendas">
 				<div style="margin:auto; width: 900px;">
+				<p:messages showDetail="true" autoUpdate="true"  />
 					<div style="clear:both;" class="center">
 						<h:outputText value="#{msg.vendas}" styleClass="title"/>
 						
@@ -118,7 +119,7 @@
 								</f:facet>
 							</p:dataTable>						
 							<p:commandButton value="#{msg.finalizarPedido}" action="#{vendasBean.salva()}" ajax="false"/>
-							<p:commandButton value="#{msg.cancelar}" />
+							<p:commandButton value="#{msg.cancelar}" action="#{vendasBean.limpaTela()}" ajax="false"/>
 						</p:fieldset>
 				</div>
 				<p:dialog widgetVar="pessoamodal" closable="true" id="pessoaDialog">

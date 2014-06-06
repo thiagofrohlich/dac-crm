@@ -46,13 +46,13 @@
 								</td>
 								<td>
 									<p:inputMask mask="99.999.999/9999-99" value="#{relatorioBean.pessoaJuridica.cnpj}" rendered="#{relatorioBean.tipoPesquisa == 1}" styleClass="cnpj" >
-										<p:ajax event="valueChange" listener="#{relatorioBean.buscaFornecedor()}" update=":relatorio:formulario" />
+										<p:ajax event="valueChange" listener="#{relatorioBean.buscaFornecedor()}" update=":relatorio:outPutFisica" />
 									</p:inputMask>
 									<p:inputMask mask="999.999.999-99" value="#{relatorioBean.pessoaFisica.cpf}" rendered="#{relatorioBean.tipoPesquisa == 2}" styleClass="cpf">
-										<p:ajax event="valueChange" listener="#{relatorioBean.buscaCliente()}" update=":relatorio:formulario" />
+										<p:ajax event="valueChange" listener="#{relatorioBean.buscaCliente()}" update=":relatorio:outPutJuridica" />
 									</p:inputMask>
-									<h:outputText value="#{relatorioBean.pessoaJuridica.nome}" rendered="#{relatorioBean.tipoPesquisa == 1}" />
-									<h:outputText value="#{relatorioBean.pessoaFisica.nome}"  rendered="#{relatorioBean.tipoPesquisa == 2}" />
+									<h:outputText value="#{relatorioBean.pessoaJuridica.nome}" rendered="#{relatorioBean.tipoPesquisa == 1}" id="outPutFisica"/>
+									<h:outputText value="#{relatorioBean.pessoaFisica.nome}"  rendered="#{relatorioBean.tipoPesquisa == 2}" id="outPutJuridica"/>
 									<p:commandButton icon="ui-icon-search" style="margin-left: 10px;" onclick="pessoaJmodal.show()" type="button" rendered="#{relatorioBean.tipoPesquisa == 1}"/>
 									<p:commandButton icon="ui-icon-search" style="margin-left: 10px;" onclick="pessoaFmodal.show()" type="button" rendered="#{relatorioBean.tipoPesquisa == 2}"/>
 								</td>

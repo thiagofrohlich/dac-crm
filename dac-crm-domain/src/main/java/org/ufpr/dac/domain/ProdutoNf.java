@@ -26,7 +26,7 @@ public class ProdutoNf implements Domain, Serializable {
 
 	@NotNull(message="org.ufpr.dac.quantidadeProdutoNfCannotBeNull")
 //	@NotEmpty(message="org.ufpr.dac.quantidadeProdutoNfCannotBeNull")
-	private Long quantidade;
+	private double quantidade;
 
 	/*//bi-directional many-to-one association to NotaFiscal
 	@ManyToOne
@@ -49,13 +49,15 @@ public class ProdutoNf implements Domain, Serializable {
 		this.id = id;
 	}
 
-	public Long getQuantidade() {
-		return this.quantidade;
+	public double getQuantidade() {
+		return quantidade;
 	}
 
-	public void setQuantidade(Long quantidade) {
+	public void setQuantidade(double quantidade) {
 		this.quantidade = quantidade;
 	}
+
+	
 
 	/*public NotaFiscal getNotaFiscal() {
 		return this.notaFiscal;

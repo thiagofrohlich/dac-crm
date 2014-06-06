@@ -9,7 +9,7 @@ public class ProdutoNfSummary implements Summary {
 	
 	private Long nfId;
 	private Long produtoId;
-	private Long quantidade;
+	private Double quantidade;
 	
 	public Long getNfId() {
 		return nfId;
@@ -23,12 +23,7 @@ public class ProdutoNfSummary implements Summary {
 	public void setProdutoId(Long produtoId) {
 		this.produtoId = produtoId;
 	}
-	public Long getQuantidade() {
-		return quantidade;
-	}
-	public void setQuantidade(Long quantidade) {
-		this.quantidade = quantidade;
-	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -65,6 +60,12 @@ public class ProdutoNfSummary implements Summary {
 		} else if (!quantidade.equals(other.quantidade))
 			return false;
 		return true;
+	}
+	public Double getQuantidade() {
+		return quantidade;
+	}
+	public void setQuantidade(Double quantidade) {
+		this.quantidade = quantidade;
 	}
 	
 }

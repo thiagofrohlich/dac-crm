@@ -19,14 +19,9 @@ public class ProdutoSummary implements Serializable {
 	private double valorVenda;
 	private PessoaJuridicaSummary fornecedor = new PessoaJuridicaSummary();
 	private Double estoque;
-	private Long qtd = new Long(0); 
+	private Double qtd = 0.0; 
 	
-	public Long getQtd() {
-		return qtd;
-	}
-	public void setQtd(Long qtd) {
-		this.qtd = qtd;
-	}
+	
 	public Long getId() {
 		return id;
 	}
@@ -122,6 +117,12 @@ public class ProdutoSummary implements Serializable {
 				.doubleToLongBits(other.valorVenda))
 			return false;
 		return true;
+	}
+	public Double getQtd() {
+		return qtd;
+	}
+	public void setQtd(Double qtd) {
+		this.qtd = qtd;
 	}
 
 }

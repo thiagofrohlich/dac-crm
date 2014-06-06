@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperExportManager;
@@ -45,7 +46,7 @@ public class OperacaoController {
 	
 	private final OperacaoTransformer operacaoTransformer;
 	private final OperacaoRepository operacaoRepository;
-
+	private ResourceBundle rb = ResourceBundle.getBundle("app");
 	
 	@Autowired
 	public OperacaoController(OperacaoTransformer operacaoTransformer,
@@ -103,10 +104,10 @@ public class OperacaoController {
 		format = new SimpleDateFormat("yyyyMMddHHmmss");  
 		String id = format.format(new Date());
 		try{
-			JasperReport pathRxml = JasperCompileManager.compileReport("D:/repo/dac/dac-crm/dac-crm-services/relatorios/relatoriocomrasDataOnly.jrxml");
+			JasperReport pathRxml = JasperCompileManager.compileReport(rb.getString("relOperacao")+"relatoriocomrasDataOnly.jrxml");
 			JasperPrint printReport = JasperFillManager.fillReport(pathRxml, map, new JRBeanCollectionDataSource(lstFields));
-			JasperExportManager.exportReportToPdfFile(printReport,"D:/repo/dac/dac-crm/dac-crm-services/relatorios/relatorio"+id+".pdf");
-			File file = new File("D:/repo/dac/dac-crm/dac-crm-services/relatorios/relatorio"+id+".pdf");
+			JasperExportManager.exportReportToPdfFile(printReport,rb.getString("relOperacao")+id+".pdf");
+			File file = new File(rb.getString("relOperacao")+id+".pdf");
 			FileInputStream fis = new FileInputStream(file);  
 	        byte[] data = new byte[fis.available()];  
 	        fis.read(data);  
@@ -146,10 +147,10 @@ public class OperacaoController {
 		format = new SimpleDateFormat("yyyyMMddHHmmss");  
 		String id = format.format(new Date());
 		try{
-			JasperReport pathRxml = JasperCompileManager.compileReport("D:/repo/dac/dac-crm/dac-crm-services/relatorios/relatoriocomrasDataOnly.jrxml");
+			JasperReport pathRxml = JasperCompileManager.compileReport(rb.getString("relOperacao")+"relatoriocomrasDataOnly.jrxml");
 			JasperPrint printReport = JasperFillManager.fillReport(pathRxml, map, new JRBeanCollectionDataSource(lstFields));
-			JasperExportManager.exportReportToPdfFile(printReport,"D:/repo/dac/dac-crm/dac-crm-services/relatorios/relatorio"+id+".pdf");
-			File file = new File("D:/repo/dac/dac-crm/dac-crm-services/relatorios/relatorio"+id+".pdf");
+			JasperExportManager.exportReportToPdfFile(printReport,rb.getString("relOperacao")+id+".pdf");
+			File file = new File(rb.getString("relOperacao")+id+".pdf");
 			FileInputStream fis = new FileInputStream(file);  
 	        byte[] data = new byte[fis.available()];  
 	        fis.read(data);  

@@ -61,6 +61,7 @@ public class VendasBean implements Serializable{
 	private Integer pagto;
 	private PessoaFisicaSummary clienteSelecionado = new PessoaFisicaSummary();
 	private ResourceBundle rb = ResourceBundle.getBundle("messages");
+	private ResourceBundle app = ResourceBundle.getBundle("app");
 	private ProdutoSummary prodSelecionado = new ProdutoSummary();
 
 
@@ -131,15 +132,14 @@ public class VendasBean implements Serializable{
 			operacao.setDataOperacao(Calendar.getInstance().getTime());
 			try{
 				operacao.getNotaFiscal().setId(operacaoService.createReturn(operacao));
-				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "INFO", rb.getString("salvaVenda")));
 				SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmmss");  
 				String id = format.format(new Date());
 				Map<String, Object> map = montaMapa();
 				
-				JasperReport pathRxml = JasperCompileManager.compileReport("D:/repo/dac/dac-crm/dac-crm-web/relatorios/venda.jrxml");
+				JasperReport pathRxml = JasperCompileManager.compileReport(app.getString("notaVenda")+"venda.jrxml");
 				JasperPrint printReport = JasperFillManager.fillReport(pathRxml, map, new JRBeanCollectionDataSource(lstProdutos));
-				JasperExportManager.exportReportToPdfFile(printReport,"D:/repo/dac/dac-crm/dac-crm-services/relatorios/relatorio"+id+".pdf");
-				File file = new File("D:/repo/dac/dac-crm/dac-crm-services/relatorios/relatorio"+id+".pdf");
+				JasperExportManager.exportReportToPdfFile(printReport,app.getString("notaVenda")+id+".pdf");
+				File file = new File(app.getString("notaVenda")+id+".pdf");
 				FacesContext context = FacesContext.getCurrentInstance();  
 				HttpServletResponse response = (HttpServletResponse) context.getExternalContext().getResponse();  
 				response.reset();  
@@ -154,14 +154,26 @@ public class VendasBean implements Serializable{
 				response.getOutputStream().flush();  
 				response.getOutputStream().close();  
 				context.responseComplete();  
-				
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "INFO", rb.getString("salvaVenda")));
+				limpaTela();
 			}catch(Exception e){
 				e.printStackTrace();
-				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "INFO", rb.getString("erroSalvaVenda")));
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERRO", rb.getString("erroSalvaVenda")));
 			}
 		}
 	}
 	
+	public void limpaTela() {
+		cliente = new PessoaFisicaSummary();
+		clienteSelecionado = new PessoaFisicaSummary();
+		prodSelecionado = new ProdutoSummary();
+		lstProdutos.clear();
+		subTotal = new BigDecimal(0);
+		operacao = new OperacaoSummary();
+		produto = new ProdutoSummary();
+		
+	}
+
 	public void buscaCliente(){
 		CPFFormatter formatter = new CPFFormatter();
 		String cpf = formatter.unformat(cliente.getCpf());

@@ -34,6 +34,7 @@ public class RelatorioBean implements Serializable{
 	private ProdutoServiceHandler produtoService = new ProdutoServiceHandler();
 	private OperacaoServiceHandler operacaoService = new OperacaoServiceHandler();
 	private ResourceBundle rb = ResourceBundle.getBundle("messages");
+	
 	private Integer tipoPesquisa = 1;
 	private Date dataini;
 	private Date datafim;
@@ -95,11 +96,24 @@ public class RelatorioBean implements Serializable{
 			context.responseComplete();  
 			dataini = null;
 			datafim = null;
+			limpaTela();
 		}catch(Exception e){
 			e.printStackTrace();
 		}
 	}
 	
+	public void limpaTela() {
+		pessoaFisica = new PessoaFisicaSummary();
+		pessoaJuridica = new PessoaJuridicaSummary();
+		doc = "";
+		pfSelecionado = new PessoaFisicaSummary();
+		pjSelecionado = new PessoaJuridicaSummary();
+		produto = new ProdutoSummary();
+		prodSelecionado = new ProdutoSummary();
+		
+	}
+
+
 	public void confirmaCampos(){
 		if(tipoPesquisa == 1){
 			if(pessoaJuridica == null || pessoaJuridica.getCnpj() == null|| pessoaJuridica.getCnpj().equals("")){

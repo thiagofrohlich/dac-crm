@@ -56,7 +56,7 @@ public class OperacaoSummaryBuilder {
 		ProdutoNfSummary produtoNfSummary = new ProdutoNfSummary();
 		produtoNfSummary.setProdutoId(new Date().getTime());
 		produtoNfSummary.setNfId(nfId);
-		produtoNfSummary.setQuantidade(1L);
+		produtoNfSummary.setQuantidade(valorTotal);
 		return produtoNfSummary;
 	}
 	public OperacaoSummaryBuilder withId(Long id) {
