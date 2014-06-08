@@ -24,6 +24,13 @@ public class ProdutoNfSummary implements Summary {
 		this.produtoId = produtoId;
 	}
 	
+	public void somaQtd(Double qtd){
+		this.quantidade = this.quantidade + qtd;
+	}
+	public void subtraiQtd(Double qtd){
+		this.quantidade = this.quantidade-qtd;
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -53,11 +60,6 @@ public class ProdutoNfSummary implements Summary {
 			if (other.produtoId != null)
 				return false;
 		} else if (!produtoId.equals(other.produtoId))
-			return false;
-		if (quantidade == null) {
-			if (other.quantidade != null)
-				return false;
-		} else if (!quantidade.equals(other.quantidade))
 			return false;
 		return true;
 	}

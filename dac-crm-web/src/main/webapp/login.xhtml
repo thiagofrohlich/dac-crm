@@ -7,45 +7,72 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 	
-	<ui:composition template="/template.xhtml">
-		<ui:define name="centro">
-			<h:form id="cadastroProduto" prependId="false">
+	<h:head>
+		
+        <link rel="stylesheet" type="text/css" href="resources/theme.css" />
+    </h:head>
+    <h:body >
+        <div align="center">
+            <p:layout >  
+                
+ 
+                <p:layoutUnit position="west" size="220">  
+                        <h:form >
+                            <p:menu style="width: 200px">
+                                <p:submenu label="Menu">
+                                    <p:menuitem value="#{msg.login}" icon="ui-icon-key" url="http://localhost:8080/dac-crm-web/login.jsf" />
+                                    <p:menuitem value="#{msg.produtos}" icon="ui-icon-contact" url="http://localhost:8080/dac-crm-web/cadastroProduto.jsf" rendered="#{loginBean.cadastro}"/>         
+                                    <p:menuitem value="#{msg.pessoa}" icon="ui-icon-contact" url="http://localhost:8080/dac-crm-web/cadastroPessoa.jsf" rendered="#{loginBean.cadastro}"/>
+                                    <p:menuitem value="#{msg.compras}" icon="ui-icon-contact" url="http://localhost:8080/dac-crm-web/compras.jsf" rendered="#{loginBean.compras}"/>
+                                    <p:menuitem value="#{msg.vendas}" icon="ui-icon-contact" url="http://localhost:8080/dac-crm-web/vendas.jsf" rendered="#{loginBean.vendas}"/>
+                                    <p:menuitem value="#{msg.relatorios}" icon="ui-icon-contact" url="http://localhost:8080/dac-crm-web/relatorio.jsf" rendered="#{loginBean.relatorio}"/>
+                                </p:submenu>
+                            </p:menu>
+                            <a href="j_spring_security_logout" style="float: left; margin-left: 28px;" >Logout</a>
+                        </h:form>
+                </p:layoutUnit>  
+                <p:layoutUnit position="center">  
+                    	<h:form id="login" prependId="false">
 				
-				<div style="clear:both;" class="center">
-					<h:outputText value="#{msg.bemVindo}" style="font-size:13px; "/>
-					<h:messages globalOnly="true"/>
-				</div>
-				<div class="center" style="padding-top: 15px;">
-					<table border="0">
-						<tr>
-							<td class="label">
-								<h:outputText value="#{msg.login}: " />
-							</td>
-							<td>
-								<h:inputText value="#{loginBean.user.login}" id="username" />
-							</td>
-						</tr>
-						<tr>
-							<td class="label">
-								<h:outputText value="#{msg.senha}: " />
-							</td>
-							<td>
-								<h:inputSecret value="#{loginBean.user.senha}" id="password" />
-							</td>
-						</tr>
-						<tr>
-							<td class="label">
-								<p:commandButton value="#{msg.voltar}" />
-							</td>
-							<td>
-								<p:commandButton value="#{msg.entrar}" type="submit" action="#{loginController.doLogin}" ajax="false" />
-							</td>
-						</tr>
-					</table>
-				</div>
-			</h:form>		
-		</ui:define>
-	</ui:composition>
+						<div style="clear:both;" class="center">
+							<h:outputText value="#{msg.bemVindo}" style="font-size:13px; "/>
+							<h:messages globalOnly="true"/>
+						</div>
+						<div class="center" style="padding-top: 15px;">
+							<table border="0">
+								<tr>
+									<td class="label">
+										<h:outputText value="#{msg.login}: " />
+									</td>
+									<td>
+										<h:inputText value="#{loginBean.user.login}" id="username" />
+									</td>
+								</tr>
+								<tr>
+									<td class="label">
+										<h:outputText value="#{msg.senha}: " />
+									</td>
+									<td>
+										<h:inputSecret value="#{loginBean.user.senha}" id="password" />
+									</td>
+								</tr>
+								<tr>
+									<td class="label">
+										<p:commandButton value="#{msg.voltar}" />
+									</td>
+									<td>
+										<p:commandButton value="#{msg.entrar}" type="submit" action="#{loginController.doLogin}" ajax="false" />
+									</td>
+								</tr>
+							</table>
+						</div>
+					</h:form>		
+                </p:layoutUnit>  
+            </p:layout>  
+        </div>
+    </h:body>
+	
+
 	
 	
 </html>

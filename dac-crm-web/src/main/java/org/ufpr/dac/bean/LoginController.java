@@ -46,6 +46,7 @@ public class LoginController implements PhaseListener {
 
         dispatcher.forward((ServletRequest) context.getRequest(),
                 (ServletResponse) context.getResponse());
+        
 
         FacesContext.getCurrentInstance().responseComplete();
 
@@ -69,11 +70,6 @@ public class LoginController implements PhaseListener {
     public void afterPhase(PhaseEvent event) {
     }
 
-    /* (non-Javadoc)
-     * @see javax.faces.event.PhaseListener#beforePhase(javax.faces.event.PhaseEvent)
-     * 
-     * Do something before rendering phase.
-     */
     public void beforePhase(PhaseEvent event) {
         Exception e = (Exception) FacesContext.getCurrentInstance().
           getExternalContext().getSessionMap().get(WebAttributes.AUTHENTICATION_EXCEPTION);
@@ -87,6 +83,8 @@ public class LoginController implements PhaseListener {
                 "Username or password not valid.", "Username or password not valid"));
         }
     }
+    
+    
 
     /* (non-Javadoc)
      * @see javax.faces.event.PhaseListener#getPhaseId()

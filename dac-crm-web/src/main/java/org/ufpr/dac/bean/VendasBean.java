@@ -18,8 +18,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletResponse;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.ResponseBuilder;
 
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperExportManager;
@@ -28,7 +26,6 @@ import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 
-import org.primefaces.event.SelectEvent;
 import org.ufpr.dac.model.OperacaoSummary;
 import org.ufpr.dac.model.PessoaFisicaSummary;
 import org.ufpr.dac.model.ProdutoNfSummary;
@@ -66,16 +63,22 @@ public class VendasBean implements Serializable{
 
 
 	public void lancar(){
+		
 		if(produto.getQtd() < produto.getEstoque()){
 			ProdutoNfSummary produtoNf = new ProdutoNfSummary();
 			produtoNf.setProdutoId(produto.getId());
 			produtoNf.setQuantidade(produto.getQtd());
-			operacao.getNotaFiscal().getProdutosNf().add(produtoNf);
+			if(operacao.getNotaFiscal().getProdutosNf().contains(produtoNf)){
+				operacao.getNotaFiscal().getProdutosNf().get(operacao.getNotaFiscal().getProdutosNf().indexOf(produtoNf)).somaQtd(produtoNf.getQuantidade());
+			}else{
+				operacao.getNotaFiscal().getProdutosNf().add(produtoNf);
+			}
 			lstProdutos.add(produto);
 			BigDecimal valor = new BigDecimal(produto.getValorVenda()*produto.getQtd());
 			valor = valor.setScale(2, BigDecimal.ROUND_HALF_UP);
 			subTotal = subTotal.add(valor);
 			produto = new ProdutoSummary();
+			
 		}else{
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERRO", rb.getString("erroQtdEQtdEstoque")));
 		}
@@ -199,6 +202,13 @@ public class VendasBean implements Serializable{
 	public void buscaProduto(){
 		try{
 			produto = produtoService.getOne(produto.getId());
+			if(!lstProdutos.isEmpty()){
+				for (ProdutoSummary p : lstProdutos){
+					if(p.getId() == produto.getId()){
+						produto.setEstoque(produto.getEstoque() - p.getQtd());
+					}
+				}
+			}
 		}catch(Exception e){
 			e.printStackTrace();
 			produto = new ProdutoSummary();

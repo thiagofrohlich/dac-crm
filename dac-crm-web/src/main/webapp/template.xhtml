@@ -12,22 +12,22 @@
 		<ui:insert name="style">
 		</ui:insert>       
     </h:head>
-    <h:body>
+    <h:body onload="#{loginBean.recuperaUuario()}">
         <div align="center">
             <p:layout >  
                 
  
                 <p:layoutUnit position="west" size="220">  
                     <ui:insert name="menu">
-                        <h:form>
+                        <h:form >
                             <p:menu style="width: 200px">
                                 <p:submenu label="Menu">
-                                    <p:menuitem value="#{msg.login}" icon="ui-icon-key" url="http://localhost:8080/dac-crm-web/login.jsf"/>
-                                    <p:menuitem value="#{msg.produtos}" icon="ui-icon-contact" url="http://localhost:8080/dac-crm-web/cadastroProduto.jsf"/>         
-                                    <p:menuitem value="#{msg.pessoa}" icon="ui-icon-contact" url="http://localhost:8080/dac-crm-web/cadastroPessoa.jsf"/>
-                                    <p:menuitem value="#{msg.compras}" icon="ui-icon-contact" url="http://localhost:8080/dac-crm-web/compras.jsf"/>
-                                    <p:menuitem value="#{msg.vendas}" icon="ui-icon-contact" url="http://localhost:8080/dac-crm-web/vendas.jsf"/>
-                                    <p:menuitem value="#{msg.relatorios}" icon="ui-icon-contact" url="http://localhost:8080/dac-crm-web/relatorio.jsf"/>
+                                    <p:menuitem value="#{msg.login}" icon="ui-icon-key" url="http://localhost:8080/dac-crm-web/login.jsf" />
+                                    <p:menuitem value="#{msg.produtos}" icon="ui-icon-contact" url="http://localhost:8080/dac-crm-web/cadastroProduto.jsf" rendered="#{loginBean.cadastro}"/>         
+                                    <p:menuitem value="#{msg.pessoa}" icon="ui-icon-contact" url="http://localhost:8080/dac-crm-web/cadastroPessoa.jsf" rendered="#{loginBean.cadastro}"/>
+                                    <p:menuitem value="#{msg.compras}" icon="ui-icon-contact" url="http://localhost:8080/dac-crm-web/compras.jsf" rendered="#{loginBean.compras}"/>
+                                    <p:menuitem value="#{msg.vendas}" icon="ui-icon-contact" url="http://localhost:8080/dac-crm-web/vendas.jsf" rendered="#{loginBean.vendas}"/>
+                                    <p:menuitem value="#{msg.relatorios}" icon="ui-icon-contact" url="http://localhost:8080/dac-crm-web/relatorio.jsf" rendered="#{loginBean.relatorio}"/>
                                 </p:submenu>
                             </p:menu>
                             <a href="j_spring_security_logout" style="float: left; margin-left: 28px;" >Logout</a>

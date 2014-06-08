@@ -67,7 +67,11 @@ public class ComprasBean implements Serializable{
 		ProdutoNfSummary produtoNf = new ProdutoNfSummary();
 		produtoNf.setProdutoId(produto.getId());
 		produtoNf.setQuantidade(produto.getQtd());
-		operacao.getNotaFiscal().getProdutosNf().add(produtoNf);
+		if(operacao.getNotaFiscal().getProdutosNf().contains(produtoNf)){
+			operacao.getNotaFiscal().getProdutosNf().get(operacao.getNotaFiscal().getProdutosNf().indexOf(produtoNf)).somaQtd(produtoNf.getQuantidade());
+		}else{
+			operacao.getNotaFiscal().getProdutosNf().add(produtoNf);
+		}
 		lstProdutos.add(produto);
 		BigDecimal valor = new BigDecimal(produto.getValorCompra()*produto.getQtd());
 		valor = valor.setScale(2, BigDecimal.ROUND_HALF_UP);
